@@ -1,0 +1,7 @@
+package com.jzqh.rzzl2.basicinfomanagement.goods.repository;
+
+import com.jzqh.rzzl2.basicinfomanagement.goods.impl.GoodsClassImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface GoodClassRepository extends JpaRepository<GoodsClassImpl, Long> {
+}

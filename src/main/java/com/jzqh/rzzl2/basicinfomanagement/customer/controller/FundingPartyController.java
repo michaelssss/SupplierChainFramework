@@ -1,0 +1,59 @@
+package com.jzqh.rzzl2.basicinfomanagement.customer.controller;
+
+import com.jzqh.base.Response;
+import com.jzqh.rzzl2.basicinfomanagement.customer.customerimpl.FundingPartyImpl;
+import com.jzqh.rzzl2.basicinfomanagement.customer.respository.FundingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * @Description:
+ * @Author:tanshaoxing
+ * @Date:2018/7/12
+ */
+@Controller
+@RequestMapping("Funding")
+public class FundingPartyController {
+    @Autowired
+    private FundingRepository fundingRepository;
+
+    @ResponseBody
+    @RequestMapping("add")
+    public Response addFunding(FundingPartyImpl fundingParty) {
+        fundingParty.addInfo();
+        return Response.OK(null);
+    }
+
+    @ResponseBody
+    @RequestMapping("update")
+    public Response updateFunding(FundingPartyImpl fundingParty) {
+        fundingParty.updateInfo();
+        return Response.OK(null);
+    }
+
+    @ResponseBody
+    @RequestMapping("delete")
+    public Response deleteFunding(FundingPartyImpl fundingParty) {
+        fundingParty.deleteInfo();
+        return Response.OK(null);
+    }
+
+    @ResponseBody
+    @RequestMapping("queryAll")
+    public Response queryAllStorage() {
+        List<FundingPartyImpl> fundingParty = fundingRepository.findAll();
+        return Response.OK(fundingParty);
+    }
+
+    @ResponseBody
+    @RequestMapping("queryInfo/id")
+    public Response queryAllStorage(@RequestParam(value = "id") Long id) {
+        FundingPartyImpl fundingParty = fundingRepository.findOne(id);
+        return Response.OK(fundingParty);
+    }
+}
