@@ -14,7 +14,7 @@ import java.util.List;
  * @Date:2018/7/19
  */
 @Controller
-@RequestMapping(path = "Sales")
+@RequestMapping("SalesContract")
 public class SalesContractController {
     private SalesContractRepository repository;
 

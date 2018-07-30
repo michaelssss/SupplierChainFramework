@@ -14,7 +14,7 @@ import java.util.List;
  * @Date:2018/7/19
  */
 @Controller
-@RequestMapping(path = "PurchaseContract")
+@RequestMapping("PurchaseContract")
 public class PurchaseContractController {
 
     private PurchaseContactRepository repository;

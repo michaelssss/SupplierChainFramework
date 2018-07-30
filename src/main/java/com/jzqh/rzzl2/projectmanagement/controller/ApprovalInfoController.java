@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date:2018/7/16
  */
 @Controller
-@RequestMapping("Project/Approval")
+@RequestMapping("ApprovalInfo")
 public class ApprovalInfoController {
 
     private ApproalInfoRepository approalInfoRepository;

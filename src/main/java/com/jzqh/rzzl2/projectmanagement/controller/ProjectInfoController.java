@@ -14,7 +14,7 @@ import java.util.List;
  * @Date:2018/7/16
  */
 @Controller
-@RequestMapping(path = "Project")
+@RequestMapping("ProjectInfo")
 public class ProjectInfoController {
 
     private ProjectInfoRepository projectInfoRepository;

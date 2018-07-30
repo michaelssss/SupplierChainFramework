@@ -17,7 +17,7 @@ import java.util.List;
  * @Date:2018/7/12
  */
 @Controller
-@RequestMapping(value = "Supplier")
+@RequestMapping("Supplier")
 public class SupplierController {
     @Autowired
     private SupplierRepository supplierRepository;

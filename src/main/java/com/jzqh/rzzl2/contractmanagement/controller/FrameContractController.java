@@ -15,7 +15,7 @@ import java.util.List;
  * @Date:2018/7/19
  */
 @Controller
-@RequestMapping(path = "FrameContract")
+@RequestMapping("FrameContract")
 public class FrameContractController {
 
     @Autowired
