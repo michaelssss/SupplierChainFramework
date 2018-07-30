@@ -1,7 +1,7 @@
 package com.jzqh.rzzl2.contractmanagement;
 
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.SpringContextHolder;
-import com.jzqh.rzzl2.SpringBootTestBasic;
 import com.jzqh.rzzl2.contractmanagement.impl.FrameContractImpl;
 import com.jzqh.rzzl2.contractmanagement.repository.FrameContractRepository;
 import org.junit.Assert;

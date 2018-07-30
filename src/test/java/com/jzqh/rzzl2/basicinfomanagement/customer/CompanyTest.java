@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.basicinfomanagement.customer;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.rzzl2.basicinfomanagement.customer.customerimpl.*;
 import com.jzqh.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import org.junit.Assert;

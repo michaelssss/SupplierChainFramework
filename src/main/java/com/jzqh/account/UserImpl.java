@@ -1,25 +1,18 @@
 package com.jzqh.account;
 
 import com.jzqh.SpringContextHolder;
-import com.jzqh.account.accessmanagement.authority.Action;
-import com.jzqh.account.accessmanagement.authority.Authority;
-import com.jzqh.account.accessmanagement.authority.Menu;
-import com.jzqh.account.organizestructure.AuthoritiesSetImpl;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Builder
 @NoArgsConstructor
@@ -44,37 +37,9 @@ public class UserImpl implements UserDetails, User, Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthoritiesSetImpl> authoritiesSets;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Menu rootMenu;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("o")
-    private SortedSet<Action> actions;
-
-
-    /**
-     *
-     */
-    @Override
-    public void registered() {
-        // SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void login() {
-        //TODO:暂缓实施
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void authority(UserImpl userImpl, Authority authority) {
-        //TODO:
-    }
+    private List<Authority> authorities;
 
     @Override
     public String getUsername() {
@@ -87,38 +52,69 @@ public class UserImpl implements UserDetails, User, Serializable {
         return encoder.matches(password, encoder.encode(password));
     }
 
+    /**
+     * @param url 传入的URL都应该是/开头,尾部如果首字母是大写则是menu，否则是action
+     * @return
+     */
+    private static boolean isMenu(String url) {
+        if (StringUtils.isEmpty(url)) return false;
+        String[] splitStr = url.split("/");
+        String lastWord = splitStr[splitStr.length - 1];
+        return lastWord.charAt(0) == lastWord.toLowerCase().charAt(0);
+    }
+
+    private static boolean isAction(String url) {
+        return !isMenu(url);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
     @Override
-    public Menu getRootMenu() {
-        return rootMenu;
+    public void authority(User other, Authority authority) {
+        if (hasAuthority(authority)) {
+            other.authority(authority);
+        }
     }
 
     @Override
-    public boolean hasAuthority(String url) {
-        return hasMenuAuthority(url) || hasActionAuthority(url);
+    public void authority(Authority authority) {
+        this.authorities.add(authority);
     }
 
-    private boolean hasMenuAuthority(String url) {
-        Menu root = getRootMenu();
-        return querySubMenu(url, root);
-    }
-
-    private boolean querySubMenu(String url, Menu menu) {
-        if (menu == null) return false;
-        if (menu.getUrl().equals(url)) return true;
-        for (Menu menu1 : menu.getSubMenus()) {
-            if (querySubMenu(url, menu1)) return true;
+    @Override
+    public SortedSet<Authority> getMenus() {
+        TreeSet<Authority> authorities = new TreeSet<>();
+        for (Authority a : this.authorities) {
+            if (isMenu(a.getUrl())) {
+                authorities.add(a);
+            }
         }
-        return false;
+        return authorities;
     }
 
-    private boolean hasActionAuthority(String url) {
-        for (Action action : this.actions) {
-            if (action.getUrl().equals(url)) {
+    @Override
+    public SortedSet<Authority> getActions() {
+        TreeSet<Authority> authorities = new TreeSet<>();
+        for (Authority a : this.authorities) {
+            if (isAction(a.getUrl())) {
+                authorities.add(a);
+            }
+        }
+        return authorities;
+    }
+
+    @Override
+    public boolean hasAuthority(Authority authority) {
+        return this.hasAuthority(authority.getUrl());
+    }
+
+    @Override
+    public boolean hasAuthority(String menuUrl) {
+        for (Authority authority : this.authorities) {
+            if (authority.getUrl().equals(menuUrl)) {
                 return true;
             }
         }
@@ -126,9 +122,10 @@ public class UserImpl implements UserDetails, User, Serializable {
     }
 
     @Override
-    public Collection<Action> getActions(Menu menu) {
-        SortedSet<Action> actions = menu.getActions();
-        return Collections.unmodifiableCollection(CollectionUtils.disjunction(actions, this.actions));
+    public void registered() {
+        if (StringUtils.isNotEmpty(this.username) && StringUtils.isNotEmpty(this.password)) {
+            SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
+        }
     }
 
     @Override

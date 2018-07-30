@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.basicinfomanagement.goods;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.rzzl2.basicinfomanagement.goods.impl.GoodsClassImpl;
 import com.jzqh.rzzl2.basicinfomanagement.goods.impl.GoodsPropertyImpl;
 import com.jzqh.rzzl2.basicinfomanagement.goods.impl.ProductionInfoImpl;

@@ -17,26 +17,26 @@ import java.util.Set;
  * @time 2018/7/30 9:56
  */
 public class RouteScanner {
-    
-    
+
+
     /**
      *  查找当前路径下所有的@controller注解文件
      * @param path 格式为 com.jzqh.rzzl2
      * @return
      */
     public static Set<BeanDefinition> getAllController(String path){
-    
+
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
-    
+
         scanner.addIncludeFilter(new AnnotationTypeFilter(Controller.class));
-    
+
         //String格式为com.jzqh.rzzl2
         Set<BeanDefinition> beanDefinitionSet = scanner.findCandidateComponents(path);
-        
+
         return beanDefinitionSet;
-        
+
     }
-    
+
     /**
      * 将Set集合中的文件名放入到list集合中并返回
      * @param beanDefinitionSet
@@ -51,7 +51,7 @@ public class RouteScanner {
         }
         return  filenames;
     }
-    
+
     /**
      * 根据反射得到文件中的所有@requestMapping的value
      * @param filenames
@@ -102,5 +102,5 @@ public class RouteScanner {
             }
         }
     }
-    
+
 }

@@ -1,7 +1,7 @@
 package com.jzqh.rzzl2.stock.controller;
 
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 

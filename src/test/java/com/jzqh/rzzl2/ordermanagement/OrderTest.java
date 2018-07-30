@@ -1,7 +1,7 @@
 package com.jzqh.rzzl2.ordermanagement;
 
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.SpringContextHolder;
-import com.jzqh.rzzl2.SpringBootTestBasic;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.data.domain.Example;

@@ -1,14 +1,16 @@
 package com.jzqh;
 
-import com.jzqh.account.User;
+import com.jzqh.account.UserCatalog;
 import com.jzqh.account.UserImpl;
 import com.jzqh.account.UserProfile;
-import com.jzqh.account.accessmanagement.authority.Action;
-import com.jzqh.account.accessmanagement.authority.Menu;
+import com.jzqh.daemon.BusinessInitialActionCenter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
 
 /**
  * 本类用于返回一个用户对象
@@ -17,22 +19,21 @@ import java.util.TreeSet;
  * @author Michaelssss
  * @see UserImpl
  */
+@Component
+@Slf4j
 public class RootUser {
-    public static void addUser() {
-        Menu rootMenu = new Menu();
-        rootMenu.setUrl("/HelloWorld");
-        Action menuAction = new Action();
-        Menu menu = new Menu();
-        menu.setUrl("/Menu");
-        rootMenu.addMenu(menu);
-        menuAction.setUrl("/Menu/get");
-        Action menuActionGet = new Action();
-        menuAction.setOrder(0);
-        menuActionGet.setOrder(1);
-        menuActionGet.setUrl("/Menu/Action/get");
-        TreeSet<Action> actions = new TreeSet<>();
-        actions.add(menuAction);
-        actions.add(menuActionGet);
+    static {
+        log.info("registered root user");
+        BusinessInitialActionCenter.registeredAction(() -> {
+            UserCatalog userCatalog = SpringContextHolder.getBean(UserCatalog.class);
+            UserImpl sample = RootUser();
+            if (0 == userCatalog.count(Example.of(sample)))
+                RootUser().registered();
+        });
+        log.info("BusinessInitialActionCenter.status=" + BusinessInitialActionCenter.getStatus());
+    }
+
+    public static UserImpl RootUser() {
         PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
         UserProfile testUserProfile = new UserProfile();
         testUserProfile.setAge(23);
@@ -40,13 +41,12 @@ public class RootUser {
         testUserProfile.setEmail("test@test.com");
         testUserProfile.setSexual("male");
         testUserProfile.setPhone("18124601060");
-        User user = UserImpl.builder().
+        UserImpl user = UserImpl.builder().
                 username("8888").
                 password(encoder.encode("1")).
-                actions(actions).
+                authorities(new ArrayList<>()).
                 userProfile(testUserProfile).
-                rootMenu(rootMenu).
                 build();
-        user.registered();
+        return user;
     }
 }

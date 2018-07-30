@@ -1,7 +1,5 @@
-package com.jzqh.account.accessmanagement;
+package com.jzqh.account;
 
-import com.jzqh.account.User;
-import com.jzqh.account.UserImpl;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,6 @@
 package com.jzqh.configuration;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

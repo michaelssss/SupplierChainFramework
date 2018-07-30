@@ -1,10 +1,6 @@
 package com.jzqh;
 
-import com.jzqh.account.CustomerAuthFailedHandler;
-import com.jzqh.account.CustomerAuthSuccessHandler;
-import com.jzqh.account.JSONUsernamePasswordAuthenticationFilter;
-import com.jzqh.account.UserDetailsServiceImpl;
-import com.jzqh.account.accessmanagement.URLVoter;
+import com.jzqh.account.*;
 import com.jzqh.configuration.ConfigurationCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

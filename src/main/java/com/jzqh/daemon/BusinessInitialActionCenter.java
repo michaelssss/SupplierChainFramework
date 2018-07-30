@@ -7,8 +7,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -21,7 +19,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Service
 public class BusinessInitialActionCenter implements ApplicationListener<ApplicationEvent> {
     private final static BlockingQueue<Action> queue = new LinkedBlockingQueue<>(32);
-    private final static ExecutorService executor = Executors.newSingleThreadExecutor();
     private static boolean initFlag = false;
 
     /**
@@ -37,24 +34,26 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
         }
     }
 
+    public static String getStatus() {
+        return queue.size() == 0 && initFlag ? "Idle" : "Busy";
+    }
+
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof ContextRefreshedEvent) {
             if (!initFlag) {
                 log.info("======================System daemon started=============================");
                 initFlag = true;
-                executor.execute(() -> {
-                    while (true) {
-                        try {
-
-                            Action action = queue.take();
-                            action.act();
-                            log.info("clazz" + action.getClass().getSimpleName() + " has been init and act ");
-                        } catch (InterruptedException e) {
-                            log.warn("Business Thread had been interrupt ,because of ", e);
-                        }
+                while (true) {
+                    try {
+                        if (queue.size() == 0) break;
+                        Action action = queue.take();
+                        action.act();
+                        log.info("clazz" + action.getClass().getSimpleName() + " has been init and act ");
+                    } catch (InterruptedException e) {
+                        log.warn("Business Thread had been interrupt ,because of ", e);
                     }
-                });
+                }
             }
         }
     }

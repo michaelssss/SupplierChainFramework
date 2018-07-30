@@ -1,7 +1,5 @@
-package com.jzqh.account.organizestructure;
+package com.jzqh.account;
 
-import com.jzqh.account.accessmanagement.authority.Action;
-import com.jzqh.account.accessmanagement.authority.Menu;
 import lombok.Data;
 import lombok.ToString;
 
@@ -23,10 +21,8 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     private Long uid;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Action> actions;
+    private Set<Authority> authorities;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Menu> menus;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AuthoritiesSetImpl parent;
@@ -35,23 +31,12 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     private List<AuthoritiesSetImpl> children;
 
     @Override
-    public void authorizeMenu(Menu menu) {
-        this.menus.add(menu);
+    public void authority(Authority authority) {
+        this.authorities.add(authority);
     }
 
     @Override
-    public void authorizeAction(Menu menu, Action action) {
-        this.menus.add(menu);
-        this.actions.add(action);
-    }
-
-    @Override
-    public void unAuthorizeMenu(Menu menu) {
-        this.menus.remove(menu);
-    }
-
-    @Override
-    public void unAuthorizeAction(Menu menu, Action action) {
-        this.actions.remove(action);
+    public void unAuthority(Authority authority) {
+        this.authorities.remove(authority);
     }
 }

@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.stock;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.rzzl2.stock.repository.StockRepository;
 import org.junit.Assert;
 import org.junit.Test;

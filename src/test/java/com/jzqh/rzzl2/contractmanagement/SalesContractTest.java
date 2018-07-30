@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.contractmanagement;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.rzzl2.contractmanagement.impl.SalesContractImpl;
 import com.jzqh.rzzl2.contractmanagement.repository.SalesContractRepository;
 import org.junit.Assert;

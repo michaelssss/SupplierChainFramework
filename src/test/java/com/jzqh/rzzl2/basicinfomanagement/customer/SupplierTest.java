@@ -1,7 +1,7 @@
 package com.jzqh.rzzl2.basicinfomanagement.customer;
 
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.SpringContextHolder;
-import com.jzqh.rzzl2.SpringBootTestBasic;
 import com.jzqh.rzzl2.basicinfomanagement.customer.customerimpl.CompanyImpl;
 import com.jzqh.rzzl2.basicinfomanagement.customer.customerimpl.SupplierImpl;
 import com.jzqh.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;

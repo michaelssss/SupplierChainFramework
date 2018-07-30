@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.projectmanagement;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.rzzl2.projectmanagement.impl.ApprovalInfo;
 import com.jzqh.rzzl2.projectmanagement.repository.ApproalInfoRepository;
 import org.junit.Assert;

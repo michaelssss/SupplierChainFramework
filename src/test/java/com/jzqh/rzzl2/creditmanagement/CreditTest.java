@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.creditmanagement;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

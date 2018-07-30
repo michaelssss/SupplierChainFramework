@@ -1,4 +1,4 @@
-package com.jzqh.account.accessmanagement.authority;
+package com.jzqh.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,22 +13,17 @@ import java.util.Objects;
  * 权限必然是有序的，可以排列成树状结构
  * 操作：ActionUrl
  * 菜单：Menu
- *
- * @see Action
- * @see Menu
  */
 @Entity
 @Table(name = "sys_auth")
 @Data
 @ToString
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Authority implements Serializable, GrantedAuthority, Comparable<Authority> {
-    public static final String ACTION = "Action";
-    public static final String MENU = "Menu";
+public class Authority implements GrantedAuthority, Comparable<Authority> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
-    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int o;
 
     private String url;
@@ -47,8 +41,6 @@ public abstract class Authority implements Serializable, GrantedAuthority, Compa
     public void setOrder(int o) {
         this.o = o;
     }
-
-    public abstract String getType();
 
     @Override
     public int compareTo(Authority o) {

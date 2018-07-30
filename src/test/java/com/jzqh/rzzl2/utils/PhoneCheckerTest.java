@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.utils;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import com.jzqh.utils.PhoneChecker;
 import org.junit.Assert;
 import org.junit.Test;

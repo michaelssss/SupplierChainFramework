@@ -1,6 +1,6 @@
 package com.jzqh.rzzl2.bpm;
 
-import com.jzqh.rzzl2.SpringBootTestBasic;
+import com.jzqh.SpringBootTestBasic;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
