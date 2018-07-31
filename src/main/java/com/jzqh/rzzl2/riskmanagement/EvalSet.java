@@ -1,13 +1,26 @@
 package com.jzqh.rzzl2.riskmanagement;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.HashSet;
 
-
+@Entity
+@Table(name = "eval_set")
+@Setter
+@Getter
 public class EvalSet implements Evaluate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
+    @NotEmpty
     private String name;
-    private Collection<Evaluate> evaluates;
+    @ManyToMany
+    private Collection<AbstractEvaluate> evaluates = new HashSet<>();
 
     @Override
     public BigDecimal eval() {
