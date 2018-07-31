@@ -19,7 +19,7 @@ public class EvalSet implements Evaluate {
     private Long uid;
     @NotEmpty
     private String name;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Collection<AbstractEvaluate> evaluates = new HashSet<>();
 
     @Override
