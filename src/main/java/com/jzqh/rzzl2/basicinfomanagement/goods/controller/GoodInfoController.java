@@ -19,7 +19,7 @@ import java.util.List;
  * @Date:2018/7/11
  */
 @Controller
-@RequestMapping("Good")
+@RequestMapping("GoodInfo")
 public class GoodInfoController {
     @Autowired
     private ProductionRepository productionRepository;

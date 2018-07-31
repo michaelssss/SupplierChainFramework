@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Api()
-@RequestMapping("/Stock")
+@RequestMapping("Stock")
 public class StockController {
     @Autowired
     OrderQuery orderQuery;

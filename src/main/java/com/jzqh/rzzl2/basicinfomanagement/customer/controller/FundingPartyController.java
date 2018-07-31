@@ -17,7 +17,7 @@ import java.util.List;
  * @Date:2018/7/12
  */
 @Controller
-@RequestMapping("Funding")
+@RequestMapping("FundingParty")
 public class FundingPartyController {
     @Autowired
     private FundingRepository fundingRepository;

@@ -18,7 +18,7 @@ import java.util.List;
  * @Date:2018/7/11
  */
 @Controller
-@RequestMapping(value = "Property")
+@RequestMapping("GoodsProperty")
 public class GoodsPropertyController {
     @Autowired
     private GoodsPropertyRepository goodsPropertyRepository;

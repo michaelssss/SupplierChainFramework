@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "Purchaser")
+@RequestMapping("Purchaser")
 public class PurchaserController {
     @Autowired
     PurchaserRepository purchaserRepository;

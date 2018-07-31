@@ -23,14 +23,14 @@ import java.util.List;
  */
 @Api(value = "公司controller")
 @Controller
-@RequestMapping(path = "Company")
+@RequestMapping("Company")
 public class CompanyController {
     @Autowired
     private CompanyRepository repository;
 
     @ApiOperation(value = "添加地址", tags = "添加地址接口")
     @ResponseBody
-    @RequestMapping(value = "Address/add")
+    @RequestMapping(value = "addAddress")
     public Response addAddress(@ApiParam(name = "id", value = "地址id", required = true) @RequestParam(value = "id") Long id, @RequestBody Address address) {
         CompanyImpl company = repository.findOne(id);
         company.addAddress(address);
