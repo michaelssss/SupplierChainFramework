@@ -1,7 +1,7 @@
-package com.jzqh.rzzl2.stock;
+package com.jzqh.rzzl2.stockmanagement;
 
 import com.jzqh.SpringBootTestBasic;
-import com.jzqh.rzzl2.stock.repository.StockRepository;
+import com.jzqh.rzzl2.stockmanagement.repository.StockRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

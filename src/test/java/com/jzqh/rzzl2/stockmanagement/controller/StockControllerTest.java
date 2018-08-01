@@ -1,4 +1,4 @@
-package com.jzqh.rzzl2.stock.controller;
+package com.jzqh.rzzl2.stockmanagement.controller;
 
 
 import com.jzqh.SpringBootTestBasic;

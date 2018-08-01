@@ -1,4 +1,4 @@
-package com.jzqh.rzzl2.stock;
+package com.jzqh.rzzl2.stockmanagement;
 
 import com.jzqh.utils.PhoneNumber;
 import lombok.Builder;

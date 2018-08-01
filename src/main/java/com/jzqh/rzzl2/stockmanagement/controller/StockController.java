@@ -1,12 +1,12 @@
-package com.jzqh.rzzl2.stock.controller;
+package com.jzqh.rzzl2.stockmanagement.controller;
 
 import com.jzqh.base.Response;
 import com.jzqh.rzzl2.ordermanagement.EntrustedOrder;
 import com.jzqh.rzzl2.ordermanagement.OrderQuery;
-import com.jzqh.rzzl2.stock.DeliveryOrder;
-import com.jzqh.rzzl2.stock.ReceivedOrder;
-import com.jzqh.rzzl2.stock.StockImpl;
-import com.jzqh.rzzl2.stock.repository.StockRepository;
+import com.jzqh.rzzl2.stockmanagement.DeliveryOrder;
+import com.jzqh.rzzl2.stockmanagement.ReceivedOrder;
+import com.jzqh.rzzl2.stockmanagement.StockImpl;
+import com.jzqh.rzzl2.stockmanagement.repository.StockRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
