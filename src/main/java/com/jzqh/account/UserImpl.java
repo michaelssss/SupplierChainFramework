@@ -37,11 +37,11 @@ public class UserImpl implements UserDetails, User, Serializable {
     private UserProfile userProfile;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<AuthoritiesSetImpl> authoritiesSets;
+    private Set<AuthoritiesSetImpl> authoritiesSets = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("o")
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
     @Override
     public String getUsername() {

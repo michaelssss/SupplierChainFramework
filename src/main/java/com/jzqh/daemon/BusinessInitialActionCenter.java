@@ -52,6 +52,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                         }
                     }
                 }
+                set.clear();
             }
         }
     }

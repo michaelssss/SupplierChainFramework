@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
 @Slf4j
@@ -47,7 +48,7 @@ public class UserTest extends SpringBootTestBasic {
 
     @Test
     public void testAuthorityOther() {
-        User mockUser = UserImpl.builder().username("9999").password("1").authorities(new TreeSet<>()).build();
+        User mockUser = UserImpl.builder().username("9999").password("1").authorities(new TreeSet<>()).authoritiesSets(new HashSet<>()).build();
         Authority authority = new Authority();
         authority.setUrl("/Pages/load");
         UserImpl user = UserImpl.builder().username("8888").build();
