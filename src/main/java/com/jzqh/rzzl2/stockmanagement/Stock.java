@@ -1,4 +1,4 @@
-package com.jzqh.rzzl2.stock;
+package com.jzqh.rzzl2.stockmanagement;
 
 /**
  * Stock代表着一个委托商在本系统内的一个项目中仓库的信息

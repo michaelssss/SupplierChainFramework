@@ -87,63 +87,161 @@ public interface Company {
      */
     void deleteInfo();
 
+    /**
+     * 公司名称
+     */
     String getPartnerName();
 
+    /**
+     * 合作伙伴性质
+     */
     String getPartnerNature();
 
+    /**
+     * 合作伙伴类型
+     */
     String getPartnerType();
 
+    /**
+     * 法定代表人
+     */
     String getLegalRepresentative();
 
+    /**
+     * 注册资本
+     */
     BigDecimal getRegisteredCapital();
 
+    /**
+     * 注册资本
+     */
     BigDecimal getContributedCapital();
 
+    /**
+     * 币种
+     */
     String getCurrency();
 
+    /**
+     * 经营状态
+     */
     String getRunningState();
 
+    /**
+     * 成立日期
+     */
     Date getRegisteredDate();
 
+    /**
+     * 注册号
+     */
     String getRegisteredNo();
 
+    /**
+     * 组织机构代码
+     */
     String getOrganizationNo();
 
+    /**
+     * 纳税人识别号
+     */
     String getTaxpayerNo();
 
+    /**
+     * 统一社会信用代码
+     */
     String getUniSocialNo();
 
+    /**
+     * 公司类型
+     */
     String getCompanyType();
 
+    /**
+     * 所属行业
+     */
     String getIndustry();
 
+    /**
+     * 核准日期
+     */
     Date getValidateDate();
 
+    /**
+     * 登记机关
+     */
     String getRegisteredAuthority();
 
+    /**
+     * 所属地区
+     */
     String getDistrict();
 
+    /**
+     * 英文名
+     */
     String getEngName();
 
+    /**
+     * 曾用名
+     */
     String getUsedName();
 
+    /**
+     * 经营方式
+     */
     String getRunningWay();
 
+    /**
+     * 员工规模
+     */
     String getStaffSize();
 
+    /**
+     * 营业期限
+     */
     String getPeriod();
 
+    /**
+     * 注册地址
+     */
     String getRegisteredAddress();
 
+    /**
+     * 经营范围
+     */
     String getScope();
 
+    /**
+     * 合作伙伴来源
+     */
     String getSource();
 
+    /**
+     * 公司地址列表
+     *
+     * @return
+     */
     Set<Address> getAddressSet();
 
+    /**
+     * 银行账户列表
+     *
+     * @return
+     */
     Set<BankAccount> getBankAccounts();
 
+    /**
+     * 股东信息
+     *
+     * @return
+     */
     Set<ShareholderInfo> getShareholderInfoSet();
 
+    /**
+     * 联系人列表
+     *
+     * @return
+     */
     Set<Contact> getContactSet();
 }

@@ -1,4 +1,4 @@
-package com.jzqh.rzzl2.stock;
+package com.jzqh.rzzl2.stockmanagement;
 
 
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Entity
-@Table(name = "stock",
+@Table(name = "stockmanagement",
         indexes = @Index(name = "idx_code", columnList = "code", unique = true),
         uniqueConstraints = {@UniqueConstraint(columnNames = "entrustedOrderCode")})
 @Data
