@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.ArrayList;
 import java.util.List;
 
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl service;
@@ -33,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**",
-                "/login.html");
+                "/login.html",
+                "/index.html");
     }
 
     @Override
@@ -47,11 +48,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         voters.add(new URLVoter());
         http
                 .cors().and()
-                .antMatcher("/login**").authorizeRequests().accessDecisionManager(new AffirmativeBased(voters))
-                .antMatchers("/login**").permitAll()
+                .authorizeRequests()
+                .accessDecisionManager(new AffirmativeBased(voters))
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
-                //这里必须要写formLogin()，不然原有的UsernamePasswordAuthenticationFilter不会出现，也就无法配置我们重新的UsernamePasswordAuthenticationFilter
-                .and().formLogin().and().csrf().disable();
+                .and()
+                .formLogin()
+                //必须要指定登陆页面，否则会做request.sendRedirect()至host/login并且导致提示登陆不能用Get的异常
+                .loginPage("/login.html")
+                .and()
+                .csrf()
+                .disable();
 
         //用重写的Filter替换掉原有的UsernamePasswordAuthenticationFilter
         http.addFilterAt(customAuthenticationFilter(),
@@ -76,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             configurationCenter.addKeyValue("auth_fail_url", "http://127.0.0.1/login.html");
         }
         if (null == configurationCenter.getValue("auth_success_url")) {
-            configurationCenter.addKeyValue("auth_success_url", "http://127.0.0.1/HelloWorld");
+            configurationCenter.addKeyValue("auth_success_url", "http://127.0.0.1/index.html");
         }
     }
 }

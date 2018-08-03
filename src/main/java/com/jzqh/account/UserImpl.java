@@ -12,14 +12,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Slf4j
-@Table(name = "sys_user")
+@Table(name = "sys_user", indexes = {@Index(name = "idx_username", columnList = "username", unique = true)})
 public class UserImpl implements UserDetails, User, Serializable {
     private static final long serialVersionUID = -2426342993719284587L;
 
@@ -39,7 +41,7 @@ public class UserImpl implements UserDetails, User, Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("o")
-    private List<Authority> authorities;
+    private Set<Authority> authorities;
 
     @Override
     public String getUsername() {
@@ -60,7 +62,7 @@ public class UserImpl implements UserDetails, User, Serializable {
         if (StringUtils.isEmpty(url)) return false;
         String[] splitStr = url.split("/");
         String lastWord = splitStr[splitStr.length - 1];
-        return lastWord.charAt(0) == lastWord.toLowerCase().charAt(0);
+        return lastWord.charAt(0) != lastWord.toLowerCase().charAt(0);
     }
 
     private static boolean isAction(String url) {
@@ -85,8 +87,8 @@ public class UserImpl implements UserDetails, User, Serializable {
     }
 
     @Override
-    public SortedSet<Authority> getMenus() {
-        TreeSet<Authority> authorities = new TreeSet<>();
+    public Set<Authority> getMenus() {
+        HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
             if (isMenu(a.getUrl())) {
                 authorities.add(a);
@@ -96,8 +98,8 @@ public class UserImpl implements UserDetails, User, Serializable {
     }
 
     @Override
-    public SortedSet<Authority> getActions() {
-        TreeSet<Authority> authorities = new TreeSet<>();
+    public Set<Authority> getActions() {
+        HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
             if (isAction(a.getUrl())) {
                 authorities.add(a);
@@ -113,7 +115,14 @@ public class UserImpl implements UserDetails, User, Serializable {
 
     @Override
     public boolean hasAuthority(String menuUrl) {
+        Set<Authority> set = new HashSet<>();
+        for (AuthoritiesSet authoritiesSet : this.authoritiesSets) {
+            set.addAll(authoritiesSet.getAllAuthority());
+        }
         for (Authority authority : this.authorities) {
+            set.add(authority);
+        }
+        for (Authority authority : set) {
             if (authority.getUrl().equals(menuUrl)) {
                 return true;
             }

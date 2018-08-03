@@ -1,5 +1,7 @@
 package com.jzqh.account;
 
+import java.util.Set;
+
 /**
  * 本集合代表了一个权限组织，
  * 例如，xxx部门，xxxx小组之类的，
@@ -26,4 +28,6 @@ public interface AuthoritiesSet {
      * @param authority
      */
     void unAuthority(Authority authority);
+
+    Set<Authority> getAllAuthority();
 }

@@ -85,4 +85,9 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
                 ", authorities=" + authorities +
                 '}';
     }
+
+    @Override
+    public Set<Authority> getAllAuthority() {
+        return Collections.unmodifiableSet(this.authorities);
+    }
 }
