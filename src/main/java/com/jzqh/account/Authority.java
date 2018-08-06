@@ -24,8 +24,9 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private int o;
-
+    private String name;
     private String url;
 
     @Override
@@ -52,11 +53,11 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
         if (this == o) return true;
         if (!(o instanceof Authority)) return false;
         Authority authority = (Authority) o;
-        return Objects.equals(getUrl(), authority.getUrl());
+        return Objects.equals(url, authority.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUrl());
+        return Objects.hash(url);
     }
 }

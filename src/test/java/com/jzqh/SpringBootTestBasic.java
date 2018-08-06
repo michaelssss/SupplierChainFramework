@@ -23,6 +23,7 @@ public abstract class SpringBootTestBasic {
             } else {
                 try {
                     TimeUnit.SECONDS.sleep(1);
+                    log.info("BusinessInitialActionCenter.status=" + BusinessInitialActionCenter.getStatus());
                 } catch (InterruptedException e) {
                     log.info("init", e);
                 }

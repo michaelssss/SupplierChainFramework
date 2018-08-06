@@ -6,8 +6,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * 如何使用，首先要实现Action接口，因为Java不支持指针函数
@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Slf4j
 @Service
 public class BusinessInitialActionCenter implements ApplicationListener<ApplicationEvent> {
-    private final static BlockingQueue<Action> queue = new LinkedBlockingQueue<>(32);
+    private final static SortedSet<Action> set = new TreeSet<>();
     private static boolean initFlag = false;
 
     /**
@@ -27,15 +27,13 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
      * @param action 无返回值任务
      */
     public static void registeredAction(Action action) {
-        try {
-            queue.put(action);
-        } catch (InterruptedException e) {
-            log.warn("BusinessInitialActionCenter.registeredAction has been interrupt, data may lose");
+        synchronized (BusinessInitialActionCenter.class) {
+            set.add(action);
         }
     }
 
     public static String getStatus() {
-        return queue.size() == 0 && initFlag ? "Idle" : "Busy";
+        return set.size() == 0 && initFlag ? "Idle" : "Busy";
     }
 
     @Override
@@ -44,16 +42,17 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
             if (!initFlag) {
                 log.info("======================System daemon started=============================");
                 initFlag = true;
-                while (true) {
-                    try {
-                        if (queue.size() == 0) break;
-                        Action action = queue.take();
-                        action.act();
-                        log.info("clazz" + action.getClass().getSimpleName() + " has been init and act ");
-                    } catch (InterruptedException e) {
-                        log.warn("Business Thread had been interrupt ,because of ", e);
+                for (Action action : set) {
+                    synchronized (BusinessInitialActionCenter.class) {
+                        try {
+                            action.act();
+                            log.info("clazz" + action.getClass().getSimpleName() + " has been init and act ");
+                        } catch (Exception e) {
+                            log.error("start task failed", e);
+                        }
                     }
                 }
+                set.clear();
             }
         }
     }

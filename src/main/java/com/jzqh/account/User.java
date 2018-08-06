@@ -1,6 +1,6 @@
 package com.jzqh.account;
 
-import java.util.SortedSet;
+import java.util.Set;
 
 public interface User {
     void authority(User other, Authority authority);
@@ -25,14 +25,14 @@ public interface User {
      *
      * @return
      */
-    SortedSet<Authority> getMenus();
+    Set<Authority> getMenus();
 
     /**
      * 获取当前用户的权限
      *
      * @return
      */
-    SortedSet<Authority> getActions();
+    Set<Authority> getActions();
 
 
     /**
