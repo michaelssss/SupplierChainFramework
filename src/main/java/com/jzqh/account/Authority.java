@@ -22,6 +22,7 @@ import java.util.Objects;
 public class Authority implements GrantedAuthority, Comparable<Authority> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private Long uid;
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore

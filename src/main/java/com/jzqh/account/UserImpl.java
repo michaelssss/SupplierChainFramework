@@ -138,6 +138,11 @@ public class UserImpl implements UserDetails, User, Serializable {
     }
 
     @Override
+    public UserProfile getProfile() {
+        return this.userProfile;
+    }
+
+    @Override
     public String getPassword() {
         return this.password;
     }

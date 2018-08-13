@@ -5,6 +5,8 @@ import java.util.Set;
 public interface User {
     void authority(User other, Authority authority);
 
+    UserProfile getProfile();
+
     void authority(Authority authority);
 
     /**

@@ -13,7 +13,18 @@ public class UserController {
     @RequestMapping("Menu/get")
     @ResponseBody
     public Response getMenu() {
+        return Response.OK(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getMenus());
+    }
+
+    @RequestMapping("Action/get")
+    @ResponseBody
+    public Response getActions() {
         return Response.OK(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getActions());
     }
 
+    @RequestMapping("Profile/get")
+    @ResponseBody
+    public Response getProfile() {
+        return Response.OK(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getProfile());
+    }
 }

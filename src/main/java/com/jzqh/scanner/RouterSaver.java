@@ -34,11 +34,10 @@ class RouterSaver extends Action {
 
     @Override
     public void act() {
-        RouteScanner routeScanner = new RouteScanner("com.jzqh.rzzl2");
+        RouteScanner routeScanner = new RouteScanner("com.jzqh");
         AuthorityCatalog catalog = SpringContextHolder.getBean(AuthorityCatalog.class);
         Set<Authority> authorities = new HashSet<>();
         Set<String> strings = routeScanner.getAllUrl();
-        strings.add("/User/Menu/get");
         for (String url : strings) {
             Authority authority = new Authority();
             authority.setUrl(url);
