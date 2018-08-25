@@ -1,12 +1,21 @@
 package com.jzqh.utils;
 
+import com.jzqh.configuration.ConfigurationCenter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 
 @Slf4j
+@Component
 public class Sha256 {
     private String salt = ""; // 盐
+
+    @Autowired
+    public Sha256(ConfigurationCenter configurationCenter) {
+        this.salt = configurationCenter.getValueOrDefault("salt", "");
+    }
 
     /**
      * SHA256加密

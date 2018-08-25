@@ -30,6 +30,14 @@ public class ConfigurationCenter {
         return getValue("", key);
     }
 
+    public String getValueOrDefault(String key, String defaultValue) {
+        return getValue(key) == null ? defaultValue : getValue(key);
+    }
+
+    public String getValueOrDefault(String subsystem, String key, String defaultValue) {
+        return getValue(subsystem, key) == null ? defaultValue : getValue(subsystem, key);
+    }
+
     /**
      * 若key存在则返回，否则返回null
      *
