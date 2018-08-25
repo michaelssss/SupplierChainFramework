@@ -40,7 +40,7 @@ class RouterSaver extends Action {
         Set<String> strings = routeScanner.getAllUrl();
         for (String url : strings) {
             Authority authority = new Authority();
-            authority.setUrl(url);
+            authority.setPath(url);
             authority.setName(url);
             if (!catalog.exists(Example.of(authority))) {
                 authorities.add(authority);

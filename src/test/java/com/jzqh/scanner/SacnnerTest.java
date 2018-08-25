@@ -27,7 +27,7 @@ public class SacnnerTest extends SpringBootTestBasic {
         for (String url : urlSet) {
             log.info(url);
             Authority authority = new Authority();
-            authority.setUrl(url);
+            authority.setPath(url);
             authorityCatalog.saveAndFlush(authority);
         }
 

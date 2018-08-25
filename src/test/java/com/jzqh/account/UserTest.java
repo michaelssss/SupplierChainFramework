@@ -23,9 +23,9 @@ public class UserTest extends SpringBootTestBasic {
     @Before
     public void before() {
         page = new Authority();
-        page.setUrl("/Pages");
+        page.setPath("/Pages");
         pageload = new Authority();
-        pageload.setUrl("/Pages/load");
+        pageload.setPath("/Pages/load");
         page = authorityCatalog.saveAndFlush(page);
         pageload = authorityCatalog.saveAndFlush(pageload);
     }
@@ -39,7 +39,7 @@ public class UserTest extends SpringBootTestBasic {
     @Test
     public void testAuthority() {
         Authority authority = new Authority();
-        authority.setUrl("/Pages/load");
+        authority.setPath("/Pages/load");
         UserImpl user = UserImpl.builder().username("8888").build();
         user = catalog.findOne(Example.of(user));
         user.authority(authority);
@@ -50,7 +50,7 @@ public class UserTest extends SpringBootTestBasic {
     public void testAuthorityOther() {
         User mockUser = UserImpl.builder().username("9999").password("1").authorities(new TreeSet<>()).authoritiesSets(new HashSet<>()).build();
         Authority authority = new Authority();
-        authority.setUrl("/Pages/load");
+        authority.setPath("/Pages/load");
         UserImpl user = UserImpl.builder().username("8888").build();
         user = catalog.findOne(Example.of(user));
         user.authority(authority);

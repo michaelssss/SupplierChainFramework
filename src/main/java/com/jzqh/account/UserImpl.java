@@ -40,7 +40,7 @@ public class UserImpl implements UserDetails, User, Serializable {
     private Set<AuthoritiesSetImpl> authoritiesSets = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy("o")
+    @OrderBy("`order`")
     private Set<Authority> authorities = new HashSet<>();
 
     @Override
@@ -90,7 +90,7 @@ public class UserImpl implements UserDetails, User, Serializable {
     public Set<Authority> getMenus() {
         HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
-            if (isMenu(a.getUrl())) {
+            if (isMenu(a.getPath())) {
                 authorities.add(a);
             }
         }
@@ -101,7 +101,7 @@ public class UserImpl implements UserDetails, User, Serializable {
     public Set<Authority> getActions() {
         HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
-            if (isAction(a.getUrl())) {
+            if (isAction(a.getPath())) {
                 authorities.add(a);
             }
         }
@@ -110,7 +110,7 @@ public class UserImpl implements UserDetails, User, Serializable {
 
     @Override
     public boolean hasAuthority(Authority authority) {
-        return this.hasAuthority(authority.getUrl());
+        return this.hasAuthority(authority.getPath());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class UserImpl implements UserDetails, User, Serializable {
             set.add(authority);
         }
         for (Authority authority : set) {
-            if (authority.getUrl().equals(menuUrl)) {
+            if (authority.getPath().equals(menuUrl)) {
                 return true;
             }
         }

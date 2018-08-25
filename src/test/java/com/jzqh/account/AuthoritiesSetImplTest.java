@@ -17,7 +17,7 @@ public class AuthoritiesSetImplTest extends SpringBootTestBasic {
     private static Authority getAuthority() {
         Random random = new Random();
         Authority authority = new Authority();
-        authority.setUrl("/home/test" + random.nextInt());
+        authority.setPath("/home/test" + random.nextInt());
         return authority;
     }
 

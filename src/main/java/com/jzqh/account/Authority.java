@@ -18,7 +18,6 @@ import java.util.Objects;
 @Table(name = "sys_auth")
 @Data
 @ToString
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Authority implements GrantedAuthority, Comparable<Authority> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +25,21 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
     private Long uid;
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
-    private int o;
+    @Column(name = "`order`")
+    private int order;
     private String name;
-    private String url;
+    private String path;
+    private String redirect;
+    private String component;
+    private String icon;
+    private String title;
 
     @Override
     @JsonIgnore
     public String getAuthority() {
-        return this.url;
+        return this.path;
     }
 
-    public int getOrder() {
-        return this.o;
-    }
-
-    public void setOrder(int o) {
-        this.o = o;
-    }
 
     @Override
     public int compareTo(Authority o) {
@@ -54,11 +51,11 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
         if (this == o) return true;
         if (!(o instanceof Authority)) return false;
         Authority authority = (Authority) o;
-        return Objects.equals(url, authority.url);
+        return Objects.equals(path, authority.path);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(url);
+        return Objects.hash(path);
     }
 }
