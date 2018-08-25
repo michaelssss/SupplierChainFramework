@@ -1,6 +1,7 @@
 package com.jzqh;
 
 import com.jzqh.account.*;
+import com.jzqh.configuration.ConfigurationCenter;
 import com.jzqh.daemon.Action;
 import com.jzqh.daemon.BusinessInitialActionCenter;
 import com.jzqh.utils.Sha256;
@@ -22,7 +23,7 @@ import java.util.TreeSet;
 @Slf4j
 public class RootUser {
     public static UserImpl RootUser() {
-        Sha256 sha256 = new Sha256();
+        Sha256 sha256 = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
         UserProfile testUserProfile = new UserProfile();
         testUserProfile.setAge(23);
         testUserProfile.setName("testName");
