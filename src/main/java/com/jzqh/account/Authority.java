@@ -3,7 +3,6 @@ package com.jzqh.account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -18,7 +17,7 @@ import java.util.Objects;
 @Table(name = "sys_auth")
 @Data
 @ToString
-public class Authority implements GrantedAuthority, Comparable<Authority> {
+public class Authority implements Comparable<Authority> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
@@ -33,13 +32,6 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
     private String component;
     private String icon;
     private String title;
-
-    @Override
-    @JsonIgnore
-    public String getAuthority() {
-        return this.path;
-    }
-
 
     @Override
     public int compareTo(Authority o) {

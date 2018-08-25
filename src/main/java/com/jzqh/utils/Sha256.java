@@ -1,41 +1,41 @@
 package com.jzqh.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import lombok.extern.slf4j.Slf4j;
 
+import java.security.MessageDigest;
+
+@Slf4j
 public class Sha256 {
-    private String salt = PropertiesUtil.getValue("salt"); // 盐
+    private String salt = ""; // 盐
 
     /**
      * SHA256加密
+     *
      * @param pwd
      * @return
      */
-    public String getPwd(String pwd){
+    public String getPwd(String pwd) {
         MessageDigest messageDigest;
         String encodeStr = "";
         String saltAndPwd = mergePasswordAndSalt(pwd);
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(saltAndPwd.getBytes("UTF-8"));
-            encodeStr = byte2Hex(messageDigest.digest());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            encodeStr = byte2Hex(messageDigest.digest(saltAndPwd.getBytes("UTF-8")));
+        } catch (Exception e) {
+            log.debug("encode failed", e);
         }
         return encodeStr;
     }
 
     /**
      * 判断所输入密码与用户密码是否匹配
-     * @param pwd 用户密码
+     *
+     * @param pwd    用户密码
      * @param pwd_in 输入密码
      * @return
      */
-    public boolean isPwd(String pwd, String pwd_in){
-        if(getPwd(pwd_in).equals(pwd)){
+    public boolean isPwd(String pwd, String pwd_in) {
+        if (getPwd(pwd_in).equals(pwd)) {
             return true;
         }
         return false;
@@ -43,6 +43,7 @@ public class Sha256 {
 
     /**
      * 字符串合并
+     *
      * @param pwd
      * @return
      */
@@ -60,15 +61,16 @@ public class Sha256 {
 
     /**
      * 将byte转为16进制
+     *
      * @param bytes
      * @return
      */
-    private String byte2Hex(byte[] bytes){
+    private String byte2Hex(byte[] bytes) {
         StringBuffer stringBuffer = new StringBuffer();
         String temp = null;
-        for (int i=0;i<bytes.length;i++){
+        for (int i = 0; i < bytes.length; i++) {
             temp = Integer.toHexString(bytes[i] & 0xFF);
-            if (temp.length()==1){
+            if (temp.length() == 1) {
                 //1得到一位的进行补0操作
                 stringBuffer.append("0");
             }

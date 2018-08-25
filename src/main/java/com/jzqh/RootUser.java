@@ -3,10 +3,9 @@ package com.jzqh;
 import com.jzqh.account.*;
 import com.jzqh.daemon.Action;
 import com.jzqh.daemon.BusinessInitialActionCenter;
+import com.jzqh.utils.Sha256;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +22,7 @@ import java.util.TreeSet;
 @Slf4j
 public class RootUser {
     public static UserImpl RootUser() {
-        PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
+        Sha256 sha256 = new Sha256();
         UserProfile testUserProfile = new UserProfile();
         testUserProfile.setAge(23);
         testUserProfile.setName("testName");
@@ -32,7 +31,7 @@ public class RootUser {
         testUserProfile.setPhone("18124601060");
         UserImpl user = UserImpl.builder().
                 username("8888").
-                password(encoder.encode("1")).
+                password(sha256.getPwd("1")).
                 authorities(new TreeSet<>()).
                 userProfile(testUserProfile).
                 build();
