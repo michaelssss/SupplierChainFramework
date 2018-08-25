@@ -1,6 +1,7 @@
 package com.jzqh.account;
 
 import com.jzqh.SpringContextHolder;
+import com.jzqh.configuration.ConfigurationCenter;
 import com.jzqh.utils.Sha256;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +48,7 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public boolean validatePassword(String password) {
-        Sha256 encoder = new Sha256();
+        Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
         return encoder.isPwd(this.password, password);
     }
 

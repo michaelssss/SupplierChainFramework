@@ -20,7 +20,7 @@ public class Token {
     @JsonIgnore
     private UserImpl user;
 
-    public boolean isOutdate() {
+    public boolean ifOutdate() {
         return new Date().compareTo(this.outdate) <= 0;
     }
 }

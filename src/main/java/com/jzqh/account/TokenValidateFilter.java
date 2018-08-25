@@ -27,9 +27,10 @@ public class TokenValidateFilter implements Filter {
         HttpServletResponse response1 = (HttpServletResponse) response;
         String token = request1.getHeader("token");
         if (!request1.getRequestURI().equals("/User/login")) {
-            if (isHeaderHasToken(token) && isTokenExist(token) && isTokenOutDate(token)) {
+            if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
+                response1.getWriter().write(JSON.toJSONString(Response.NonOK("token validate failed")));
                 response1.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response1.getWriter().write(JSON.toJSONString(Response.NonOK("Not login")));
+                return;
             } else {
                 Token token1 = getToken(token);
                 ((HttpServletRequest) request).getSession(true).setAttribute("user", token1.getUser());
@@ -38,11 +39,11 @@ public class TokenValidateFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    private boolean isTokenOutDate(String token) {
-        return getToken(token).isOutdate();
+    private boolean tokenNotOutdate(String token) {
+        return getToken(token).ifOutdate();
     }
 
-    private boolean isHeaderHasToken(String token) {
+    private boolean headerHasNoToken(String token) {
         return StringUtils.isEmpty(token);
     }
 
@@ -53,7 +54,7 @@ public class TokenValidateFilter implements Filter {
         return catalog.findOne(Example.of(example));
     }
 
-    private boolean isTokenExist(String token) {
+    private boolean tokenExist(String token) {
         TokenCatalog catalog = SpringContextHolder.getBean(TokenCatalog.class);
         Token example = new Token();
         example.setToken(token);

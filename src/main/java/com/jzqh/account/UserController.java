@@ -37,7 +37,7 @@ public class UserController {
             if (user.validatePassword((String) requestMap.get("password"))) {
                 Token token = new Token();
                 token.setToken(UUID.randomUUID().toString());
-                token.setOutdate(new Date(Long.valueOf(requestMap.get("outdate").toString())));
+                token.setOutdate(new Date(Long.valueOf(requestMap.get("outdate").toString()) * 1000));
                 token.setUser(user);
                 tokenCatalog.save(token);
                 response.setStatus(HttpServletResponse.SC_OK);
