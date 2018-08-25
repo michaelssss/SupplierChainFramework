@@ -19,4 +19,8 @@ public class Token {
     @OneToOne
     @JsonIgnore
     private UserImpl user;
+
+    public boolean isOutdate() {
+        return new Date().compareTo(this.outdate) <= 0;
+    }
 }

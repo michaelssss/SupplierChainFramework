@@ -27,7 +27,7 @@ public class TokenValidateFilter implements Filter {
         HttpServletResponse response1 = (HttpServletResponse) response;
         String token = request1.getHeader("token");
         if (!request1.getRequestURI().equals("/User/login")) {
-            if (isHeaderHasToken(token) && isTokenExist(token)) {
+            if (isHeaderHasToken(token) && isTokenExist(token) && isTokenOutDate(token)) {
                 response1.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response1.getWriter().write(JSON.toJSONString(Response.NonOK("Not login")));
             } else {
@@ -36,6 +36,10 @@ public class TokenValidateFilter implements Filter {
             }
         }
         chain.doFilter(request, response);
+    }
+
+    private boolean isTokenOutDate(String token) {
+        return getToken(token).isOutdate();
     }
 
     private boolean isHeaderHasToken(String token) {
