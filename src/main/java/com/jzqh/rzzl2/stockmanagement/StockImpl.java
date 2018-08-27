@@ -23,6 +23,7 @@ public class StockImpl implements Stock {
     @Column(length = 64)
     private String code;//业务主键，也可以称为仓库编号
     //委托单编号，唯一
+    @Column(length = 64)
     private String entrustedOrderCode;
     //发货单
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

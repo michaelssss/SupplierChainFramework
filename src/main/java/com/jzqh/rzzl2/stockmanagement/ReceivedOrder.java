@@ -14,7 +14,9 @@ public class ReceivedOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
+    @Column(length = 64)
     private String purchaseOrderCode;
+    @Column(length = 64)
     private String supplierName;
     private String deliverName;
     private String deliverDate;
