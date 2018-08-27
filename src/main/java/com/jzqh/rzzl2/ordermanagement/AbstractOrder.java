@@ -28,7 +28,7 @@ public abstract class AbstractOrder implements Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long uid;
-
+    @Column(length = 64)
     protected String code;
 
     protected Date orderDate;

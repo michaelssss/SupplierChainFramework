@@ -20,6 +20,7 @@ public class StockImpl implements Stock {
     private Long uid;
     //业务主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 64)
     private String code;//业务主键，也可以称为仓库编号
     //委托单编号，唯一
     private String entrustedOrderCode;

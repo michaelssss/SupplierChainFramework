@@ -15,6 +15,7 @@ class RecordEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
     private String clazzName;
+    @Column(length = 64)
     private String prefix;
     private Long sequence;
 }

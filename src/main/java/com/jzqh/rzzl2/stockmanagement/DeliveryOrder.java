@@ -20,8 +20,10 @@ public class DeliveryOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;//业务无关主键ID
     @NotEmpty
+    @Column(length = 64)
     private String saleOrderCode;//销售订单编号
     @NotEmpty
+    @Column(length = 64)
     private String clientName;//客户名称
     @NotEmpty
     private String carNo;//委托车辆车牌号

@@ -14,6 +14,7 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long uid;
+    @Column(length = 64)
     private String token;
     private Date outdate;
     @OneToOne
