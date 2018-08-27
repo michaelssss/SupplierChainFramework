@@ -1,1 +1,1 @@
-mvnw.cmd clean compile package spring-boot::run
+mvnw.cmd clean compile package spring-boot::start
