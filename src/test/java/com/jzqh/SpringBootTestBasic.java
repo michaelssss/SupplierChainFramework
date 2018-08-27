@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.TimeUnit;
 
-@SpringBootTest
 @Slf4j
-@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Rzzl2Application.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public abstract class SpringBootTestBasic {
     @Before
     public void beforeLoad() {
