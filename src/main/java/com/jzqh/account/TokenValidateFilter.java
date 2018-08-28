@@ -27,9 +27,11 @@ public class TokenValidateFilter implements Filter {
         HttpServletRequest request1 = (HttpServletRequest) request;
         HttpServletResponse response1 = (HttpServletResponse) response;
         String token = "";
-        for (Cookie cookie : request1.getCookies()) {
-            if (cookie.getName().equals("token")) {
-                token = cookie.getValue();
+        if (null != request1.getCookies()) {
+            for (Cookie cookie : request1.getCookies()) {
+                if (cookie.getName().equals("token")) {
+                    token = cookie.getValue();
+                }
             }
         }
         if (!request1.getRequestURI().equals("/User/login")) {
