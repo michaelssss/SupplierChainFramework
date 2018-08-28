@@ -2,3 +2,4 @@
 git pull;
 ./mvnw spring-boot::stop;
 ./mvnw clean compile package spring-boot::start;
+tail ./bo.log;
