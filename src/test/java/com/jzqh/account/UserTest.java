@@ -127,7 +127,22 @@ public class UserTest extends SpringBootTestBasic {
         urlList.add("/Company/Address/queryAll");
         urlList.add("/Company/query/id");
         urlList.add("/Company/ShareHolder/update");
-        MenuUtil.urlToMenu(urlList);
+        
+        urlList.add("/user/ShareHolder/update");
+        urlList.add("/Company/user/update");
+        urlList.add("/Company/ShareHolder/user");
+        urlList.add("/Company/User/update");
+        urlList.add("/USEr/ShareHolder/update");
+    
+        for (int i = 0; i < urlList.size(); i++) {
+            if (urlList.get(i).toLowerCase().contains("user")) {//去除所有路径带有user的url
+                urlList.remove(i);
+            }
+        }
+        for(String url :urlList){
+            System.out.println(url);
+        }
+        MenuUtil.urlToMenu(urlList,null);
     }
 
 }
