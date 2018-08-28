@@ -6,7 +6,7 @@
 
 * token的正确性由服务端保证
 
-* token校验失败则接口调用返回http.status=500，并在body返回错误内容
+* token校验失败则接口调用返回http.status=403，并在body返回错误内容
 
 * 所有请求都采用post
 
