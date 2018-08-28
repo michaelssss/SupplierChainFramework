@@ -31,11 +31,9 @@ public class CreditTest extends SpringBootTestBasic {
                 .startDate(new Date()).lastModificationDate(new Date()).remark("flag").build();
 
         creditRepository.saveAndFlush(credit);
-
         //查询数据
-        Credit credit1 = creditService.getCompanyCredit("测试");
-
-        creditRepository.delete(credit);
+        CreditImpl credit1 = (CreditImpl) creditService.getCompanyCredit("测试");
+        creditRepository.delete(credit1);
 
     }
 }

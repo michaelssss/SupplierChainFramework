@@ -10,12 +10,13 @@ import java.util.List;
 
 @Builder
 @Entity
-@Table(name = "credit")
+@Table(name = "credit", indexes = {@Index(name = "idx_companyName", columnList = "companyFullName", unique = true)})
 @Data
 public class CreditImpl implements Credit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
+    @Column(length = 64, unique = true)
     private String companyFullName;
     private String auditReplyCode;
     private String type;
