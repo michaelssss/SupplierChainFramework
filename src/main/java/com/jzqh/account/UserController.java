@@ -41,7 +41,7 @@ public class UserController {
                 return;
             }
         }
-        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(JSON.toJSONString(Response.NonOK("password or username not validate")));
     }
 
