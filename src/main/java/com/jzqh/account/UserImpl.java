@@ -54,20 +54,6 @@ public class UserImpl implements User, Serializable {
         return encoder.isPwd(this.password, password);
     }
 
-    /**
-     * @param url 传入的URL都应该是/开头,尾部如果首字母是大写则是menu，否则是action
-     * @return
-     */
-    private static boolean isMenu(String url) {
-        if (StringUtils.isEmpty(url)) return false;
-        String[] splitStr = url.split("/");
-        String lastWord = splitStr[splitStr.length - 1];
-        return lastWord.charAt(0) != lastWord.toLowerCase().charAt(0);
-    }
-
-    private static boolean isAction(String url) {
-        return !isMenu(url);
-    }
 
     @Override
     public void authority(User other, Authority authority) {
@@ -85,7 +71,7 @@ public class UserImpl implements User, Serializable {
     public Set<Authority> getMenus() {
         HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
-            if (isMenu(a.getPath())) {
+            if (a.isMenu()) {
                 authorities.add(a);
             }
         }
@@ -96,7 +82,7 @@ public class UserImpl implements User, Serializable {
     public Set<Authority> getActions() {
         HashSet<Authority> authorities = new HashSet<>();
         for (Authority a : this.authorities) {
-            if (isAction(a.getPath())) {
+            if (a.isAction()) {
                 authorities.add(a);
             }
         }

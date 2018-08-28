@@ -3,6 +3,7 @@ package com.jzqh.account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -36,6 +37,22 @@ public class Authority implements Comparable<Authority> {
     @Override
     public int compareTo(Authority o) {
         return Integer.compare(this.getOrder(), o.getOrder());
+    }
+
+    /**
+     * @return
+     */
+    @JsonIgnore
+    public boolean isMenu() {
+        if (StringUtils.isEmpty(this.path)) return false;
+        String[] splitStr = path.split("/");
+        String lastWord = splitStr[splitStr.length - 1];
+        return lastWord.charAt(0) != lastWord.toLowerCase().charAt(0);
+    }
+
+    @JsonIgnore
+    public boolean isAction() {
+        return !isMenu();
     }
 
     @Override
