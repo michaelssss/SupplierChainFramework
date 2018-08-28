@@ -1,5 +1,6 @@
 package com.jzqh.account;
 
+import java.util.Date;
 import java.util.Set;
 
 public interface User {
@@ -57,4 +58,9 @@ public interface User {
      * 注册一个用户
      */
     void registered();
+
+    /**
+     * 登陆
+     */
+    Token login(String password, Date outdate);
 }

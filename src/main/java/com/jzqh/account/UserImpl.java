@@ -11,8 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Builder
 @NoArgsConstructor
@@ -128,6 +130,19 @@ public class UserImpl implements User, Serializable {
         if (StringUtils.isNotEmpty(this.username) && StringUtils.isNotEmpty(this.password)) {
             SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
         }
+    }
+
+    @Override
+    public Token login(String password, Date outdate) {
+        if (validatePassword(password)) {
+            Token token = new Token();
+            token.setToken(UUID.randomUUID().toString());
+            token.setOutdate(outdate);
+            token.setUser(this);
+            token = SpringContextHolder.getBean(TokenCatalog.class).save(token);
+            return token;
+        }
+        return null;
     }
 
     @Override

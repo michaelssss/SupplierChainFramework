@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "User")
@@ -34,19 +33,16 @@ public class UserController {
         UserImpl example = UserImpl.builder().username(username).build();
         UserImpl user = userCatalog.findOne(Example.of(example));
         if (null != user) {
-            if (user.validatePassword((String) requestMap.get("password"))) {
-                Token token = new Token();
-                token.setToken(UUID.randomUUID().toString());
-                token.setOutdate(new Date(Long.valueOf(requestMap.get("outdate").toString()) * 1000));
-                token.setUser(user);
-                tokenCatalog.save(token);
+            Token token = null;
+            token = user.login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString())));
+            if (null != token) {
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().write(JSON.toJSONString(token));
                 return;
             }
         }
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        response.getWriter().write("user not found");
+        response.getWriter().write(JSON.toJSONString(Response.NonOK("password or username not validate")));
     }
 
     @RequestMapping("Menu/get")
