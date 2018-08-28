@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,12 +17,10 @@ import java.util.*;
 @RequestMapping(value = "User")
 public class UserController {
     private UserCatalog userCatalog;
-    private TokenCatalog tokenCatalog;
 
     @Autowired
-    public UserController(UserCatalog userCatalog, TokenCatalog tokenCatalog) {
+    public UserController(UserCatalog userCatalog) {
         this.userCatalog = userCatalog;
-        this.tokenCatalog = tokenCatalog;
     }
 
     /**
@@ -216,7 +213,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "login")
-    public Response login(@RequestBody Map<String, Object> requestMap, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public Response login(@RequestBody Map<String, Object> requestMap) throws IOException {
         String username = (String) requestMap.get("username");
         UserImpl example = UserImpl.builder().username(username).build();
         UserImpl user = userCatalog.findOne(Example.of(example));
