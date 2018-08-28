@@ -1,7 +1,6 @@
 package com.jzqh.account;
 
 import com.jzqh.SpringBootTestBasic;
-import com.jzqh.scanner.RouteScanner;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +8,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.TreeSet;
 
 @Slf4j
 public class UserTest extends SpringBootTestBasic {
@@ -19,10 +21,10 @@ public class UserTest extends SpringBootTestBasic {
     private UserCatalog catalog;
     @Autowired
     private AuthorityCatalog authorityCatalog;
-    
+
     @Autowired
     private UserController userController;
-    
+
     @Before
     public void before() {
         page = new Authority();
@@ -32,13 +34,13 @@ public class UserTest extends SpringBootTestBasic {
         page = authorityCatalog.saveAndFlush(page);
         pageload = authorityCatalog.saveAndFlush(pageload);
     }
-    
+
     @Test
     public void testStartAddRootUser() {
         UserImpl sample = UserImpl.builder().username("8888").build();
         Assert.assertNotNull(catalog.findOne(Example.of(sample)));
     }
-    
+
     @Test
     public void testAuthority() {
         Authority authority = new Authority();
@@ -48,7 +50,7 @@ public class UserTest extends SpringBootTestBasic {
         user.authority(authority);
         Assert.assertTrue(user.hasAuthority(authority));
     }
-    
+
     @Test
     public void testAuthorityOther() {
         User mockUser = UserImpl.builder().username("9999").password("1").authorities(new TreeSet<>()).authoritiesSets(new HashSet<>()).build();
@@ -60,7 +62,7 @@ public class UserTest extends SpringBootTestBasic {
         user.authority(mockUser, authority);
         Assert.assertTrue(mockUser.hasAuthority(authority));
     }
-    
+
     @Test
     public void testGetMenus() {
         UserImpl user = UserImpl.builder().username("8888").build();
@@ -69,7 +71,7 @@ public class UserTest extends SpringBootTestBasic {
         user.authority(pageload);
         Assert.assertTrue(user.getMenus().contains(page));
     }
-    
+
     @Test
     public void testGetActions() {
         UserImpl user = UserImpl.builder().username("8888").build();
@@ -78,38 +80,38 @@ public class UserTest extends SpringBootTestBasic {
         user.authority(pageload);
         Assert.assertTrue(user.getActions().contains(pageload));
     }
-    
+
     /**
      * 获取菜单测试；入参为11个url
      * 预设出参为：一个虚拟根节点，一个1级节点，8个2级节点，其中3个二级节点无3级节点，5个二级节点有3级节点，
      * 且3个二级节点有2个3节点
      * 具体如下：
      * root：
-     *  company：--1级节点
-     *
-     *      Address：--2级节点
-     *          delete --3级节点
-     *          queryAll --3级节点
-     *
-     *      BankAccount:--2级节点
-     *          add --3级节点
-     *          delete --3级节点
-     *
-     *      addAddress--2级节点
-     *
-     *      delete--2级节点
-     *
-     *      ShareHolder:--2级节点
-     *          add --3级节点
-     *          update --3级节点
-     *
-     *      Contacts:--2级节点
-     *          delete --3级节点
-     *
-     *      queryALL--2级节点
-     *
-     *      query:--2级节点
-     *          id --3级节点
+     * company：--1级节点
+     * <p>
+     * Address：--2级节点
+     * delete --3级节点
+     * queryAll --3级节点
+     * <p>
+     * BankAccount:--2级节点
+     * add --3级节点
+     * delete --3级节点
+     * <p>
+     * addAddress--2级节点
+     * <p>
+     * delete--2级节点
+     * <p>
+     * ShareHolder:--2级节点
+     * add --3级节点
+     * update --3级节点
+     * <p>
+     * Contacts:--2级节点
+     * delete --3级节点
+     * <p>
+     * queryALL--2级节点
+     * <p>
+     * query:--2级节点
+     * id --3级节点
      */
     @Test
     public void testMenuTree() {
@@ -125,8 +127,7 @@ public class UserTest extends SpringBootTestBasic {
         urlList.add("/Company/Address/queryAll");
         urlList.add("/Company/query/id");
         urlList.add("/Company/ShareHolder/update");
-        MenuBo test = userController.urlToMenu(urlList);
-        test.getPath();
+        MenuUtil.urlToMenu(urlList);
     }
-    
+
 }
