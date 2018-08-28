@@ -6,8 +6,6 @@
 
 * token的正确性由服务端保证
 
-* token校验失败则接口调用返回http.status=403，并在body返回错误内容
-
 * 所有请求都采用post
 
 ## 登陆
@@ -33,9 +31,11 @@ request:
 ```json
 response:
 {
-    "result":"",//succeed,failed
-    "token":"", //String
-    "outdate":1234 //时间戳,Timestamp
+    "status": "OK",
+    "result": {
+        "token": "42047fa6-600c-433b-8ec1-331250c81f47",
+        "outdate": 2173017600000
+    }
 }
 ```
 
@@ -59,7 +59,9 @@ request:
 ```json
 response:
 {
-    "result":""//succeed,failed
+    "status": "OK",
+    "result": {
+    }
 }
 ```
 
@@ -81,52 +83,57 @@ request:
 
 ```json
 response:
-[
-    {
-        "path": "", //默认跳转进来的首页
-        "component": "Layout",  //这个Layout是方便前端用来做判断处理的
-        "redirect": "dashboard",
-        "children": [
-            {
-                "path": "dashboard",
-                "component": "dashboard/index",  //组件文件名称
-                "meta": {
-                    "title": "首页" // 菜单名称
-                }
-            }
-        ]
-    },
-    {
-        "path": "/example",
-        "component": "Layout",
-        "redirect": "/example/table",
-        "name": "Example",
-        "meta": {
-            "title": "案例"
-        },
-        "children": [
-            {
-                "path": "table",
-                "name": "Table",
-                "component": "table/index",
-                "meta": {
-                    "title": "表格"
-                }
-            },
-            {
-                "path": "tree",
-                "name": "Tree",
-                "component": "tree/index",
-                "meta": {
-                    "title": "树形菜单"
-                }
-            }
-        ]
-    },
-    {
-        "path": "*",
-        "redirect": "/404",  //报错页面404
-        "hidden": true
-    }
-]
+{
+    "status": "OK",
+    "result": 
+    [
+      {
+          "path": "", //默认跳转进来的首页
+          "component": "Layout",  //这个Layout是方便前端用来做判断处理的
+          "redirect": "dashboard",
+          "children": [
+              {
+                  "path": "dashboard",
+                  "component": "dashboard/index",  //组件文件名称
+                  "meta": {
+                      "title": "首页" // 菜单名称
+                  }
+              }
+          ]
+      },
+      {
+          "path": "/example",
+          "component": "Layout",
+          "redirect": "/example/table",
+          "name": "Example",
+          "meta": {
+              "title": "案例"
+          },
+          "children": [
+              {
+                  "path": "table",
+                  "name": "Table",
+                  "component": "table/index",
+                  "meta": {
+                      "title": "表格"
+                  }
+              },
+              {
+                  "path": "tree",
+                  "name": "Tree",
+                  "component": "tree/index",
+                  "meta": {
+                      "title": "树形菜单"
+                  }
+              }
+          ]
+      },
+      {
+          "path": "*",
+          "redirect": "/404",  //报错页面404
+          "hidden": true
+      }
+    ]
+}
+
 ```
