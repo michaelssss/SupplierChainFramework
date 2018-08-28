@@ -8,6 +8,7 @@ import org.springframework.data.domain.Example;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,7 +26,17 @@ public class TokenValidateFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request1 = (HttpServletRequest) request;
         HttpServletResponse response1 = (HttpServletResponse) response;
-        String token = request1.getHeader("token");
+        String token = "";
+        for (Cookie cookie : request1.getCookies()) {
+            if (cookie.getValue().contains("=")) {
+                String[] keyValue = cookie.getValue().split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+                if (key.equals("token")) {
+                    token = value;
+                }
+            }
+        }
         if (!request1.getRequestURI().equals("/User/login")) {
             if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
                 response1.getWriter().write(JSON.toJSONString(Response.NonOK("token validate failed")));
