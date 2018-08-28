@@ -46,7 +46,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                     synchronized (BusinessInitialActionCenter.class) {
                         try {
                             action.act();
-                            log.info("clazz" + action.getClass().getSimpleName() + " has been init and act ");
+                            log.info("clazz " + action.getClass().getSimpleName() + " has been init and act ");
                         } catch (Exception e) {
                             log.error("start task failed", e);
                         }

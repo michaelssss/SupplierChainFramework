@@ -4,6 +4,7 @@ import com.jzqh.account.*;
 import com.jzqh.configuration.ConfigurationCenter;
 import com.jzqh.daemon.Action;
 import com.jzqh.daemon.BusinessInitialActionCenter;
+import com.jzqh.utils.JSON;
 import com.jzqh.utils.Sha256;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
@@ -21,7 +22,32 @@ import java.util.TreeSet;
  */
 @Component
 @Slf4j
-public class RootUser {
+public class RootUser extends Action {
+    @Override
+    public void act() {
+        UserImpl root = RootUser.RootUser();
+        UserCatalog userCatalog = SpringContextHolder.getBean(UserCatalog.class);
+        AuthorityCatalog authorityCatalog = SpringContextHolder.getBean(AuthorityCatalog.class);
+        UserImpl sample = UserImpl.builder().username(root.getUsername()).build();
+        if (0 == userCatalog.count(Example.of(sample))) {
+            log.info("create root user" + JSON.toJSONString(root));
+            root.registered();
+        }
+        root = userCatalog.findOne(Example.of(sample));
+        for (Authority authority : authorityCatalog.findAll()) {
+            root.authority(authority);
+            log.debug("auth root authority: " + authority.getName());
+        }
+        userCatalog.saveAndFlush(root);
+        log.info("auth root all authority");
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
+    }
+
+
     public static UserImpl RootUser() {
         Sha256 sha256 = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
         UserProfile testUserProfile = new UserProfile();
@@ -42,30 +68,6 @@ public class RootUser {
     @PostConstruct
     public void init() {
         log.info("registered root user");
-        BusinessInitialActionCenter.registeredAction(new Action() {
-            @Override
-            public void act() {
-                UserImpl root = RootUser();
-                UserCatalog userCatalog = SpringContextHolder.getBean(UserCatalog.class);
-                AuthorityCatalog authorityCatalog = SpringContextHolder.getBean(AuthorityCatalog.class);
-                UserImpl sample = UserImpl.builder().username(root.getUsername()).build();
-                if (0 == userCatalog.count(Example.of(sample))) {
-                    root.registered();
-                }
-                root = userCatalog.findOne(Example.of(sample));
-                for (Authority authority : authorityCatalog.findAll()) {
-                    root.authority(authority);
-                    log.debug("auth root authority: " + authority.getName());
-                }
-                userCatalog.saveAndFlush(root);
-                log.info("auth root all authority");
-            }
-
-            @Override
-            public int getOrder() {
-                return 1;
-            }
-        });
-        log.info("BusinessInitialActionCenter.status=" + BusinessInitialActionCenter.getStatus());
+        BusinessInitialActionCenter.registeredAction(this);
     }
 }
