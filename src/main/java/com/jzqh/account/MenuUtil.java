@@ -24,6 +24,13 @@ public class MenuUtil {
         for (Authority authority : menuSet) {
             urlList.add(authority.getPath());
         }
+        if (urlList != null && urlList.size() > 0) {
+            for (int i = 0; i < urlList.size(); i++) {
+                if (urlList.get(i).toLowerCase().contains("user")) {//去除所有路径带有user的url
+                    urlList.remove(i);
+                }
+            }
+        }
         MenuBo menuBo1 = urlToMenu(urlList);
         return menuBo1;
     }
