@@ -49,7 +49,7 @@ public class UserController {
         UserImpl example = UserImpl.builder().username(username).build();
         UserImpl user = userCatalog.findOne(Example.of(example));
         if (null != user) {
-            Token token = user.login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString()) * 1000));
+            Token token = user.login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString())));
             if (null != token) {
                 return Response.OK(token);
             }
