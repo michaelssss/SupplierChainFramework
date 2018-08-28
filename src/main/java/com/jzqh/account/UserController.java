@@ -1,7 +1,6 @@
 package com.jzqh.account;
 
 import com.jzqh.base.Response;
-import com.jzqh.utils.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -20,34 +19,26 @@ import java.util.*;
 public class UserController {
     private UserCatalog userCatalog;
     private TokenCatalog tokenCatalog;
-    
+
     @Autowired
     public UserController(UserCatalog userCatalog, TokenCatalog tokenCatalog) {
         this.userCatalog = userCatalog;
         this.tokenCatalog = tokenCatalog;
     }
-    
-    @RequestMapping(value = "login")
-    public void login(@RequestBody Map<String, Object> requestMap, HttpServletResponse response) throws IOException {
-        String username = (String) requestMap.get("username");
-        UserImpl example = UserImpl.builder().username(username).build();
-        UserImpl user = userCatalog.findOne(Example.of(example));
-        if (null != user) {
-            if (user.validatePassword((String) requestMap.get("password"))) {
-                Token token = new Token();
-                token.setToken(UUID.randomUUID().toString());
-                token.setOutdate(new Date(Long.valueOf(requestMap.get("outdate").toString()) * 1000));
-                token.setUser(user);
-                tokenCatalog.save(token);
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().write(JSON.toJSONString(token));
-                return;
-            }
-        }
-        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        response.getWriter().write("user not found");
+
+    /**
+     * 将url转成menubo
+     *
+     * @param urlList
+     * @return
+     */
+    public static MenuBo urlToMenu(List<String> urlList) {
+        Map<String, List<String[]>> mapByLength = getMapByLength(getAllUrlArray(urlList));
+        MenuBo menuBo1 = buildRootNode(getFirstNode(urlList), mapByLength);
+        return menuBo1;
+
     }
-    
+
     @RequestMapping("Menu/get")
     @ResponseBody
     public Response getMenu(@SessionAttribute User user) {
@@ -55,20 +46,20 @@ public class UserController {
         menuBo.getPath();
         return Response.OK(user.getMenus());
     }
-    
+
     @RequestMapping("Action/get")
     @ResponseBody
     public Response getActions(@SessionAttribute User user) {
         return Response.OK(user.getActions());
     }
-    
+
     @RequestMapping("Profile/get")
     @ResponseBody
     public Response getProfile(@SessionAttribute User user) {
         return Response.OK(user.getProfile());
     }
-    
-    
+
+
     /**
      * 对转入的user
      *
@@ -84,65 +75,7 @@ public class UserController {
         MenuBo menuBo1 = urlToMenu(urlList);
         return menuBo1;
     }
-    
-    /**
-     * 将url转成menubo
-     *
-     * @param urlList
-     * @return
-     */
-    public static MenuBo urlToMenu(List<String> urlList) {
-        Map<String, List<String[]>> mapByLength = getMapByLength(getAllUrlArray(urlList));
-        MenuBo menuBo1 = buildRootNode(getFirstNode(urlList), mapByLength);
-        return menuBo1;
-        
-    }
-    
-    /**
-     * 得到分割后的list string数组
-     *
-     * @param urlList
-     * @return
-     */
-    public static List<String[]> getAllUrlArray(List<String> urlList) {
-        List<String[]> allPathArray = new ArrayList<>();
-        for (int i = 0; i < urlList.size(); i++) {
-            String[] pathArray = strToArray(urlList.get(i));
-            allPathArray.add(pathArray);//存放所有的分解后的路径
-        }
-        return allPathArray;
-    }
-    
-    /**
-     * 得到所有数组的头结点
-     *
-     * @param urlList
-     * @return
-     */
-    public static TreeSet<String> getFirstNode(List<String> urlList) {
-        TreeSet<String> firstNode = new TreeSet<>();
-        for (int i = 0; i < urlList.size(); i++) {
-            String[] pathArray = strToArray(urlList.get(i));
-            firstNode.add(pathArray[0]);
-        }
-        return firstNode;
-    }
-    
-    /**
-     * 对string的分割
-     *
-     * @param url
-     * @return
-     */
-    public static String[] strToArray(String url) {
-        //转递的url默认以"/"开头
-        if (url.startsWith("/")) {
-            url = url.substring(1, url.length());
-        }
-        return url.split("/");
-    }
-    
-    
+
     /**
      * 以长度来区分数组
      * 得到分类好的数组
@@ -155,7 +88,7 @@ public class UserController {
         List<String[]> pathArrayByLength1 = new ArrayList<>();
         List<String[]> pathArrayByLength2 = new ArrayList<>();
         List<String[]> pathArrayByLength3 = new ArrayList<>();
-        
+
         for (int i = 0; i < allPathArray.size(); i++) {
             String[] pathArray = allPathArray.get(i);
             if (pathArray.length > 2) {
@@ -172,27 +105,54 @@ public class UserController {
         pathMapByLength.put("first", pathArrayByLength1);
         pathMapByLength.put("second", pathArrayByLength2);
         pathMapByLength.put("third", pathArrayByLength3);
-        
+
         return pathMapByLength;
     }
-    
-    
+
     /**
-     * 头结点
+     * 得到分割后的list string数组
      *
-     * @param firstNode
+     * @param urlList
      * @return
      */
-    public static MenuBo buildRootNode(TreeSet<String> firstNode, Map<String, List<String[]>> pathMapByLength) {
-        TreeSet<MenuBo> menuBoSet = new TreeSet<>();
-        for (String path : firstNode) {
-            TreeSet<MenuBo> tempSet = new TreeSet<>();
-            tempSet = checkSecondChildNode(path, pathMapByLength, tempSet);
-            menuBoSet.add(buildMenu(path, tempSet));
+    public static List<String[]> getAllUrlArray(List<String> urlList) {
+        List<String[]> allPathArray = new ArrayList<>();
+        for (int i = 0; i < urlList.size(); i++) {
+            String[] pathArray = strToArray(urlList.get(i));
+            allPathArray.add(pathArray);//存放所有的分解后的路径
         }
-        return buildMenu("root", menuBoSet);
+        return allPathArray;
     }
-    
+
+    /**
+     * 得到所有数组的头结点
+     *
+     * @param urlList
+     * @return
+     */
+    public static TreeSet<String> getFirstNode(List<String> urlList) {
+        TreeSet<String> firstNode = new TreeSet<>();
+        for (int i = 0; i < urlList.size(); i++) {
+            String[] pathArray = strToArray(urlList.get(i));
+            firstNode.add(pathArray[0]);
+        }
+        return firstNode;
+    }
+
+    /**
+     * 对string的分割
+     *
+     * @param url
+     * @return
+     */
+    public static String[] strToArray(String url) {
+        //转递的url默认以"/"开头
+        if (url.startsWith("/")) {
+            url = url.substring(1, url.length());
+        }
+        return url.split("/");
+    }
+
     /**
      * 根据头节点找到第二个节点
      * 并给第二个节点赋值
@@ -234,10 +194,41 @@ public class UserController {
             TreeSet<MenuBo> menuBoSet1 = new TreeSet<>();
             menuBoSet.add(buildMenu(node2, checkThirdChildNode(node2, secondList, menuBoSet1)));
         }
-        
+
         return menuBoSet;
     }
-    
+
+
+    /**
+     * 头结点
+     *
+     * @param firstNode
+     * @return
+     */
+    public static MenuBo buildRootNode(TreeSet<String> firstNode, Map<String, List<String[]>> pathMapByLength) {
+        TreeSet<MenuBo> menuBoSet = new TreeSet<>();
+        for (String path : firstNode) {
+            TreeSet<MenuBo> tempSet = new TreeSet<>();
+            tempSet = checkSecondChildNode(path, pathMapByLength, tempSet);
+            menuBoSet.add(buildMenu(path, tempSet));
+        }
+        return buildMenu("root", menuBoSet);
+    }
+
+    @RequestMapping(value = "login")
+    public Response login(@RequestBody Map<String, Object> requestMap, HttpServletResponse response) throws IOException {
+        String username = (String) requestMap.get("username");
+        UserImpl example = UserImpl.builder().username(username).build();
+        UserImpl user = userCatalog.findOne(Example.of(example));
+        if (null != user) {
+            Token token = user.login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString()) * 1000));
+            if (null != token) {
+                return Response.OK(token);
+            }
+        }
+        return Response.NonOK("username or password not validate");
+    }
+
     /**
      * 根据第二个节点找到第三个节点
      *
@@ -256,7 +247,7 @@ public class UserController {
         }
         return menuBoSet;
     }
-    
+
     /**
      * 给菜单赋值
      *
@@ -272,8 +263,8 @@ public class UserController {
         }
         return menuBo;
     }
-    
-    
+
+
     /**
      * @param url    前台转递的url 格式为：/a/b/c
      * @param menuBo
@@ -290,7 +281,7 @@ public class UserController {
         }
         return menuBo;
     }
-    
+
     /**
      * 使用递归方法对传的url数组进行封装
      *
