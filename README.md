@@ -2,7 +2,7 @@
 
 ## 约定
 
-* 除了登录接口外，所有的请求需要在header中放置token
+* 除了登录接口外，所有的请求需要在cookie中放置token=xxxxx
 
 * token的正确性由服务端保证
 
