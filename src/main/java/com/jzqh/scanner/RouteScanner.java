@@ -136,6 +136,8 @@ public class RouteScanner {
                 if (prefixValues != null && prefixValues.length > 0) {
                     //规定每个class中只有一个@requestMapping注解作为类注释
                     String prefix = prefixValues[0];//获取类路由
+                    //保存类路由
+                    urlSet.add("/"+prefix);
                     Method[] methods = clazz.getDeclaredMethods();
                     for (Method method : methods) {
 
@@ -145,6 +147,7 @@ public class RouteScanner {
                             String[] values = annotation1.value();
                             if (values != null && values.length > 0) {
                                 for (String value : values) {
+                                    //保存方法路由
                                     urlSet.add("/" + prefix + "/" + value);
                                 }
                             }
