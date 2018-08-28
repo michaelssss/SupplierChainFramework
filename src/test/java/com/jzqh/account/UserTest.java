@@ -85,23 +85,31 @@ public class UserTest extends SpringBootTestBasic {
      * 且3个二级节点有2个3节点
      * 具体如下：
      * root：
-     * company：
-     * Address：
-     * delete
-     * queryAll
-     * BankAccount
-     * add
-     * delete
-     * addAddress
-     * delete
-     * ShareHolder
-     * add
-     * update
-     * Contacts
-     * delete
-     * queryALL
-     * query
-     * id
+     *  company：--1级节点
+     *
+     *      Address：--2级节点
+     *          delete --3级节点
+     *          queryAll --3级节点
+     *
+     *      BankAccount:--2级节点
+     *          add --3级节点
+     *          delete --3级节点
+     *
+     *      addAddress--2级节点
+     *
+     *      delete--2级节点
+     *
+     *      ShareHolder:--2级节点
+     *          add --3级节点
+     *          update --3级节点
+     *
+     *      Contacts:--2级节点
+     *          delete --3级节点
+     *
+     *      queryALL--2级节点
+     *
+     *      query:--2级节点
+     *          id --3级节点
      */
     @Test
     public void testMenuTree() {
