@@ -27,21 +27,21 @@ public class StorageController {
     @RequestMapping("add")
     public Response addStorage(StorageImpl storage) {
         storage.addInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping("update")
     public Response updateStorage(StorageImpl storage) {
         storage.updateInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping("delete")
     public Response deleteStorage(StorageImpl storage) {
         storage.deleteInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
@@ -52,7 +52,7 @@ public class StorageController {
     }
 
     @ResponseBody
-    @RequestMapping("queryInfo/id")
+    @RequestMapping("queryInfo")
     public Response queryAllStorage(@RequestParam(value = "id") Long id) {
         StorageImpl storage = storageRepository.findOne(id);
         return Response.OK(storage);

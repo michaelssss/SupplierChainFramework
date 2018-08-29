@@ -28,7 +28,7 @@ public class MenuUtil {
                 }
             }
         }
-        MenuBo menuBo1 = urlToMenu(urlList,menuSet);
+        MenuBo menuBo1 = urlToMenu(urlList, menuSet);
         return menuBo1;
     }
     
@@ -38,9 +38,9 @@ public class MenuUtil {
      * @param urlList
      * @return
      */
-    public static MenuBo urlToMenu(List<String> urlList,Set<Authority> menuSet) {
+    public static MenuBo urlToMenu(List<String> urlList, Set<Authority> menuSet) {
         Map<String, List<String[]>> mapByLength = getMapByLength(getAllUrlArray(urlList));
-        MenuBo menuBo1 = buildRootNode(getFirstNode(urlList), mapByLength,menuSet);
+        MenuBo menuBo1 = buildRootNode(getFirstNode(urlList), mapByLength, menuSet);
         return menuBo1;
         
     }
@@ -130,14 +130,14 @@ public class MenuUtil {
      * @param firstNode
      * @return
      */
-    public static MenuBo buildRootNode(TreeSet<String> firstNode, Map<String, List<String[]>> pathMapByLength,Set<Authority> menuSet) {
+    public static MenuBo buildRootNode(TreeSet<String> firstNode, Map<String, List<String[]>> pathMapByLength, Set<Authority> menuSet) {
         TreeSet<MenuBo> menuBoSet = new TreeSet<>();
         for (String path : firstNode) {
             TreeSet<MenuBo> tempSet = new TreeSet<>();
-            tempSet = checkSecondChildNode(path, pathMapByLength, tempSet,menuSet);
-            menuBoSet.add(buildMenu(path, tempSet,menuSet));
+            tempSet = checkSecondChildNode(path, pathMapByLength, tempSet, menuSet);
+            menuBoSet.add(buildMenu(path, tempSet, menuSet));
         }
-        return buildMenu("root", menuBoSet,null);
+        return buildMenu("root", menuBoSet, null);
     }
     
     /**
@@ -149,7 +149,7 @@ public class MenuUtil {
      * @param menuBoSet
      * @return
      */
-    public static TreeSet<MenuBo> checkSecondChildNode(String path, Map<String, List<String[]>> pathMapByLength, TreeSet<MenuBo> menuBoSet,Set<Authority> menuSet) {
+    public static TreeSet<MenuBo> checkSecondChildNode(String path, Map<String, List<String[]>> pathMapByLength, TreeSet<MenuBo> menuBoSet, Set<Authority> menuSet) {
         List<String[]> tempList = pathMapByLength.get("second");
         List<String[]> secondList = new ArrayList<>();
         TreeSet<String> tempSet1 = new TreeSet<>();
@@ -175,11 +175,11 @@ public class MenuUtil {
             tempSet1.removeAll(tempSet);//取出set1中的重复元素
         }
         for (String node2 : tempSet1) {
-            menuBoSet.add(buildMenu(path + "/" + node2, null,menuSet));
+            menuBoSet.add(buildMenu(path + "/" + node2, null, menuSet));
         }
         for (String node2 : tempSet2) {
             TreeSet<MenuBo> menuBoSet1 = new TreeSet<>();
-            menuBoSet.add(buildMenu(path + "/" + node2, checkThirdChildNode(path + "/" + node2, secondList, menuBoSet1,menuSet),null));
+            menuBoSet.add(buildMenu(path + "/" + node2, checkThirdChildNode(path + "/" + node2, secondList, menuBoSet1, menuSet), null));
         }
         
         return menuBoSet;
@@ -193,12 +193,12 @@ public class MenuUtil {
      * @param menuBoSet
      * @return
      */
-    public static TreeSet<MenuBo> checkThirdChildNode(String path, List<String[]> pathList, TreeSet<MenuBo> menuBoSet,Set<Authority> menuSet) {
+    public static TreeSet<MenuBo> checkThirdChildNode(String path, List<String[]> pathList, TreeSet<MenuBo> menuBoSet, Set<Authority> menuSet) {
         //长度为3
         for (int i = 0; i < pathList.size(); i++) {
             if (path.equals(pathList.get(i)[0] + "/" + pathList.get(i)[1])) {
                 //最终节点没有子节点
-                menuBoSet.add(buildMenu(path + "/" + pathList.get(i)[2], null,menuSet));
+                menuBoSet.add(buildMenu(path + "/" + pathList.get(i)[2], null, menuSet));
             }
         }
         return menuBoSet;
@@ -210,17 +210,20 @@ public class MenuUtil {
      * @param path
      * @return
      */
-    public static MenuBo buildMenu(String path, TreeSet<MenuBo> menuBoSet,Set<Authority> menuSet) {
+    public static MenuBo buildMenu(String path, TreeSet<MenuBo> menuBoSet, Set<Authority> menuSet) {
         MenuBo menuBo = new MenuBo();
         menuBo.setPath(path);
-        menuBo.setComponent("");
         if (menuBoSet != null) {
             menuBo.setChildren(menuBoSet);
         }
-        if (menuSet != null && menuSet.size() > 0){
-            for (Authority authority :menuSet){
-                if (authority.getPath().equals("/"+path)){//通过url的匹配来找到对应的Authority对象
+        if (menuSet != null && menuSet.size() > 0) {
+            for (Authority authority : menuSet) {
+                if (authority.getPath().equals("/" + path)) {//通过url的匹配来找到对应的Authority对象
                     menuBo.setRedirect(authority.getRedirect());//开始赋值
+                    menuBo.setComponent((authority.getComponent() == null) ? "Layout" : authority.getComponent());
+                    Map<String, String> meta = new HashMap<>();
+                    meta.put("title", authority.getTitle());
+                    menuBo.setMeta(meta);
                 }
             }
         }

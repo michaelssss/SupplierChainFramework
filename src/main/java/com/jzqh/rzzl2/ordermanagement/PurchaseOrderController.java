@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -22,6 +23,13 @@ public class PurchaseOrderController {
     @Autowired
     public PurchaseOrderController(PurchaseOrderRepository purchaserRepository) {
         this.purchaseOrderRepository = purchaserRepository;
+    }
+
+    @RequestMapping("add")
+    @ResponseBody
+    public Response addPurchaseOrder(PurchaseOrderImpl purchaseOrder) {
+        purchaseOrderRepository.saveAndFlush(purchaseOrder);
+        return Response.OK("");
     }
 
     /**

@@ -30,32 +30,32 @@ public class PurchaserController {
         CompanyImpl company = repository.findOne(purchaser.getCompany().getId());
         purchaser.setCompany(company);
         purchaser.addInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
-    @RequestMapping(value = "add/requestPermit")
+    @RequestMapping(value = "addRequestPermit")
     public Response addPurchaserRequestPermit(EntryApplyPurchaseImpl entryApplyPurchase) {
         entryApplyPurchase.requestPermit();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping(value = "requestPermit")
     public Response PurchaserRequestPermit(EntryApplyPurchaseImpl entryApplyPurchase) {
         entryApplyPurchase.requestPermit();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryAll/permitInfo")
+    @RequestMapping(value = "queryAllPermitInfo")
     public Response queryAllPermitInfo() {
         List<EntryApplyPurchaseImpl> applyPurchaseList = applyPurchaseRepository.findAll();
         return Response.OK(applyPurchaseList);
     }
 
     @ResponseBody
-    @RequestMapping(value = "query/requestPermit/id")
+    @RequestMapping(value = "permitId")
     public Response queryPermitInfoById(@RequestParam(value = "id") Long id) {
         EntryApplyPurchaseImpl entryApplyPurchase = applyPurchaseRepository.findOne(id);
         return Response.OK(entryApplyPurchase);
@@ -65,14 +65,14 @@ public class PurchaserController {
     @RequestMapping(value = "update")
     public Response updatePurchaserInfo(PurchaserImpl purchaser) {
         purchaserRepository.saveAndFlush(purchaser);
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @DeleteMapping(value = "delete")
     public Response deletePurchaserInfo(@RequestParam(value = "id") Long id) {
         purchaserRepository.delete(id);
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody

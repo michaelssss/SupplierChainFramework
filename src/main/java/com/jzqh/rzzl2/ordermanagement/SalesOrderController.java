@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Tongch
@@ -23,6 +24,12 @@ public class SalesOrderController {
         this.salesOrderRepository = salesOrderRepository;
     }
 
+    @RequestMapping("SalesOrder/add")
+    @ResponseBody
+    public Response addSalesOrder(SalesOrderImpl salesOrder) {
+        salesOrderRepository.saveAndFlush(salesOrder);
+        return Response.OK("");
+    }
     /**
      * 获取订单编号
      * --String
