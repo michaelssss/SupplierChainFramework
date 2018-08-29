@@ -15,17 +15,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-class RouterSaver extends Action {
-
-    @Override
-    public int compareTo(Action o) {
-        return Integer.compare(this.getOrder(), o.getOrder());
-    }
-
-    @Override
-    public int getOrder() {
-        return 0;
-    }
+public class RouterSaver extends Action {
 
     @PostConstruct
     public void init() {

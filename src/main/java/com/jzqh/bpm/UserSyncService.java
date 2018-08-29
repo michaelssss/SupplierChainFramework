@@ -43,9 +43,4 @@ public class UserSyncService extends Action {
             }
         }
     }
-
-    @Override
-    public int getOrder() {
-        return 99;
-    }
 }

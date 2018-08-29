@@ -42,12 +42,6 @@ public class RootUser extends Action {
         log.info("auth root all authority");
     }
 
-    @Override
-    public int getOrder() {
-        return 1;
-    }
-
-
     public static UserImpl RootUser() {
         Sha256 sha256 = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
         UserProfile testUserProfile = new UserProfile();

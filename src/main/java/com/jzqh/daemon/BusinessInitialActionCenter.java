@@ -6,9 +6,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 /**
  * 如何使用，首先要实现Action接口，因为Java不支持指针函数
  * 其次是将需要执行的任务调用BusinessInitialActionCenter.registeredAction(Action yourAction)
@@ -18,7 +15,7 @@ import java.util.TreeSet;
 @Slf4j
 @Service
 public class BusinessInitialActionCenter implements ApplicationListener<ApplicationEvent> {
-    private final static SortedSet<Action> set = new TreeSet<>();
+    private final static OrderBusinessArrayList orderbusinessList = new OrderBusinessArrayList();
     private static boolean initFlag = false;
 
     /**
@@ -28,12 +25,12 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
      */
     public static void registeredAction(Action action) {
         synchronized (BusinessInitialActionCenter.class) {
-            set.add(action);
+            orderbusinessList.add(action);
         }
     }
 
     public static String getStatus() {
-        return set.size() == 0 && initFlag ? "Idle" : "Busy";
+        return orderbusinessList.size() == 0 && initFlag ? "Idle" : "Busy";
     }
 
     @Override
@@ -42,7 +39,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
             if (!initFlag) {
                 log.info("======================System daemon started=============================");
                 initFlag = true;
-                for (Action action : set) {
+                for (Action action : orderbusinessList) {
                     synchronized (BusinessInitialActionCenter.class) {
                         try {
                             action.act();
@@ -52,7 +49,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                         }
                     }
                 }
-                set.clear();
+                orderbusinessList.clear();
             }
         }
     }
