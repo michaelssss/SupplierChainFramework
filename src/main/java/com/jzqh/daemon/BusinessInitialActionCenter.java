@@ -37,6 +37,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof ContextRefreshedEvent) {
             if (!initFlag) {
+                orderbusinessList.sorted();
                 log.info("======================System daemon started=============================");
                 initFlag = true;
                 for (Action action : orderbusinessList) {
