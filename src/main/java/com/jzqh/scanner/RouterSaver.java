@@ -42,6 +42,7 @@ class RouterSaver extends Action {
             Authority authority = new Authority();
             authority.setPath(url);
             authority.setName(url);
+            authority.setTitle(url);
             if (authority.isMenu()) {
                 authority.setComponent("Layout");
             }
