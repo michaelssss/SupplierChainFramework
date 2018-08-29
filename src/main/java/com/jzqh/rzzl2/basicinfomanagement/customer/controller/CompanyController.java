@@ -28,8 +28,15 @@ public class CompanyController {
     @Autowired
     private CompanyRepository repository;
     @ResponseBody
-    @RequestMapping(path = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "CompanyInfo/Add", method = RequestMethod.POST)
     public Response addCompanyInfo(@RequestBody CompanyImpl company) {
+        company.addInfo();
+        return Response.OK(company);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "CompanyInfo", method = RequestMethod.POST)
+    public Response adCompanyInfo(@RequestBody CompanyImpl company) {
         company.addInfo();
         return Response.OK(company);
     }
