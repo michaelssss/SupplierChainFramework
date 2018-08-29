@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("Order")
 public class OrderController {
 
-    private EntrustedOrderRepository entrustedOrderRepository;
+   /* private EntrustedOrderRepository entrustedOrderRepository;
     private PurchaseOrderRepository purchaseOrderRepository;
     private SalesOrderRepository salesOrderRepository;
 
@@ -40,6 +40,6 @@ public class OrderController {
     public Response addSalesOrder(SalesOrderImpl salesOrder) {
         salesOrderRepository.saveAndFlush(salesOrder);
         return Response.OK("");
-    }
+    }*/
 
 }

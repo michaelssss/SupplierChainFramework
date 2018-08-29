@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -24,6 +25,12 @@ public class EntrustedOrderController {
         this.entrustedOrderRepository = entrustedOrderRepository;
     }
 
+    @RequestMapping("add")
+    @ResponseBody
+    public Response addEntrustedOrder(EntrustedOrderImpl entrustedOrder) {
+        this.entrustedOrderRepository.saveAndFlush(entrustedOrder);
+        return Response.OK("");
+    }
     /**
      * 获取订单编号 生成新的编号
      * --String

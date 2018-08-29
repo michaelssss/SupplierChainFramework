@@ -26,21 +26,21 @@ public class FundingPartyController {
     @RequestMapping("add")
     public Response addFunding(FundingPartyImpl fundingParty) {
         fundingParty.addInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping("update")
     public Response updateFunding(FundingPartyImpl fundingParty) {
         fundingParty.updateInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping("delete")
     public Response deleteFunding(FundingPartyImpl fundingParty) {
         fundingParty.deleteInfo();
-        return Response.OK(null);
+        return Response.OK("");
     }
 
     @ResponseBody
