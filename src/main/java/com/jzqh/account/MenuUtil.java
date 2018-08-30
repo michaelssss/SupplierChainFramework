@@ -179,7 +179,7 @@ public class MenuUtil {
         }
         for (String node2 : tempSet2) {
             TreeSet<MenuBo> menuBoSet1 = new TreeSet<>();
-            menuBoSet.add(buildMenu(path + "/" + node2, checkThirdChildNode(path + "/" + node2, secondList, menuBoSet1, menuSet), null));
+            menuBoSet.add(buildMenu(path + "/" + node2, checkThirdChildNode(path + "/" + node2, secondList, menuBoSet1, menuSet), menuSet));
         }
         
         return menuBoSet;
