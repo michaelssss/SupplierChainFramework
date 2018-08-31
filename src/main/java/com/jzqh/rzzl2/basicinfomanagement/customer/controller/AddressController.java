@@ -16,15 +16,17 @@ import org.springframework.web.bind.annotation.*;
  * @Author:tanshaoxing
  * @Date:2018/8/29
  */
-@Api(value = "公司controller")
+
 @Controller
 @RequestMapping(name="Address")
+@Api(tags = "/Address",description="公司地址信息管理")
 public class AddressController {
     @Autowired
     private CompanyRepository repository;
-    @ApiOperation(value = "添加地址", tags = "添加地址接口")
+
     @ResponseBody
     @RequestMapping(value = "add")
+    @ApiOperation(value = "添加地址",httpMethod="POST")
     public Response addAddress(@ApiParam(name = "id", value = "地址id", required = true) @RequestParam(value = "id") Long id, @RequestBody Address address) {
         CompanyImpl company = repository.findOne(id);
         company.addAddress(address);
@@ -32,17 +34,18 @@ public class AddressController {
         return Response.OK("");
     }
 
-    @ApiOperation(value = "修改地址", tags = "修改地址接口")
+
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ApiOperation(value = "修改地址")
     public Response updateAddress(@ApiParam(name = "address", value = "地址") @RequestBody Address address) {
         address.updateInfo();
         return Response.OK(address);
     }
 
     @ResponseBody
-    @ApiOperation(value = "删除地址", tags = "删除地址接口")
     @RequestMapping("delete")
+    @ApiOperation(value = "删除地址")
     public Response deleteAddress(@RequestParam(value = "id") Long id, @RequestBody Address address) {
         CompanyImpl company = repository.findOne(id);
         company.deleteAddress(address);

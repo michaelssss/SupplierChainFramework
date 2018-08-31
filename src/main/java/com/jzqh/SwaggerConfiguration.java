@@ -16,10 +16,11 @@ public class SwaggerConfiguration {
     @Bean
     public Docket create() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .enable(true)//生产环境改为false
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jzqh"))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.jzqh.rzzl2"))
+                .paths(PathSelectors.any())//生产环境设为PathSelectors.none 二选其一 推荐选上面的
                 .build();
     }
 
