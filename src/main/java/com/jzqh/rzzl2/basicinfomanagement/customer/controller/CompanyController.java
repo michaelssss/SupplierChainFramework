@@ -6,8 +6,7 @@ import com.jzqh.base.Response;
 import com.jzqh.rzzl2.basicinfomanagement.customer.customerimpl.*;
 import com.jzqh.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +27,13 @@ public class CompanyController {
     @Autowired
     private CompanyRepository repository;
     @ResponseBody
-    @RequestMapping(value = "CompanyInfo/Add", method = RequestMethod.POST)
-    public Response addCompanyInfo(@RequestBody CompanyImpl company) {
-        company.addInfo();
-        return Response.OK(company);
+    @RequestMapping(value = "CompanyInfo/Test", method = RequestMethod.GET)
+    public Response testCompanyInfo() {
+        return Response.OK("");
     }
-
     @ResponseBody
-    @RequestMapping(value = "CompanyInfo", method = RequestMethod.POST)
-    public Response adCompanyInfo(@RequestBody CompanyImpl company) {
+    @RequestMapping(value = "CompanyInfo/add", method = RequestMethod.POST)
+    public Response addCompanyInfo(@RequestBody CompanyImpl company) {
         company.addInfo();
         return Response.OK(company);
     }

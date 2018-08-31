@@ -26,6 +26,7 @@ public class TokenValidateFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request1 = (HttpServletRequest) request;
         HttpServletResponse response1 = (HttpServletResponse) response;
+        String uri = request1.getRequestURI();
         String token = "";
         if (null != request1.getCookies()) {
             for (Cookie cookie : request1.getCookies()) {
@@ -34,14 +35,18 @@ public class TokenValidateFilter implements Filter {
                 }
             }
         }
-        if (!request1.getRequestURI().equals("/User/login")) {
-            if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
-                response1.getWriter().write(JSON.toJSONString(Response.NonOK("token validate failed")));
-                response1.setStatus(HttpServletResponse.SC_OK);
-                return;
-            } else {
-                Token token1 = getToken(token);
-                ((HttpServletRequest) request).getSession(true).setAttribute("user", token1.getUser());
+        boolean isSwaggerUri = uri.equals("/swagger-ui.html") || uri.matches("^/webjars/springfox-swagger-ui/.*$") || uri.equals("/v2/api-docs")
+                || uri.equals("/swagger-resources") || uri.equals("/configuration/ui");
+        if (!isSwaggerUri) {
+            if (!request1.getRequestURI().equals("/User/login")) {
+                if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
+                    response1.getWriter().write(JSON.toJSONString(Response.NonOK("token validate failed")));
+                    response1.setStatus(HttpServletResponse.SC_OK);
+                    return;
+                } else {
+                    Token token1 = getToken(token);
+                    ((HttpServletRequest) request).getSession(true).setAttribute("user", token1.getUser());
+                }
             }
         }
         chain.doFilter(request, response);

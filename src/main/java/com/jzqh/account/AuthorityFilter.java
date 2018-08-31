@@ -24,11 +24,15 @@ public class AuthorityFilter implements Filter {
         HttpServletResponse response1 = (HttpServletResponse) response;
         User user = (User) request1.getSession(true).getAttribute("user");
         String uri = request1.getRequestURI();
-        if (!request1.getRequestURI().equals("/User/login") && !user.hasAuthority(uri)) {
-            log.info("user" + user.getUsername() + " ,try to access" + request1.getRequestURI() + " ,ip=" + request1.getRemoteAddr());
-            response1.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response1.getWriter().write(JSON.toJSONString(Response.NonOK("user has no right access " + uri)));
-            return;
+        boolean isSwaggerUri = uri.equals("/swagger-ui.html") || uri.matches("^/webjars/springfox-swagger-ui/.*$") || uri.equals("/v2/api-docs")
+                || uri.equals("/swagger-resources") || uri.equals("/configuration/ui");
+        if(!isSwaggerUri){
+            if (!request1.getRequestURI().equals("/User/login")&& !user.hasAuthority(uri)) {
+                log.info("user" + user.getUsername() + " ,try to access" + request1.getRequestURI() + " ,ip=" + request1.getRemoteAddr());
+                response1.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response1.getWriter().write(JSON.toJSONString(Response.NonOK("user has no right access " + uri)));
+                return;
+            }
         }
         chain.doFilter(request, response);
     }
