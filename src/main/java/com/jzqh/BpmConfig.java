@@ -17,7 +17,6 @@ public class BpmConfig {
     public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager) {
         SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
         processEngineConfiguration.setDataSource(dataSource);
-        processEngineConfiguration.setDatabaseSchema("jzqh");
         processEngineConfiguration.setDatabaseSchemaUpdate(SpringProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
         processEngineConfiguration.setDatabaseType(SpringProcessEngineConfiguration.DATABASE_TYPE_MYSQL);
         processEngineConfiguration.setTransactionManager(transactionManager);
