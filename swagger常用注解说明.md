@@ -1,19 +1,29 @@
-####常用到的注解有：
+#### 常用到的注解有：
 * Api
+
 * ApiOperation
+
 * ApiParam
+
 * ApiModel
+
 * ApiModelProperty
+
 * ApiResponse
+
 * ApiResponses
+
 * ResponseHeader
 
-####1. api标记
+#### 1. api标记
+
 Api 用在类上，说明该类的作用。可以标记一个Controller类做为swagger 文档资源，使用方式：
 
 例如：@Api(value = "/user", description = "Operations about user")
+
 * 与Controller注解并列使用。
-    #####属性配置：   
+
+##### 属性配置：   
     
 | 属性名称 | 备注    | 
 | :--------:  | :---|
@@ -30,22 +40,29 @@ Api 用在类上，说明该类的作用。可以标记一个Controller类做为
 
 * 在SpringMvc中的配置如下：
 
+```java
     @Controller     
     @RequestMapping(value = "/api/pet", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})   
     @Api(value = "/Stefan", description = "Operations about Stefan")  
     public class StefanController {
-
     }
+```
 
- ####2. ApiOperation标记
+ #### 2. ApiOperation标记
+ 
 * ApiOperation：用在方法上，说明方法的作用，每一个url资源的定义,使用方式：  
+
+```java
 @ApiOperation( value = "Find purchase order by ID",  
           notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",  
           response = Order,
           tags = {"Pet Store"}) 
+```
+
            
 与Controller中的方法并列使用。
- #####属性配置：   
+
+ ##### 属性配置:
     
 | 属性名称 | 备注    | 
 | :--------:  | :---|
@@ -65,27 +82,33 @@ Api 用在类上，说明该类的作用。可以标记一个Controller类做为
 |code|	                http的状态码 默认 200
 |extensions|	            扩展属性
 
-* 在SpringMvc中的配置如下：  
-@RequestMapping(value = "/order/{orderId}", method = GET)  
+* 在SpringMvc中的配置如下：
+ 
+```java
+  @RequestMapping(value = "/order/{orderId}", method = GET)  
   @ApiOperation(  
       value = "Find purchase order by ID",  
       notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",  
       response = Order.class,  
       tags = { "Pet Store" })  
-   public ResponseEntity<Order> getOrderById(@PathVariable("orderId") String orderId)  
-      throws NotFoundException {  
-    Order order = storeData.get(Long.valueOf(orderId));  
-    if (null != order) {  
-      return ok(order);  
-    } else {  
-      throw new NotFoundException(404, "Order not found");  
+  public ResponseEntity<Order> getOrderById(@PathVariable("orderId") String orderId)  throws NotFoundException {  
+     Order order = storeData.get(Long.valueOf(orderId));  
+     if (null != order) {  
+     return ok(order);  
+     } else {  
+         throw new NotFoundException(404, "Order not found");  
      }  
-  }  
+  }
+
+``` 
+
 #### 3. ApiParam标记
+
 * ApiParam请求属性,使用方式：  
 public ResponseEntity<User> createUser(@RequestBody @ApiParam(value = "Created user object", required = true)  User user)  
  与Controller中的方法并列使用。
- #####属性配置： 
+ 
+##### 属性配置： 
     
 | 属性名称 | 备注    | 
 | :--------:  | :---|
