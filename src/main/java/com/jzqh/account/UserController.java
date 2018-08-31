@@ -26,8 +26,7 @@ public class UserController {
     @RequestMapping("Menu/get")
     @ResponseBody
     public Response getMenu(@SessionAttribute User user) {
-        MenuBo menuBo = MenuUtil.buildTree(user.getMenus());
-        return Response.OK(menuBo);
+        return Response.OK("OK");
     }
 
     @RequestMapping("Action/get")
