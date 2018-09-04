@@ -2,7 +2,7 @@
 
 ## 约定
 
-* 除了登录接口外，所有的请求需要在cookie中放置token=xxxxx
+* 除了登录接口外，所有的请求需要在header中放置token
 
 * token的正确性由服务端保证
 
@@ -65,16 +65,15 @@ response:
 }
 ```
 
-## 获取菜单列表
+## 获取当前用户可用功能列表
 
-* 菜单数据结构说明
+* 当前用户可用功能列表数据结构说明
 
-> 如果菜单为一级菜单，则children为其本身  
-如果菜单为二级及以下菜单则children是其子菜单
+
 
 * 例子
 
-path:/User/Menu/get
+path:/User/Functions/get
 
 ```json
 request:
@@ -85,54 +84,34 @@ request:
 response:
 {
     "status": "OK",
-    "result": 
-    [
-      {
-          "path": "", //默认跳转进来的首页
-          "component": "Layout",  //这个Layout是方便前端用来做判断处理的
-          "redirect": "dashboard",
-          "children": [
-              {
-                  "path": "dashboard",
-                  "component": "dashboard/index",  //组件文件名称
-                  "meta": {
-                      "title": "首页" // 菜单名称
-                  }
-              }
-          ]
-      },
-      {
-          "path": "/example",
-          "component": "Layout",
-          "redirect": "/example/table",
-          "name": "Example",
-          "meta": {
-              "title": "案例"
-          },
-          "children": [
-              {
-                  "path": "table",
-                  "name": "Table",
-                  "component": "table/index",
-                  "meta": {
-                      "title": "表格"
-                  }
-              },
-              {
-                  "path": "tree",
-                  "name": "Tree",
-                  "component": "tree/index",
-                  "meta": {
-                      "title": "树形菜单"
-                  }
-              }
-          ]
-      },
-      {
-          "path": "*",
-          "redirect": "/404",  //报错页面404
-          "hidden": true
-      }
+    "result": [
+        {
+            "name": "添加"
+        },
+        {
+            "name": "获取功能列表"
+        },
+        {
+            "name": "公司controller"
+        },
+        {
+            "name": "/BankAccount"
+        },
+        {
+            "name": "用户相关"
+        },
+        {
+            "name": "获取用户信息"
+        },
+        {
+            "name": ""
+        },
+        {
+            "name": "xiaobai"
+        },
+        {
+            "name": "登陆"
+        }
     ]
 }
 
