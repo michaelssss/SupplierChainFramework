@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @Controller
-@RequestMapping(name="Address")
-@Api(tags = "/Address",description="公司地址信息管理")
+@RequestMapping(value = "Address")
+@Api(value = "公司地址信息管理", tags = "/Address", description = "公司地址信息管理")
 public class AddressController {
     @Autowired
     private CompanyRepository repository;
 
     @ResponseBody
     @RequestMapping(value = "add")
-    @ApiOperation(value = "添加地址",httpMethod="POST")
+    @ApiOperation(value = "添加地址", httpMethod = "POST")
     public Response addAddress(@ApiParam(name = "id", value = "地址id", required = true) @RequestParam(value = "id") Long id, @RequestBody Address address) {
         CompanyImpl company = repository.findOne(id);
         company.addAddress(address);
