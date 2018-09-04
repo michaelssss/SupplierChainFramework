@@ -2,12 +2,14 @@ package com.michaelssss.rzzl2.basicinfomanagement.service;
 
 import com.michaelssss.rzzl2.basicinfomanagement.Company;
 import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.CompanyAuditHistoryEntity;
+import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.CompanyImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,5 +33,13 @@ public class CompanyHistoryQuery {
             companies.add(companyAuditHistoryEntity1.getCompany());
         }
         return companies;
+    }
+
+    public CompanyAuditHistoryEntity addNewRecord(Company company) {
+        CompanyAuditHistoryEntity companyAuditHistoryEntity = new CompanyAuditHistoryEntity();
+        companyAuditHistoryEntity.setHistoryId(Long.toString(new Date().getTime()));
+        companyAuditHistoryEntity.setCompany((CompanyImpl) company);
+        companyAuditHistoryEntity.setCompanyName(company.getPartnerName());
+        return companyHistoryRepository.saveAndFlush(companyAuditHistoryEntity);
     }
 }

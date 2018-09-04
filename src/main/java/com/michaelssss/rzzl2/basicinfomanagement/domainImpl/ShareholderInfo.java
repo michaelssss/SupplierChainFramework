@@ -1,11 +1,15 @@
 package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
 @Table(name = "company_shareholder_info")
 public class ShareholderInfo {
 
