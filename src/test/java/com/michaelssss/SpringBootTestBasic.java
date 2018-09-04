@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@SpringBootTest(classes = Rzzl2Application.class)
+@SpringBootTest(classes = SupplierChainFramework.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class SpringBootTestBasic {
     @Before

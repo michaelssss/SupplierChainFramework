@@ -97,7 +97,7 @@ public class UserImpl implements User, Serializable {
             token.setToken(UUID.randomUUID().toString());
             token.setOutdate(outdate);
             token.setUser(this);
-            token = SpringContextHolder.getBean(TokenCatalog.class).save(token);
+            token = SpringContextHolder.getBean(TokenCatalog.class).saveAndFlush(token);
             return token;
         }
         return null;
