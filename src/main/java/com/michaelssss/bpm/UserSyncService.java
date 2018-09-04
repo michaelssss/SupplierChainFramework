@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * 本类用于同步自有账号系统与Activiti账号系统
+ */
 @Service
 @Slf4j
 public class UserSyncService extends Action {

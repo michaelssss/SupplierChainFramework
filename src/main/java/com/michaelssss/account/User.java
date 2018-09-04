@@ -49,6 +49,8 @@ public interface User {
 
     /**
      * 登陆
+     *
+     * @return 若登陆失败返回null，成功则返回相应的Token
      */
     Token login(String password, Date outdate);
 }
