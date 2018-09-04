@@ -1,7 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement.customer;
 
 import com.michaelssss.SpringBootTestBasic;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.*;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.*;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import org.junit.Assert;
 import org.junit.Test;

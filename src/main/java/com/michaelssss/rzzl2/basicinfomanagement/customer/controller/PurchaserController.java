@@ -2,11 +2,11 @@ package com.michaelssss.rzzl2.basicinfomanagement.customer.controller;
 
 
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.CompanyImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.EntryApplyPurchaseImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.PurchaserImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.PurchaseClientApplyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.PurchaserImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.EntryApplyPurchaseRepository;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.PurchaseClientApplyRepository;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.PurchaserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class PurchaserController {
     @Autowired
     PurchaserRepository purchaserRepository;
     @Autowired
-    EntryApplyPurchaseRepository applyPurchaseRepository;
+    PurchaseClientApplyRepository applyPurchaseRepository;
     @Autowired
     private CompanyRepository repository;
 
@@ -35,14 +35,14 @@ public class PurchaserController {
 
     @ResponseBody
     @RequestMapping(value = "addRequestPermit")
-    public Response addPurchaserRequestPermit(EntryApplyPurchaseImpl entryApplyPurchase) {
+    public Response addPurchaserRequestPermit(PurchaseClientApplyImpl entryApplyPurchase) {
         entryApplyPurchase.requestPermit();
         return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping(value = "requestPermit")
-    public Response PurchaserRequestPermit(EntryApplyPurchaseImpl entryApplyPurchase) {
+    public Response PurchaserRequestPermit(PurchaseClientApplyImpl entryApplyPurchase) {
         entryApplyPurchase.requestPermit();
         return Response.OK("");
     }
@@ -50,14 +50,14 @@ public class PurchaserController {
     @ResponseBody
     @RequestMapping(value = "queryAllPermitInfo")
     public Response queryAllPermitInfo() {
-        List<EntryApplyPurchaseImpl> applyPurchaseList = applyPurchaseRepository.findAll();
+        List<PurchaseClientApplyImpl> applyPurchaseList = applyPurchaseRepository.findAll();
         return Response.OK(applyPurchaseList);
     }
 
     @ResponseBody
     @RequestMapping(value = "permitId")
     public Response queryPermitInfoById(@RequestParam(value = "id") Long id) {
-        EntryApplyPurchaseImpl entryApplyPurchase = applyPurchaseRepository.findOne(id);
+        PurchaseClientApplyImpl entryApplyPurchase = applyPurchaseRepository.findOne(id);
         return Response.OK(entryApplyPurchase);
     }
 

@@ -3,7 +3,7 @@ package com.michaelssss.rzzl2.basicinfomanagement.customer.controller;
 
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.CompanyImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

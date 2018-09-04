@@ -1,9 +1,9 @@
 package com.michaelssss.rzzl2.basicinfomanagement.customer.controller;
 
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.EntryApplySupplierImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.SupplierImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.EntryApplySupplierRepository;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.SupplierClientApply;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.SupplierImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.SupplierClientApplyRepository;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class SupplierController {
     @Autowired
     private SupplierRepository supplierRepository;
     @Autowired
-    private EntryApplySupplierRepository entryApplySupplierRepository;
+    private SupplierClientApplyRepository entryApplySupplierRepository;
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -61,14 +61,14 @@ public class SupplierController {
 
     @ResponseBody
     @RequestMapping(value = "addRequestPermit")
-    public Response addPurchaserRequestPermit(EntryApplySupplierImpl entryApplySupplier) {
+    public Response addPurchaserRequestPermit(SupplierClientApply entryApplySupplier) {
         entryApplySupplier.addInfo();
         return Response.OK("");
     }
 
     @ResponseBody
     @RequestMapping(value = "requestPermit")
-    public Response PurchaserRequestPermit(EntryApplySupplierImpl entryApplySupplier) {
+    public Response PurchaserRequestPermit(SupplierClientApply entryApplySupplier) {
         entryApplySupplier.updateInfo();
         return Response.OK("");
     }
@@ -76,14 +76,14 @@ public class SupplierController {
     @ResponseBody
     @RequestMapping(value = "queryAllPermitInfo")
     public Response queryAllPermitInfo() {
-        List<EntryApplySupplierImpl> applySupplierList = entryApplySupplierRepository.findAll();
+        List<SupplierClientApply> applySupplierList = entryApplySupplierRepository.findAll();
         return Response.OK(applySupplierList);
     }
 
     @ResponseBody
     @RequestMapping(value = "requestPermitId")
     public Response queryPermitInfoById(@RequestParam(value = "id") Long id) {
-        EntryApplySupplierImpl applySupplierList = entryApplySupplierRepository.findOne(id);
+        SupplierClientApply applySupplierList = entryApplySupplierRepository.findOne(id);
         return Response.OK(applySupplierList);
     }
 }

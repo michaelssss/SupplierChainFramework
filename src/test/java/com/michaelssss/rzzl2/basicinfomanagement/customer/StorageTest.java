@@ -2,8 +2,8 @@ package com.michaelssss.rzzl2.basicinfomanagement.customer;
 
 import com.michaelssss.SpringBootTestBasic;
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.CompanyImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.StorageImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.StorageImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import org.junit.Test;
 

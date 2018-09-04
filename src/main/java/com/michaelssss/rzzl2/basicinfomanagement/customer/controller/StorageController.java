@@ -1,7 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement.customer.controller;
 
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.StorageImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.StorageImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.StorageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

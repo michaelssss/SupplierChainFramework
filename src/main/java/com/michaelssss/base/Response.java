@@ -2,6 +2,9 @@ package com.michaelssss.base;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
+
+import java.util.Collection;
 
 /**
  * Sample:
@@ -11,13 +14,15 @@ import lombok.ToString;
  *      return body;
  * </pre>
  *
- * @param <T> 返回值的内容的泛型，其中考虑到都是内网操作，故而分页等功能由前端完成，后端不提供分页的支持
+ * @param <T> 返回值的内容的泛型
  */
 @Data
 @ToString
 public class Response<T> {
     private Status status;
     private T result;
+    private Integer currentPage;
+    private Integer total;
 
     private Response() {
     }
@@ -26,6 +31,20 @@ public class Response<T> {
         Response response = new Response<>();
         response.status = Status.OK;
         response.result = o;
+        return response;
+    }
+
+    /**
+     * 仅用于查询需要分页的业务数据使用
+     *
+     * @param collection 数据内容
+     * @param page       分页情况
+     * @return 结果
+     */
+    public static Response<?> OK(Collection<?> collection, Page page) {
+        Response response = OK(collection);
+        response.currentPage = page.getNumber();
+        response.total = page.getTotalPages();
         return response;
     }
 

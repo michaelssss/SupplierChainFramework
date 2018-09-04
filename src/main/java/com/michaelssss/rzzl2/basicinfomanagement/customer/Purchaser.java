@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement.customer;
 
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.EntryApplyPurchaseImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.PurchaseClientApplyImpl;
 
 /**
  * @Description:合作伙伴基础信息资金方信息
@@ -32,6 +32,6 @@ public interface Purchaser {
     /***
      * 添加准入信息
      */
-    void addPermitInfo(EntryApplyPurchaseImpl entryApplyPurchase);
+    void addPermitInfo(PurchaseClientApplyImpl entryApplyPurchase);
 
 }

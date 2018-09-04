@@ -1,8 +1,8 @@
 package com.michaelssss.rzzl2.basicinfomanagement.customer.controller;
 
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.CompanyImpl;
-import com.michaelssss.rzzl2.basicinfomanagement.customer.customerimpl.ShareholderInfo;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.customer.domainImpl.ShareholderInfo;
 import com.michaelssss.rzzl2.basicinfomanagement.customer.respository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
