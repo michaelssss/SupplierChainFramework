@@ -1,4 +1,5 @@
 #### 常用到的注解有：
+
 * Api
 
 * ApiOperation
@@ -23,14 +24,14 @@ Api 用在类上，说明该类的作用。可以标记一个Controller类做为
 
 * 与Controller注解并列使用。
 
-##### 属性配置：   
-    
-| 属性名称 | 备注    | 
+##### 属性配置：
+
+| 属性名称 | 备注    |
 | :--------:  | :---|
-|value	|            url的路径值
-|tags	|            如果设置这个值、value的值会被覆盖 一般用这个
-|description|	        对api资源的描述
-|basePath|	        基本路径可以不配置
+|value|url的路径值
+|tags|如果设置这个值、value的值会被覆盖 一般用这个
+|description|对api资源的描述
+|basePath|基本路径可以不配置
 |position|	        如果配置多个Api 想改变显示的顺序位置
 |produces|	        For example, "application/json, application/xml"
 |consumes|	        For example, "application/json, application/xml"
@@ -56,7 +57,7 @@ Api 用在类上，说明该类的作用。可以标记一个Controller类做为
 @ApiOperation( value = "Find purchase order by ID",  
           notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",  
           response = Order,
-          tags = {"Pet Store"}) 
+          tags = {"Pet Store"})
 ```
 
            
@@ -127,7 +128,9 @@ public ResponseEntity<User> createUser(@RequestBody @ApiParam(value = "Created u
       @PathVariable("orderId") String orderId)  
 ------------------------------------------------------------------------------------------------------------------------
 ####4. ApiResponse
-* ApiResponse：响应配置，使用方式：  
+
+* ApiResponse：响应配置，使用方式：
+  
 @ApiResponse(code = 400, message = "Invalid user supplied")  
 与Controller中的方法并列使用。
 #####属性配置： 
