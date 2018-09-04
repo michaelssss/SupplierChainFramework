@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.stockmanagement;
 
-import com.michaelssss.utils.PhoneNumber;
+import com.michaelssss.annotation.PhoneNumber;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;

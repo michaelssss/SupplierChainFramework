@@ -1,6 +1,6 @@
 package com.michaelssss.account;
 
-import com.michaelssss.utils.PhoneNumber;
+import com.michaelssss.annotation.PhoneNumber;
 import lombok.Data;
 
 import javax.persistence.*;

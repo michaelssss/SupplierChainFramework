@@ -1,7 +1,7 @@
 package com.michaelssss.rzzl2.utils;
 
 import com.michaelssss.SpringBootTestBasic;
-import com.michaelssss.utils.PhoneChecker;
+import com.michaelssss.annotation.PhoneNumberValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ public class PhoneCheckerTest extends SpringBootTestBasic {
 
     @Test
     public void testIsValid() {
-        PhoneChecker phoneChecker = new PhoneChecker();
+        PhoneNumberValidator phoneChecker = new PhoneNumberValidator();
         final String actualPhone = "18124601060";
         final String fakePhone = "12345678901";
         Assert.assertTrue(phoneChecker.isValid(actualPhone, null));

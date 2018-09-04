@@ -1,4 +1,4 @@
-package com.michaelssss.utils;
+package com.michaelssss.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PhoneChecker.class)
+@Constraint(validatedBy = PhoneNumberValidator.class)
 @Documented
 public @interface PhoneNumber {
     String message() default "{phone string not right}";
