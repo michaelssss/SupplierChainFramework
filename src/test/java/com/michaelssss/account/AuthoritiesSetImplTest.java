@@ -14,11 +14,10 @@ public class AuthoritiesSetImplTest extends SpringBootTestBasic {
     @Autowired
     private AuthSetCatalog authSetCatalog;
 
-    private static Authority getAuthority() {
+    private static FunctionName getAuthority() {
         Random random = new Random();
-        Authority authority = new Authority();
-        authority.setPath("/home/test" + random.nextInt());
-        return authority;
+        FunctionName functionName = new FunctionName();
+        return functionName;
     }
 
     @Test
@@ -26,7 +25,7 @@ public class AuthoritiesSetImplTest extends SpringBootTestBasic {
         AuthoritiesSetImpl authoritiesSet = new AuthoritiesSetImpl();
         authoritiesSet.setName("testAuthSet");
         authoritiesSet.addParentAuthSet(authoritiesSet);
-        Set<Authority> authorities = new HashSet<>();
+        Set<FunctionName> authorities = new HashSet<>();
         for (int i = 0; i < 20; i++) {
             authorities.add(getAuthority());
         }
@@ -43,7 +42,7 @@ public class AuthoritiesSetImplTest extends SpringBootTestBasic {
         AuthoritiesSetImpl authoritiesSet = new AuthoritiesSetImpl();
         authoritiesSet.setName("testAuthSet");
         authoritiesSet.addParentAuthSet(authoritiesSet);
-        Set<Authority> authorities = new HashSet<>();
+        Set<FunctionName> authorities = new HashSet<>();
         for (int i = 0; i < 1; i++) {
             authorities.add(getAuthority());
         }
@@ -65,7 +64,7 @@ public class AuthoritiesSetImplTest extends SpringBootTestBasic {
         AuthoritiesSetImpl authoritiesSet = new AuthoritiesSetImpl();
         authoritiesSet.setName("testAuthSet");
         authoritiesSet.addParentAuthSet(authoritiesSet);
-        Set<Authority> authorities = new HashSet<>();
+        Set<FunctionName> authorities = new HashSet<>();
         for (int i = 0; i < 1; i++) {
             authorities.add(getAuthority());
         }

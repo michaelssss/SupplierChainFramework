@@ -34,9 +34,9 @@ public class RootUser extends Action {
             root.registered();
         }
         root = userCatalog.findOne(Example.of(sample));
-        for (Authority authority : authorityCatalog.findAll()) {
-            root.authority(authority);
-            log.debug("auth root authority: " + authority.getName());
+        for (FunctionName functionName : authorityCatalog.findAll()) {
+            root.authority(functionName);
+            log.debug("auth root functionName: " + functionName.getFunctionName());
         }
         userCatalog.saveAndFlush(root);
         log.info("auth root all authority");

@@ -11,10 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 @NoArgsConstructor
@@ -40,8 +37,7 @@ public class UserImpl implements User, Serializable {
     private Set<AuthoritiesSetImpl> authoritiesSets = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy(value = "`order` ASC")
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<FunctionName> authorities = new HashSet<>();
 
     @Override
     public String getUsername() {
@@ -56,55 +52,31 @@ public class UserImpl implements User, Serializable {
 
 
     @Override
-    public void authority(User other, Authority authority) {
-        if (hasAuthority(authority)) {
-            other.authority(authority);
+    public void authority(User other, FunctionName functionName) {
+        if (hasAuthority(functionName.getUrl())) {
+            other.authority(functionName);
         }
     }
 
     @Override
-    public void authority(Authority authority) {
-        this.authorities.add(authority);
+    public void authority(FunctionName functionName) {
+        this.authorities.add(functionName);
     }
 
     @Override
-    public Set<Authority> getMenus() {
-        HashSet<Authority> authorities = new HashSet<>();
-        for (Authority a : this.authorities) {
-            if (a.isMenu()) {
-                authorities.add(a);
-            }
-        }
-        return authorities;
-    }
-
-    @Override
-    public Set<Authority> getActions() {
-        HashSet<Authority> authorities = new HashSet<>();
-        for (Authority a : this.authorities) {
-            if (a.isAction()) {
-                authorities.add(a);
-            }
-        }
-        return authorities;
-    }
-
-    @Override
-    public boolean hasAuthority(Authority authority) {
-        return this.hasAuthority(authority.getPath());
-    }
-
-    @Override
-    public boolean hasAuthority(String menuUrl) {
-        Set<Authority> set = new HashSet<>();
+    public Set<FunctionName> getHasAuthorityFunctionName() {
+        HashSet<FunctionName> functionNames = new HashSet<>(this.authorities);
         for (AuthoritiesSet authoritiesSet : this.authoritiesSets) {
-            set.addAll(authoritiesSet.getAllAuthority());
+            functionNames.addAll(authoritiesSet.getAllAuthority());
         }
-        for (Authority authority : this.authorities) {
-            set.add(authority);
-        }
-        for (Authority authority : set) {
-            if (authority.getPath().equals(menuUrl)) {
+        return functionNames;
+    }
+
+    @Override
+    public boolean hasAuthority(String functionUrl) {
+        Collection<FunctionName> functionNames = getHasAuthorityFunctionName();
+        for (FunctionName functionName : functionNames) {
+            if (functionName.getUrl().equals(functionUrl)) {
                 return true;
             }
         }

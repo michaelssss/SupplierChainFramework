@@ -1,6 +1,8 @@
 package com.michaelssss.account;
 
 import com.michaelssss.base.Response;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Controller
+@Api(value = "用户相关")
 @RequestMapping(value = "User")
 public class UserController {
     private UserCatalog userCatalog;
@@ -23,26 +26,23 @@ public class UserController {
         this.userCatalog = userCatalog;
     }
 
-    @RequestMapping("Menu/get")
+    @RequestMapping("Functions/get")
     @ResponseBody
-    public Response getMenu(@SessionAttribute User user) {
-        return Response.OK("OK");
-    }
-
-    @RequestMapping("Action/get")
-    @ResponseBody
-    public Response getActions(@SessionAttribute User user) {
-        return Response.OK(user.getActions());
+    @ApiOperation(value = "获取功能列表")
+    public Response getFunctions(@SessionAttribute User user) {
+        return Response.OK(user.getHasAuthorityFunctionName());
     }
 
     @RequestMapping("Profile/get")
     @ResponseBody
+    @ApiOperation(value = "获取用户信息")
     public Response getProfile(@SessionAttribute User user) {
         return Response.OK(user.getProfile());
     }
 
     @RequestMapping(value = "login")
     @ResponseBody
+    @ApiOperation(value = "登陆")
     public Response login(@RequestBody Map<String, Object> requestMap) throws IOException {
         String username = (String) requestMap.get("username");
         UserImpl example = UserImpl.builder().username(username).build();

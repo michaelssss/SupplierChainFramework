@@ -24,7 +24,7 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<FunctionName> authorities = new HashSet<>();
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -56,13 +56,13 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     }
 
     @Override
-    public void authority(Authority authority) {
-        this.authorities.add(authority);
+    public void authority(FunctionName functionName) {
+        this.authorities.add(functionName);
     }
 
     @Override
-    public void unAuthority(Authority authority) {
-        this.authorities.remove(authority);
+    public void unAuthority(FunctionName functionName) {
+        this.authorities.remove(functionName);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     }
 
     @Override
-    public Set<Authority> getAllAuthority() {
+    public Set<FunctionName> getAllAuthority() {
         return Collections.unmodifiableSet(this.authorities);
     }
 }

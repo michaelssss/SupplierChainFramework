@@ -1,14 +1,16 @@
 package com.michaelssss.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.Set;
 
 public interface User {
-    void authority(User other, Authority authority);
+    void authority(User other, FunctionName functionName);
 
     UserProfile getProfile();
 
-    void authority(Authority authority);
+    void authority(FunctionName functionName);
 
     /**
      * @return 用户名
@@ -28,31 +30,17 @@ public interface User {
      *
      * @return
      */
-    Set<Authority> getMenus();
-
-    /**
-     * 获取当前用户的权限
-     *
-     * @return
-     */
-    Set<Authority> getActions();
+    @JsonIgnore
+    Set<FunctionName> getHasAuthorityFunctionName();
 
 
     /**
-     * 判断用户是否拥有此菜单的权限
+     * 判断用户是否拥有此功能的权限
      *
-     * @param menuUrl 需要判断的URL
+     * @param functionName 需要判断的功能名称
      * @return Boolean
      */
-    boolean hasAuthority(Authority menuUrl);
-
-    /**
-     * 判断用户是否拥有此菜单的权限
-     *
-     * @param menuUrl 需要判断的URL
-     * @return Boolean
-     */
-    boolean hasAuthority(String menuUrl);
+    boolean hasAuthority(String functionName);
 
     /**
      * 注册一个用户

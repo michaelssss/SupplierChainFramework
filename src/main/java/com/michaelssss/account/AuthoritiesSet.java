@@ -18,16 +18,16 @@ public interface AuthoritiesSet {
     /**
      * 给予一个权限
      *
-     * @param authority
+     * @param functionName
      */
-    void authority(Authority authority);
+    void authority(FunctionName functionName);
 
     /**
      * 去除一个权限
      *
-     * @param authority
+     * @param functionName
      */
-    void unAuthority(Authority authority);
+    void unAuthority(FunctionName functionName);
 
-    Set<Authority> getAllAuthority();
+    Set<FunctionName> getAllAuthority();
 }
