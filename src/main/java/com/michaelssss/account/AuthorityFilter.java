@@ -29,7 +29,7 @@ public class AuthorityFilter implements Filter {
         if(!isSwaggerUri){
             if (!request1.getRequestURI().equals("/User/login")&& !user.hasAuthority(uri)) {
                 log.info("user" + user.getUsername() + " ,try to access" + request1.getRequestURI() + " ,ip=" + request1.getRemoteAddr());
-                response1.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response1.setStatus(HttpServletResponse.SC_OK);
                 response1.getWriter().write(JSON.toJSONString(Response.NonOK("user has no right access " + uri)));
                 return;
             }
