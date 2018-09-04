@@ -56,8 +56,8 @@ public class CompanyTest extends SpringBootTestBasic {
     }
 
     public Address getAddress() {
-        Address address = Address.builder().addressType(Long.valueOf(1)).area(Long.valueOf(1)).city(2l)
-                .connectEmail("125566@sin.com").connectPeople("李四").connectPhone("13975015246").detail("待定").isDefault("是").province(1L).remark("测试").build();
+        Address address = Address.builder().addressType(Long.toString(1)).area(Long.toString(1)).city(Long.toString(2l))
+                .connectEmail("125566@sin.com").connectPeople("李四").connectPhone("13975015246").detail("待定").isDefault("是").province(Long.toString(1L)).remark("测试").build();
         return address;
     }
 
@@ -93,12 +93,12 @@ public class CompanyTest extends SpringBootTestBasic {
 
     @Test
     public void addAddress() {
-        Address address = Address.builder().addressType(2l).area(3l).city(2l)
-                .connectEmail("125566@sin.com").connectPeople("王五").connectPhone("13975015246").detail("待定").isDefault("是").province(1L).remark("测试").build();
+        Address address = Address.builder().addressType(Long.toString(2l)).area(Long.toString(3l)).city(Long.toString(2l))
+                .connectEmail("125566@sin.com").connectPeople("王五").connectPhone("13975015246").detail("待定").isDefault("是").province(Long.toString(1L)).remark("测试").build();
 
 
-        Address address1 = Address.builder().addressType(Long.valueOf(1)).area(Long.valueOf(1)).city(2l)
-                .connectEmail("125566@sin.com").connectPeople("李四").connectPhone("13975015246").detail("待定").isDefault("是").province(1L).remark("测试").build();
+        Address address1 = Address.builder().addressType(Long.toString(1)).area(Long.toString(1)).city(Long.toString(2l))
+                .connectEmail("125566@sin.com").connectPeople("李四").connectPhone("13975015246").detail("待定").isDefault("是").province(Long.toString(1L)).remark("测试").build();
         Set<Address> addressSet = new HashSet<>();
         addressSet.add(address1);
         Company company = CompanyImpl.builder().id(2l).partnerName("测试公司更新")

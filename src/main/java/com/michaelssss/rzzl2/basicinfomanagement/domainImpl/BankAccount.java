@@ -1,6 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "company_bank_account")
 public class BankAccount {
     @Id
