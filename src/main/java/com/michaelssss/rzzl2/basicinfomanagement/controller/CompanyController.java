@@ -35,7 +35,7 @@ public class CompanyController {
     @ApiOperation(value = "添加")
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public Response addCompanyInfo(@RequestBody CompanyImpl company) {
-        company.addInfo();
+        company.save();
         return Response.OK(company);
     }
 

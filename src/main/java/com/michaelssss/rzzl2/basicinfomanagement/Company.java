@@ -74,7 +74,7 @@ public interface Company {
     /**
      * 添加公司的基础信息
      */
-    void addInfo();
+    void save();
 
     /**
      * 公司名称

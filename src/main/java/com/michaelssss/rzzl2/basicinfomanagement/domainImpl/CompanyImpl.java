@@ -120,8 +120,7 @@ public class CompanyImpl implements Company {
 
 
     @Override
-    public void addInfo() {
-
+    public void save() {
         CompanyImpl company = CompanyImpl.builder().build();
         company.setPartnerName(this.partnerName);
         //创建实例
