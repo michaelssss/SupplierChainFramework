@@ -25,7 +25,7 @@ public class BusinessCodeGenerator {
         RecordEntity actual;
         sample.setPrefix(prefix);
         sample.setClazzName(clazz.getSimpleName());
-        if (recordExsited(sample)) {
+        if (recordExist(sample)) {
             actual = recordEntityRepository.findOne(Example.of(sample));
             actual.setSequence(actual.getSequence() + 1L);
         } else {
@@ -38,7 +38,7 @@ public class BusinessCodeGenerator {
         return actual.getPrefix() + "-" + actual.getSequence();
     }
 
-    private boolean recordExsited(RecordEntity sample) {
+    private boolean recordExist(RecordEntity sample) {
         return recordEntityRepository.count(Example.of(sample)) != 0;
     }
 }
