@@ -17,6 +17,7 @@
 *.ipr
 *.log
 logs
+application.properties
 
 ### NetBeans ###
 /nbproject/private/
