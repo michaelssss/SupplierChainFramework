@@ -206,6 +206,8 @@ public interface Company {
      */
     String getSource();
 
+    String getHistoryId();
+
     /**
      * 公司地址列表
      *
@@ -234,5 +236,9 @@ public interface Company {
      */
     Set<Contact> getContactSet();
 
+    /**
+     * 产生一条审核记录，生成一条新记录信息
+     */
+    void applyAudit();
 
 }

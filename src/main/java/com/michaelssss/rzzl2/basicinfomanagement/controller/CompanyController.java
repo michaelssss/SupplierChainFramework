@@ -1,22 +1,19 @@
 package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
 
-import com.michaelssss.SpringContextHolder;
 import com.michaelssss.base.Response;
+import com.michaelssss.rzzl2.basicinfomanagement.*;
 import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.*;
-import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
 import com.michaelssss.rzzl2.basicinfomanagement.service.CompanyHistoryQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -30,12 +27,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("Company")
 public class CompanyController {
-    private CompanyRepository repository;
     private CompanyHistoryQuery companyHistoryQuery;
 
     @Autowired
-    public CompanyController(CompanyRepository repository, CompanyHistoryQuery companyHistoryQuery) {
-        this.repository = repository;
+    public CompanyController(CompanyHistoryQuery companyHistoryQuery) {
         this.companyHistoryQuery = companyHistoryQuery;
     }
 
@@ -47,12 +42,16 @@ public class CompanyController {
         return Response.OK(company);
     }
 
+    /**
+     * 总是查询最新一条
+     *
+     * @return
+     */
     @ResponseBody
     @ApiOperation(value = "查询")
     @RequestMapping(value = "query", method = RequestMethod.POST)
     public Response queryALL() {
-        List<CompanyImpl> hibernateDelegateList = SpringContextHolder.getBean(CompanyRepository.class).findAll();
-        return Response.OK(hibernateDelegateList);
+        return Response.OK(companyHistoryQuery.getAllCompanyLatestHistory());
     }
 
     @ResponseBody
@@ -60,9 +59,8 @@ public class CompanyController {
     @RequestMapping(value = "detail", method = RequestMethod.POST)
     public Response queryCompanyInfoById(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
-        return Response.OK(company);
+        String historyId = map.get("historyId");
+        return Response.OK(companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId));
     }
 
     @ResponseBody
@@ -70,9 +68,10 @@ public class CompanyController {
     @RequestMapping(value = "applyAudit", method = RequestMethod.POST)
     public Response applyAudit(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
-        return Response.OK(null);
+        String historyId = map.get("historyId");
+        Company company = this.companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
+        company.applyAudit();
+        return Response.OK("申请审批成功");
     }
 
     @ResponseBody
@@ -80,6 +79,7 @@ public class CompanyController {
     @RequestMapping(value = "Contact/add", method = RequestMethod.POST)
     public Response addContact(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
         String contactType = map.get("contactType");//联系人类型
         String name = map.get("name");//联系人姓名
         String mobilePhone = map.get("mobilePhone");//移动手机号码
@@ -100,8 +100,7 @@ public class CompanyController {
                 .position(position)
                 .remark(remark)
                 .build();
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
+        Company company = companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         company.addContacts(contact);
         return Response.OK("新增联系人成功");
     }
@@ -111,6 +110,7 @@ public class CompanyController {
     @RequestMapping(value = "ShareHolder/add", method = RequestMethod.POST)
     public Response addShareHolder(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
         String shareholderName = map.get("shareholderName");
         String fundedOfRatio = map.get("fundedOfRatio");
         String contribution = map.get("contribution");
@@ -124,8 +124,7 @@ public class CompanyController {
                 .currency(currency)
                 .investmentOfType(investmentOfType)
                 .remark(remark).build();
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
+        Company company = companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         company.addShareHolder(shareholderInfo);
         return Response.OK("新增股东信息成功");
     }
@@ -135,6 +134,7 @@ public class CompanyController {
     @RequestMapping(value = "BankAccount/add", method = RequestMethod.POST)
     public Response addBankAccount(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
         String accountName = map.get("accountName");//账户名称
         String bankAccount = map.get("bankAccount");//银行账号
         String bankName = map.get("bankName");//开户行名称
@@ -154,8 +154,7 @@ public class CompanyController {
                 .isDefault(isDefault)
                 .remark(remark)
                 .build();
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
+        Company company = companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         company.addBankAccount(bankAccount1);
         return Response.OK("新增账户信息成功");
     }
@@ -165,6 +164,7 @@ public class CompanyController {
     @RequestMapping(value = "Address/add", method = RequestMethod.POST)
     public Response addAddress(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
         String addressType = map.get("addressType");
         String province = map.get("province");
         String city = map.get("city");
@@ -189,8 +189,7 @@ public class CompanyController {
                 .isDefault(isDefault)
                 .remark(remark)
                 .build();
-        CompanyImpl company = CompanyImpl.builder().partnerName(companyName).build();
-        company = this.repository.findOne(Example.of(company));
+        Company company = companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         company.addAddress(address);
         return Response.OK("新增地址成功");
     }
@@ -202,4 +201,55 @@ public class CompanyController {
         String companyName = map.get("companyName");
         return Response.OK(this.companyHistoryQuery.getCompanyAllAuditHistory(companyName));
     }
+
+    @ResponseBody
+    @ApiOperation(value = "申请成为供货商")
+    @RequestMapping(value = "Supplier/apply", method = RequestMethod.POST)
+    public Response applySupplier(@RequestBody Map<String, String> map) {
+        String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
+        Company company = this.companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
+        SupplierClientApply supplierClientApply = SupplierClientApply.builder().build();
+        Supplier supplier = new SupplierImpl();
+        supplier.apply(supplierClientApply, company);
+        return Response.OK("申请成功");
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "申请成为采购商")
+    @RequestMapping(value = "Purchase/apply", method = RequestMethod.POST)
+    public Response applyPurchase(@RequestBody Map<String, String> map) {
+        String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
+        Company company = this.companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
+        PurchaseClientApply purchaseClientApply = PurchaseClientApply.builder().build();
+        Purchaser purchaser = PurchaserImpl.builder().build();
+        purchaser.apply(purchaseClientApply, company);
+        return Response.OK("申请成功");
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "申请成为仓储商")
+    @RequestMapping(value = "Storage/apply", method = RequestMethod.POST)
+    public Response applyStorage(@RequestBody Map<String, String> map) {
+        String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
+        Company company = this.companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
+        Storage storage = new StorageImpl();
+        storage.apply(company);
+        return Response.OK("申请成功");
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "申请成为资金方")
+    @RequestMapping(value = "Fund/apply", method = RequestMethod.POST)
+    public Response applyFund(@RequestBody Map<String, String> map) {
+        String companyName = map.get("companyName");
+        String historyId = map.get("historyId");
+        Company company = this.companyHistoryQuery.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
+        Funding funding = new FundingImpl();
+        funding.apply(company);
+        return Response.OK("申请成功");
+    }
+
 }
