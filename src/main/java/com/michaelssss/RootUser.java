@@ -53,7 +53,7 @@ public class RootUser extends Action {
         UserImpl user = UserImpl.builder().
                 username("8888").
                 password(sha256.getPwd("1")).
-                authorities(new TreeSet<>()).
+                functionNames(new TreeSet<>()).
                 userProfile(testUserProfile).
                 build();
         return user;

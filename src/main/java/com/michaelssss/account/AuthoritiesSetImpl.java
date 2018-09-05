@@ -1,13 +1,15 @@
 package com.michaelssss.account;
 
-import com.michaelssss.SpringContextHolder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -25,50 +27,16 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<FunctionName> authorities = new HashSet<>();
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private AuthoritiesSetImpl parent;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<AuthoritiesSetImpl> children = new ArrayList<>();
-
-    /**
-     * 因为是根对象的引用修改，jpa是无法侦测到此处被修改的，
-     *
-     * @param parent
-     */
-    @Override
-    public void addParentAuthSet(AuthoritiesSet parent) {
-        this.setParent((AuthoritiesSetImpl) parent);
-        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
-    }
-
-    @Override
-    public void addChildrenAuthSet(AuthoritiesSet children) {
-        this.children.add((AuthoritiesSetImpl) children);
-        children.addParentAuthSet(this);
-        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
-    }
-
-    @Override
-    public void removeChildren(AuthoritiesSet children) {
-        this.children.remove((AuthoritiesSetImpl) children);
-        children.addParentAuthSet(null);
-        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
-    }
+    private Set<FunctionName> functionNames = new HashSet<>();
 
     @Override
     public void authority(FunctionName functionName) {
-        this.authorities.add(functionName);
-        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
+        this.functionNames.add(functionName);
     }
 
     @Override
     public void unAuthority(FunctionName functionName) {
-        this.authorities.remove(functionName);
-        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
+        this.functionNames.remove(functionName);
     }
 
     @Override
@@ -93,12 +61,12 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     public String toString() {
         return "AuthoritiesSetImpl{" +
                 "name='" + name + '\'' +
-                ", authorities=" + authorities +
+                ", functionNames=" + functionNames +
                 '}';
     }
 
     @Override
     public Set<FunctionName> getAllAuthority() {
-        return Collections.unmodifiableSet(this.authorities);
+        return Collections.unmodifiableSet(this.functionNames);
     }
 }

@@ -35,10 +35,10 @@ public class UserImpl implements User, Serializable {
     private UserProfile userProfile;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<AuthoritiesSetImpl> authoritiesSets = new HashSet<>();
+    private Set<AuthoritiesSetImpl> groups = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<FunctionName> authorities = new HashSet<>();
+    private Set<FunctionName> functionNames = new HashSet<>();
 
     @Override
     public String getUsername() {
@@ -63,13 +63,13 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public void authority(FunctionName functionName) {
-        this.authorities.add(functionName);
+        this.functionNames.add(functionName);
     }
 
     @Override
     public Set<FunctionName> getHasAuthorityFunctionName() {
-        HashSet<FunctionName> functionNames = new HashSet<>(this.authorities);
-        for (AuthoritiesSet authoritiesSet : this.authoritiesSets) {
+        HashSet<FunctionName> functionNames = new HashSet<>(this.functionNames);
+        for (AuthoritiesSet authoritiesSet : this.groups) {
             functionNames.addAll(authoritiesSet.getAllAuthority());
         }
         return functionNames;

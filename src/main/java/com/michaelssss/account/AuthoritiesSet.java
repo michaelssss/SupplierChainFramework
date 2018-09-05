@@ -11,12 +11,6 @@ public interface AuthoritiesSet {
 
     void setAuthoriesSetname(String name);
 
-    void addParentAuthSet(AuthoritiesSet parent);
-
-    void addChildrenAuthSet(AuthoritiesSet children);
-
-    void removeChildren(AuthoritiesSet children);
-
     /**
      * 给予一个权限
      *
