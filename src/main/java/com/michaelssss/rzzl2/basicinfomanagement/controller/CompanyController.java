@@ -23,7 +23,7 @@ import java.util.Map;
  * @Author:
  * @Date 2018/7/9
  */
-@Api(value = "公司信息")
+@Api(value = "基础信息")
 @Controller
 @RequestMapping("Company")
 public class CompanyController {
