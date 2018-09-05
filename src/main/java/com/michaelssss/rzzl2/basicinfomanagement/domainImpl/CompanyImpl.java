@@ -3,6 +3,7 @@ package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.rzzl2.basicinfomanagement.Company;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
+import com.michaelssss.rzzl2.basicinfomanagement.service.CompanyHistoryQuery;
 import com.michaelssss.rzzl2.exception.ExistException;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,11 +26,14 @@ import java.util.Set;
 @ToString
 @Builder
 @Data
-@Table(name = "company")
+@Table(name = "company", indexes = {
+        @Index(name = "idx_partnerNameHistoryId",
+                columnList = "partner_name,history_id", unique = true)})
 public class CompanyImpl implements Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 64, name = "partner_name")
     private String partnerName;//公司名称
     private String partnerNature;//合作伙伴性质
     private String partnerType;//合作伙伴类型
@@ -57,6 +60,8 @@ public class CompanyImpl implements Company {
     private String registeredAddress;//注册地址
     private String scope;//经营范围
     private String source;//合作伙伴来源
+    @Column(length = 64, name = "history_id")
+    private String historyId;//历史ID
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     private Set<Address> addressSet;
@@ -125,12 +130,10 @@ public class CompanyImpl implements Company {
         company.setPartnerName(this.partnerName);
         //创建实例
         Example<CompanyImpl> ex = Example.of(company);
-        List<CompanyImpl> list = SpringContextHolder.getBean(CompanyRepository.class).findAll(ex);
-        if (list.size() > 0) {
+        if (SpringContextHolder.getBean(CompanyRepository.class).exists(ex)) {
             throw new ExistException("公司名称已存在");
         }
         SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
-
     }
 
     @Override
@@ -281,5 +284,10 @@ public class CompanyImpl implements Company {
     @Override
     public Set<Contact> getContactSet() {
         return Collections.unmodifiableSet(contactSet);
+    }
+
+    @Override
+    public void applyAudit() {
+        SpringContextHolder.getBean(CompanyHistoryQuery.class).addNewRecord(this);
     }
 }

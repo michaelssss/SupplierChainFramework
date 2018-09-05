@@ -19,10 +19,13 @@ public class SupplierImpl implements Supplier {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CompanyImpl company;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private SupplierClientApply supplierClientApply;
 
     @Override
-    public void apply(Company company) {
+    public void apply(SupplierClientApply supplierClientApply, Company company) {
         this.company = (CompanyImpl) company;
+        this.supplierClientApply = supplierClientApply;
         SpringContextHolder.getBean(SupplierRepository.class).saveAndFlush(this);
     }
 }
