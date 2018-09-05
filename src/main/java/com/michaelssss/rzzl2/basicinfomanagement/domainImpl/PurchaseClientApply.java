@@ -42,7 +42,4 @@ public class PurchaseClientApply {
     private String accessStation;//准入状态
     private Date registeredDate;//注册日期
     private String supplier;//拟合作供应商
-    @OneToOne
-    private CompanyImpl company;
-
 }

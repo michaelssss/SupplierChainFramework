@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class CompanyHistoryQuery {
+public class CompanyHistoryService {
     @Autowired
     private CompanyRepository companyRepository;
 

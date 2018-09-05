@@ -3,7 +3,7 @@ package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.rzzl2.basicinfomanagement.Company;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
-import com.michaelssss.rzzl2.basicinfomanagement.service.CompanyHistoryQuery;
+import com.michaelssss.rzzl2.basicinfomanagement.service.CompanyHistoryService;
 import com.michaelssss.rzzl2.exception.ExistException;
 import lombok.Builder;
 import lombok.Data;
@@ -288,6 +288,6 @@ public class CompanyImpl implements Company {
 
     @Override
     public void applyAudit() {
-        SpringContextHolder.getBean(CompanyHistoryQuery.class).addNewRecord(this);
+        SpringContextHolder.getBean(CompanyHistoryService.class).addNewRecord(this);
     }
 }

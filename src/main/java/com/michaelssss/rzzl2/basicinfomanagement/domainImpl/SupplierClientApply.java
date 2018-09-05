@@ -38,7 +38,4 @@ public class SupplierClientApply {
     private String validityOfAdmission;//准入有效期
     private String accessStation;//准入状态
     private Date registeredDate;//注册日期
-    @OneToOne
-    private CompanyImpl company;
-
 }
