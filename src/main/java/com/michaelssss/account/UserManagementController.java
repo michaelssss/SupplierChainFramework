@@ -11,21 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "UserManagement")
 @Api(value = "用户管理")
-public class UserManagement {
+public class UserManagementController {
 
     private UserCatalog userCatalog;
     private FunctionNameCatalog functionNameCatalog;
     private AuthSetCatalog authSetCatalog;
 
     @Autowired
-    public UserManagement(UserCatalog userCatalog, FunctionNameCatalog functionNameCatalog, AuthSetCatalog authSetCatalog) {
+    public UserManagementController(UserCatalog userCatalog, FunctionNameCatalog functionNameCatalog, AuthSetCatalog authSetCatalog) {
         this.userCatalog = userCatalog;
         this.functionNameCatalog = functionNameCatalog;
         this.authSetCatalog = authSetCatalog;
@@ -78,31 +76,22 @@ public class UserManagement {
     @ResponseBody
     public Response createGroup(@RequestBody Map<String, String> map) {
         String groupName = map.get("groupName");
-        AuthoritiesSet group = new AuthoritiesSetImpl();
-        group.setAuthoriesSetname(groupName);
-        authSetCatalog.saveAndFlush((AuthoritiesSetImpl) group);
+        Group group = new GroupImpl();
+        group.setGroupName(groupName);
+        authSetCatalog.saveAndFlush((GroupImpl) group);
         return Response.OK("创建部门成功");
     }
 
-    @RequestMapping(value = "Group/authority")
-    @ApiOperation(value = "部门授权")
+    @RequestMapping(value = "Group/join")
+    @ApiOperation(value = "加入部门")
     @ResponseBody
-    public Response authorityGroup(@RequestBody Map<String, Object> map) {
+    public Response authorityGroup(@SessionAttribute("user") User user, @RequestBody Map<String, Object> map) {
         String groupName = map.get("groupName").toString();
         String[] functionName = (String[]) map.get("functionNames");
-        AuthoritiesSetImpl group = new AuthoritiesSetImpl();
-        group.setAuthoriesSetname(groupName);
+        GroupImpl group = new GroupImpl();
+        group.setGroupName(groupName);
         group = authSetCatalog.findOne(Example.of(group));
-        List<FunctionName> functionNames = new ArrayList<>();
-        for (String functionN : functionName) {
-            FunctionName functionName1 = new FunctionName();
-            functionName1.setFunctionName(functionN);
-            functionName1 = functionNameCatalog.findOne(Example.of(functionName1));
-            functionNames.add(functionName1);
-        }
-        for (FunctionName functionName1 : functionNames) {
-            group.authority(functionName1);
-        }
-        return Response.OK("已授权");
+        group.addUser(user);
+        return Response.OK("已加入");
     }
 }

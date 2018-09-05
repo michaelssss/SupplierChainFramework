@@ -6,6 +6,8 @@ import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -14,12 +16,13 @@ import javax.sql.DataSource;
 public class BpmConfig {
     //流程配置，与spring整合采用SpringProcessEngineConfiguration这个实现
     @Bean
-    public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager) {
+    public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager, ResourceLoader resourceLoader) {
         SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
         processEngineConfiguration.setDataSource(dataSource);
         processEngineConfiguration.setDatabaseSchemaUpdate(SpringProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
         processEngineConfiguration.setDatabaseType(SpringProcessEngineConfiguration.DATABASE_TYPE_MYSQL);
         processEngineConfiguration.setTransactionManager(transactionManager);
+        processEngineConfiguration.setDeploymentResources(new Resource[]{resourceLoader.getResource("classpath:/processes/HelloWorld.bpmn")});
         return processEngineConfiguration;
     } //流程引擎，与spring整合使用factoryBean
 

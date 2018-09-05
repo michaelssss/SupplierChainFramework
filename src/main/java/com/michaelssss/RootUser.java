@@ -52,7 +52,7 @@ public class RootUser extends Action {
         testUserProfile.setPhone("18124601060");
         UserImpl user = UserImpl.builder().
                 username("8888").
-                password(sha256.getPwd("1")).
+                password("1").
                 functionNames(new TreeSet<>()).
                 userProfile(testUserProfile).
                 build();

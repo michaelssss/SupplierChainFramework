@@ -1,8 +1,10 @@
 package com.michaelssss.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.activiti.engine.task.Task;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public interface User {
@@ -62,4 +64,7 @@ public interface User {
     void logout(String token);
 
     void updatePassword(String password);
+
+    @JsonIgnore
+    List<Task> getTasks();
 }

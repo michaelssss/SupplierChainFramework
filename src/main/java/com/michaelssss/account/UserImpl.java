@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 
@@ -35,7 +38,7 @@ public class UserImpl implements User, Serializable {
     private UserProfile userProfile;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<AuthoritiesSetImpl> groups = new HashSet<>();
+    private Set<GroupImpl> groups = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<FunctionName> functionNames = new HashSet<>();
@@ -68,11 +71,7 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public Set<FunctionName> getHasAuthorityFunctionName() {
-        HashSet<FunctionName> functionNames = new HashSet<>(this.functionNames);
-        for (AuthoritiesSet authoritiesSet : this.groups) {
-            functionNames.addAll(authoritiesSet.getAllAuthority());
-        }
-        return functionNames;
+        return Collections.unmodifiableSet(this.functionNames);
     }
 
     @Override
@@ -129,5 +128,13 @@ public class UserImpl implements User, Serializable {
     @Override
     public UserProfile getProfile() {
         return this.userProfile;
+    }
+
+    @Override
+    public List<Task> getTasks() {
+        IdentityService identityService = SpringContextHolder.getBean(IdentityService.class);
+        TaskService taskService = SpringContextHolder.getBean(TaskService.class);
+        org.activiti.engine.identity.User user = identityService.createUserQuery().userId(this.username).singleResult();
+        return taskService.createTaskQuery().taskCandidateOrAssigned(user.getId()).list();
     }
 }
