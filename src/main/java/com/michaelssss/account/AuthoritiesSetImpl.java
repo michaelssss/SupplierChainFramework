@@ -1,5 +1,6 @@
 package com.michaelssss.account;
 
+import com.michaelssss.SpringContextHolder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -41,28 +42,38 @@ public class AuthoritiesSetImpl implements AuthoritiesSet, Serializable {
     @Override
     public void addParentAuthSet(AuthoritiesSet parent) {
         this.setParent((AuthoritiesSetImpl) parent);
+        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
     }
 
     @Override
     public void addChildrenAuthSet(AuthoritiesSet children) {
         this.children.add((AuthoritiesSetImpl) children);
         children.addParentAuthSet(this);
+        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
     }
 
     @Override
     public void removeChildren(AuthoritiesSet children) {
         this.children.remove((AuthoritiesSetImpl) children);
         children.addParentAuthSet(null);
+        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
     }
 
     @Override
     public void authority(FunctionName functionName) {
         this.authorities.add(functionName);
+        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
     }
 
     @Override
     public void unAuthority(FunctionName functionName) {
         this.authorities.remove(functionName);
+        SpringContextHolder.getBean(AuthSetCatalog.class).saveAndFlush(this);
+    }
+
+    @Override
+    public void setAuthoriesSetname(String name) {
+        this.name = name;
     }
 
     @Override

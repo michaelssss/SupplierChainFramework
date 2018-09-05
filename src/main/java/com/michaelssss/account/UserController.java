@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Date;
@@ -54,5 +51,13 @@ public class UserController {
             }
         }
         return Response.NonOK("username or password not validate");
+    }
+
+    @RequestMapping(value = "logout")
+    @ResponseBody
+    @ApiOperation(value = "登出")
+    public Response logout(@SessionAttribute("user") User user, @CookieValue("token") String token) {
+        user.logout(token);
+        return Response.OK("登出成功");
     }
 }

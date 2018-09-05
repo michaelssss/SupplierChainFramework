@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Example;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -53,8 +54,10 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public void authority(User other, FunctionName functionName) {
-        if (hasAuthority(functionName.getUrl())) {
+        if (hasAuthority(functionName.getFunctionName())) {
             other.authority(functionName);
+        } else {
+            throw new AuthorityException("you have no Authority");
         }
     }
 
@@ -85,6 +88,8 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public void registered() {
+        Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
+        this.password = encoder.getPwd(this.password);
         if (StringUtils.isNotEmpty(this.username) && StringUtils.isNotEmpty(this.password)) {
             SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
         }
@@ -101,6 +106,24 @@ public class UserImpl implements User, Serializable {
             return token;
         }
         return null;
+    }
+
+    @Override
+    public void logout(String token) {
+        TokenCatalog tokenCatalog = SpringContextHolder.getBean(TokenCatalog.class);
+        Token sample = new Token();
+        sample.setToken(token);
+        Token token1 = tokenCatalog.findOne(Example.of(sample));
+        if (token1.getUser().uid.equals(this.uid)) {
+            tokenCatalog.delete(token1);
+        }
+    }
+
+    @Override
+    public void updatePassword(String password) {
+        Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
+        this.password = encoder.getPwd(password);
+        SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
     }
 
     @Override

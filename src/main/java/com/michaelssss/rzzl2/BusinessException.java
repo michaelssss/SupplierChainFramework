@@ -1,4 +1,4 @@
-package com.michaelssss.exception;
+package com.michaelssss.rzzl2;
 
 public class BusinessException extends Exception {
     private String message;

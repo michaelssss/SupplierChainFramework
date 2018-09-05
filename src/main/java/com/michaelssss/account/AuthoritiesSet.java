@@ -9,6 +9,8 @@ import java.util.Set;
  */
 public interface AuthoritiesSet {
 
+    void setAuthoriesSetname(String name);
+
     void addParentAuthSet(AuthoritiesSet parent);
 
     void addChildrenAuthSet(AuthoritiesSet children);

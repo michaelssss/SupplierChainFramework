@@ -53,4 +53,13 @@ public interface User {
      * @return 若登陆失败返回null，成功则返回相应的Token
      */
     Token login(String password, Date outdate);
+
+    /**
+     * 使传入Token失效
+     *
+     * @param token 登陆使用Token
+     */
+    void logout(String token);
+
+    void updatePassword(String password);
 }
