@@ -8,20 +8,20 @@ import java.util.Date;
 import java.util.SortedSet;
 
 @Entity
-@Table(name = "receipt_voucher")
+@Table(name = "purchase_invoice")
 @Data
-public class ReceiptVoucherImpl implements ReceiptVoucher {
+public class PurchaseInvoiceImpl implements PurchaseInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
 
     private String type;
-    private String salesOrderCode;
-    private BigDecimal amount;
+    private String purchaseCode;
     private BigDecimal auditAmount;
+    private BigDecimal amount;
     private String paymentMethod;
     private Date transferFinishDate;
-    private String status = UNRECEIVED;
+    private String status = 未付款;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("transfer_date")
     private SortedSet<TransferReceipt> receipts;
@@ -34,7 +34,7 @@ public class ReceiptVoucherImpl implements ReceiptVoucher {
     @Override
     public void confirmAuditTotal(BigDecimal auditTotal) {
         this.auditAmount = auditTotal;
-        this.status = RECEIVEDCONFIRM;
+        this.status = 付款确认;
     }
 
     @Override

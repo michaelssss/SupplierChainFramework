@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.TreeSet;
 
-public class PaymentVoucherImplTest extends SpringBootTestBasic {
+public class PurchaseInvoiceImplTest extends SpringBootTestBasic {
     @Autowired
-    private PaymentVoucherRepository repository;
+    private PurchaseInvoiceCatalog repository;
 
-    static PaymentVoucherImpl fakePaymentVoucher() {
-        PaymentVoucherBuilder builder = PaymentVoucherBuilder.aPaymentVoucherImpl();
+    static PurchaseInvoiceImpl fakePaymentVoucher() {
+        PurchaseInvoiceBuilder builder = PurchaseInvoiceBuilder.aPaymentVoucherImpl();
         builder
                 .type("")
                 .amount(BigDecimal.valueOf(2000))
@@ -28,8 +28,8 @@ public class PaymentVoucherImplTest extends SpringBootTestBasic {
 
     @Test
     public void addPaymentVoucher() {
-        PaymentVoucherImpl paymentVoucher = repository.saveAndFlush(fakePaymentVoucher());
-        PaymentVoucherImpl sample = new PaymentVoucherImpl();
+        PurchaseInvoiceImpl paymentVoucher = repository.saveAndFlush(fakePaymentVoucher());
+        PurchaseInvoiceImpl sample = new PurchaseInvoiceImpl();
         sample.setPurchaseCode("testCode");
         Assert.assertEquals(1L, this.repository.count(Example.of(sample)));
         repository.delete(paymentVoucher);
@@ -37,10 +37,10 @@ public class PaymentVoucherImplTest extends SpringBootTestBasic {
 
     @Test
     public void testConfirmAuditTotal() {
-        PaymentVoucher paymentVoucher = fakePaymentVoucher();
+        PurchaseInvoice paymentVoucher = fakePaymentVoucher();
         paymentVoucher.confirmAuditTotal(BigDecimal.valueOf(1000));
         Assert.assertEquals(BigDecimal.valueOf(1000), paymentVoucher.getAuditTotal());
         Assert.assertEquals(BigDecimal.valueOf(1000), paymentVoucher.getNotAuditTotal());
-        Assert.assertEquals(Voucher.PAYCONFIRM, ((PaymentVoucherImpl) paymentVoucher).getStatus());
+        Assert.assertEquals(Invoice.PAYCONFIRM, ((PurchaseInvoiceImpl) paymentVoucher).getStatus());
     }
 }

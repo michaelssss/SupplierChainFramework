@@ -2,7 +2,7 @@ package com.michaelssss.rzzl2.accountingmanagement;
 
 import java.math.BigDecimal;
 
-public interface ReceiptVoucher extends Voucher {
+public interface PurchaseInvoice extends Invoice {
     void addTransferReceipt(TransferReceipt transferReceipt);
 
     void confirmAuditTotal(BigDecimal auditTotal);

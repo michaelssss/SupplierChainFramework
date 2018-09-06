@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.TreeSet;
 
-public class ReceiptVoucherImplTest extends SpringBootTestBasic {
+public class SalesInvoiceImplTest extends SpringBootTestBasic {
     @Autowired
-    private ReceiptVoucherRepository repository;
+    private SalesInvoiceCatalog repository;
 
-    static ReceiptVoucherImpl fakeReceiptVoucher() {
-        ReceiptVoucherBuilder builder = ReceiptVoucherBuilder.aReceiptVoucherImpl();
+    static SalesInvoiceImpl fakeReceiptVoucher() {
+        SalesInvoiceBuilder builder = SalesInvoiceBuilder.aReceiptVoucherImpl();
         builder
                 .type("")
                 .amount(BigDecimal.valueOf(2000))
@@ -28,8 +28,8 @@ public class ReceiptVoucherImplTest extends SpringBootTestBasic {
 
     @Test
     public void addPaymentVoucher() {
-        ReceiptVoucherImpl receiptVoucher = repository.saveAndFlush(fakeReceiptVoucher());
-        ReceiptVoucherImpl sample = new ReceiptVoucherImpl();
+        SalesInvoiceImpl receiptVoucher = repository.saveAndFlush(fakeReceiptVoucher());
+        SalesInvoiceImpl sample = new SalesInvoiceImpl();
         sample.setSalesOrderCode("testCode");
         Assert.assertEquals(1L, this.repository.count(Example.of(sample)));
         repository.delete(receiptVoucher);
@@ -37,10 +37,10 @@ public class ReceiptVoucherImplTest extends SpringBootTestBasic {
 
     @Test
     public void testConfirmAuditTotal() {
-        ReceiptVoucher receiptVoucher = fakeReceiptVoucher();
+        SalesInvoice receiptVoucher = fakeReceiptVoucher();
         receiptVoucher.confirmAuditTotal(BigDecimal.valueOf(1000));
         Assert.assertEquals(BigDecimal.valueOf(1000), receiptVoucher.getAuditTotal());
         Assert.assertEquals(BigDecimal.valueOf(1000), receiptVoucher.getNotAuditTotal());
-        Assert.assertEquals(Voucher.RECEIVEDCONFIRM, ((ReceiptVoucherImpl) receiptVoucher).getStatus());
+        Assert.assertEquals(Invoice.RECEIVEDCONFIRM, ((SalesInvoiceImpl) receiptVoucher).getStatus());
     }
 }
