@@ -40,7 +40,6 @@ public class UserSyncService extends Action {
         for (UserImpl user : users) {
             if (identityService.createUserQuery().userId(user.getUsername()).count() == 0) {
                 User user1 = identityService.newUser(user.getUsername());
-                user1.setFirstName(user.getProfile().getName());
                 identityService.saveUser(user1);
                 log.info("User " + user.getUsername() + " sync to Activiti");
             }

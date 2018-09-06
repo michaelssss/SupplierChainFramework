@@ -1,5 +1,6 @@
 package com.michaelssss.base;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,9 @@ import java.util.Collection;
 public class Response<T> {
     private Status status;
     private T result;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer currentPage;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer total;
 
     private Response() {

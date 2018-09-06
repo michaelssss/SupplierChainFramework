@@ -1,17 +1,15 @@
 package com.michaelssss;
 
 import com.michaelssss.account.*;
-import com.michaelssss.configuration.ConfigurationCenter;
 import com.michaelssss.daemon.Action;
 import com.michaelssss.daemon.BusinessInitialActionCenter;
 import com.michaelssss.utils.JSON;
-import com.michaelssss.utils.Sha256;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 /**
  * 本类用于返回一个用户对象
@@ -43,9 +41,8 @@ public class RootUser extends Action {
     }
 
     public static UserImpl RootUser() {
-        Sha256 sha256 = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
         UserProfile testUserProfile = new UserProfile();
-        testUserProfile.setAge(23);
+        testUserProfile.setAge("23");
         testUserProfile.setName("testName");
         testUserProfile.setEmail("test@test.com");
         testUserProfile.setSexual("male");
@@ -53,7 +50,7 @@ public class RootUser extends Action {
         UserImpl user = UserImpl.builder().
                 username("8888").
                 password("1").
-                functionNames(new TreeSet<>()).
+                functionNames(new HashSet<>()).
                 userProfile(testUserProfile).
                 build();
         return user;

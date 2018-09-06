@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.util.HashSet;
 import java.util.Map;
 
 @Controller
@@ -20,13 +21,13 @@ public class UserManagementController {
 
     private UserCatalog userCatalog;
     private FunctionNameCatalog functionNameCatalog;
-    private AuthSetCatalog authSetCatalog;
+    private GroupCatalog groupCatalog;
 
     @Autowired
-    public UserManagementController(UserCatalog userCatalog, FunctionNameCatalog functionNameCatalog, AuthSetCatalog authSetCatalog) {
+    public UserManagementController(UserCatalog userCatalog, FunctionNameCatalog functionNameCatalog, GroupCatalog groupCatalog) {
         this.userCatalog = userCatalog;
         this.functionNameCatalog = functionNameCatalog;
-        this.authSetCatalog = authSetCatalog;
+        this.groupCatalog = groupCatalog;
     }
 
     @RequestMapping(value = "User/add")
@@ -35,9 +36,22 @@ public class UserManagementController {
     public Response addUser(@RequestBody Map<String, String> map) {
         String username = map.get("username");
         String password = map.get("password");
+        UserProfile userProfile = new UserProfile();
+        String name = map.get("name");
+        String age = map.get("age");
+        String sexual = map.get("sexual");
+        String phone = map.get("phone");
+        String email = map.get("email");
+        userProfile.setName(name);
+        userProfile.setAge(age);
+        userProfile.setSexual(sexual);
+        userProfile.setPhone(phone);
+        userProfile.setEmail(email);
         User user = UserImpl.builder()
                 .username(username)
                 .password(password)
+                .functionNames(new HashSet<>())
+                .userProfile(userProfile)
                 .build();
         user.registered();
         return Response.OK("新增用户成功");
@@ -78,20 +92,40 @@ public class UserManagementController {
         String groupName = map.get("groupName");
         Group group = new GroupImpl();
         group.setGroupName(groupName);
-        authSetCatalog.saveAndFlush((GroupImpl) group);
+        groupCatalog.saveAndFlush((GroupImpl) group);
         return Response.OK("创建部门成功");
     }
 
     @RequestMapping(value = "Group/join")
     @ApiOperation(value = "加入部门")
     @ResponseBody
-    public Response authorityGroup(@SessionAttribute("user") User user, @RequestBody Map<String, Object> map) {
+    public Response authorityGroup(@RequestBody Map<String, Object> map) {
         String groupName = map.get("groupName").toString();
-        String[] functionName = (String[]) map.get("functionNames");
+        String username = map.get("username").toString();
+        User user = UserImpl.builder().username(username).build();
+        user = this.userCatalog.findOne(Example.of((UserImpl) user));
         GroupImpl group = new GroupImpl();
         group.setGroupName(groupName);
-        group = authSetCatalog.findOne(Example.of(group));
+        group = groupCatalog.findOne(Example.of(group));
         group.addUser(user);
         return Response.OK("已加入");
+    }
+
+    @RequestMapping(value = "Group/Users/list")
+    @ApiOperation(value = "列出部门所有员工")
+    @ResponseBody
+    public Response listUsersInGroup(@RequestBody Map<String, Object> map) {
+        String groupName = map.get("groupName").toString();
+        GroupImpl group = new GroupImpl();
+        group.setGroupName(groupName);
+        group = groupCatalog.findOne(Example.of(group));
+        return Response.OK(group.getUsers());
+    }
+
+    @RequestMapping(value = "Users/list")
+    @ApiOperation(value = "列出所有用户")
+    @ResponseBody
+    public Response listUsers() {
+        return Response.OK(userCatalog.findAll());
     }
 }

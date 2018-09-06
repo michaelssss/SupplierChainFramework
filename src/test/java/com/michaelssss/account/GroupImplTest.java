@@ -8,17 +8,17 @@ import org.springframework.data.domain.Example;
 
 public class GroupImplTest extends SpringBootTestBasic {
     @Autowired
-    private AuthSetCatalog authSetCatalog;
+    private GroupCatalog groupCatalog;
 
     @Test
     public void testAddGroup() {
         GroupImpl authoritiesSet = new GroupImpl();
         authoritiesSet.setName("testAuthSet");
-        authoritiesSet = authSetCatalog.saveAndFlush(authoritiesSet);
+        authoritiesSet = groupCatalog.saveAndFlush(authoritiesSet);
         GroupImpl sample = new GroupImpl();
         sample.setName("testAuthSet");
-        Assert.assertTrue(authSetCatalog.count(Example.of(sample)) != 0);
-        authSetCatalog.delete(authoritiesSet);
+        Assert.assertTrue(groupCatalog.count(Example.of(sample)) != 0);
+        groupCatalog.delete(authoritiesSet);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.michaelssss.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.configuration.ConfigurationCenter;
 import com.michaelssss.utils.Sha256;
@@ -12,6 +13,9 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,14 +35,11 @@ public class UserImpl implements User, Serializable {
     private Long uid;
     @Column(length = 64)
     private String username;
-
+    @JsonIgnore
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserProfile userProfile;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<GroupImpl> groups = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<FunctionName> functionNames = new HashSet<>();
@@ -87,10 +88,17 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public void registered() {
-        Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
-        this.password = encoder.getPwd(this.password);
         if (StringUtils.isNotEmpty(this.username) && StringUtils.isNotEmpty(this.password)) {
+            PlatformTransactionManager platformTransactionManager = SpringContextHolder.getBean(PlatformTransactionManager.class);
+            TransactionStatus transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+            Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
+            FunctionName functionName = new FunctionName();
+            functionName.setFunctionName("用户相关.获取功能列表");
+            functionName = SpringContextHolder.getBean(FunctionNameCatalog.class).findOne(Example.of(functionName));
+            this.functionNames.add(functionName);
+            this.password = encoder.getPwd(this.password);
             SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
+            platformTransactionManager.commit(transactionStatus);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.michaelssss.account;
 
-import com.michaelssss.annotation.PhoneNumber;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,11 +11,11 @@ import javax.persistence.*;
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long uid;
     private String name;
-    private int age;
+    private String age;
     private String sexual;
-    @PhoneNumber
     private String phone;
     private String email;
 }

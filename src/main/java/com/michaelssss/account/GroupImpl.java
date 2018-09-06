@@ -1,5 +1,6 @@
 package com.michaelssss.account;
 
+import com.michaelssss.SpringContextHolder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@Table(name = "sys_user_set")
+@Table(name = "sys_group")
 public class GroupImpl implements Group, Serializable {
 
     private static final long serialVersionUID = 5892583758056026304L;
@@ -47,6 +48,12 @@ public class GroupImpl implements Group, Serializable {
     @Override
     public void addUser(User user) {
         this.users.add((UserImpl) user);
+    }
+
+    @Override
+    public void removeUser(User user) {
+        this.users.removeIf((user1 -> user.getUsername().equals(user1.getUsername())));
+        SpringContextHolder.getBean(GroupCatalog.class).saveAndFlush(this);
     }
 
     @Override

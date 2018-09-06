@@ -8,10 +8,31 @@ import java.util.Set;
  * 可以任意层级细分
  */
 public interface Group {
-
+    /**
+     * 设立部门名字
+     *
+     * @param name
+     */
     void setGroupName(String name);
 
+    /**
+     * 获取部门所有员工
+     *
+     * @return
+     */
     Set<User> getUsers();
 
+    /**
+     * 给部门添加员工
+     *
+     * @param user
+     */
     void addUser(User user);
+
+    /**
+     * 将员工从部门移除
+     *
+     * @param user
+     */
+    void removeUser(User user);
 }
