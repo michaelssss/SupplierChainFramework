@@ -41,6 +41,6 @@ public class SalesInvoiceImplTest extends SpringBootTestBasic {
         receiptVoucher.confirmAuditTotal(BigDecimal.valueOf(1000));
         Assert.assertEquals(BigDecimal.valueOf(1000), receiptVoucher.getAuditTotal());
         Assert.assertEquals(BigDecimal.valueOf(1000), receiptVoucher.getNotAuditTotal());
-        Assert.assertEquals(Invoice.RECEIVEDCONFIRM, ((SalesInvoiceImpl) receiptVoucher).getStatus());
+        Assert.assertEquals(Invoice.收款确认, ((SalesInvoiceImpl) receiptVoucher).getStatus());
     }
 }
