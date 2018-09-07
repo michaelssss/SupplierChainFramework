@@ -8,6 +8,8 @@
 
 * 所有请求都采用post
 
+* 未提及的功能请求均可在http://host/swagger-ui.html中查询
+
 ## 登陆
 
 * 说明

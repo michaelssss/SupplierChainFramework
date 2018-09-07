@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "ProjectManagement")
-@Api(value = "项目管理")
+@Api(value = "项目管理", tags = "项目管理")
 public class ProjectController {
     private ProjectCatalog projectCatalog;
     private ApprovalCatalog approvalCatalog;
@@ -30,35 +30,35 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/list", method = RequestMethod.POST)
-    @ApiOperation(value = "所有项目")
+    @ApiOperation(value = "所有项目", tags = "项目管理")
     @ResponseBody
     public Response listProject() {
         return Response.OK(projectCatalog.findAll());
     }
 
     @RequestMapping(value = "Project/detail", method = RequestMethod.POST)
-    @ApiOperation(value = "项目详情")
+    @ApiOperation(value = "项目详情", tags = "项目管理")
     @ResponseBody
     public Response detailProject(@RequestBody ProjectImpl project) {
         return Response.OK(projectCatalog.findOne(project.getId()));
     }
 
     @RequestMapping(value = "Project/Approval/list", method = RequestMethod.POST)
-    @ApiOperation(value = "所有批复")
+    @ApiOperation(value = "所有批复", tags = "项目管理")
     @ResponseBody
     public Response listProjectApproval() {
         return Response.OK(approvalCatalog.findAll());
     }
 
     @RequestMapping(value = "Project/Approval/detail", method = RequestMethod.POST)
-    @ApiOperation(value = "批复详情")
+    @ApiOperation(value = "批复详情", tags = "项目管理")
     @ResponseBody
     public Response detailProjectApproval(@RequestBody ApprovalImpl approval) {
         return Response.OK(approvalCatalog.findOne(approval.getId()));
     }
 
     @RequestMapping(value = "Project/add", method = RequestMethod.POST)
-    @ApiOperation(value = "添加项目")
+    @ApiOperation(value = "添加项目", tags = "项目管理")
     @ResponseBody
     public Response addProject(@RequestBody ProjectImpl project) {
         project.addProject();
@@ -66,7 +66,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/update", method = RequestMethod.POST)
-    @ApiOperation(value = "更新项目")
+    @ApiOperation(value = "更新项目", tags = "项目管理")
     @ResponseBody
     public Response updateProject(@RequestBody ProjectImpl project) {
         ProjectImpl instance = projectCatalog.findOne(project.getId());
@@ -76,7 +76,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/apply", method = RequestMethod.POST)
-    @ApiOperation(value = "申请项目")
+    @ApiOperation(value = "申请项目", tags = "项目管理")
     @ResponseBody
     public Response applyProject(@RequestBody ProjectImpl project) {
         ProjectImpl instance = projectCatalog.findOne(project.getId());
@@ -85,7 +85,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/Approval/add", method = RequestMethod.POST)
-    @ApiOperation(value = "添加项目批复")
+    @ApiOperation(value = "添加项目批复", tags = "项目管理")
     @ResponseBody
     public Response addProjectApproval(@RequestBody ApprovalImpl approval) {
         approval.addApproval();
@@ -93,7 +93,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/Approval/update", method = RequestMethod.POST)
-    @ApiOperation(value = "更新项目批复")
+    @ApiOperation(value = "更新项目批复", tags = "项目管理")
     @ResponseBody
     public Response updateProjectApproval(@RequestBody ApprovalImpl approval) {
         Approval instance = approvalCatalog.findOne(approval.getId());
@@ -103,7 +103,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "Project/Approval/confirm", method = RequestMethod.POST)
-    @ApiOperation(value = "确认项目批复")
+    @ApiOperation(value = "确认项目批复", tags = "项目管理")
     @ResponseBody
     public Response confirmProjectApproval(@RequestBody ApprovalImpl approval) {
         Approval instance = approvalCatalog.findOne(approval.getId());
