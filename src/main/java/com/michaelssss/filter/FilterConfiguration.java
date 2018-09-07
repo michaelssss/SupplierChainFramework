@@ -1,7 +1,5 @@
-package com.michaelssss;
+package com.michaelssss.filter;
 
-import com.michaelssss.account.AuthorityFilter;
-import com.michaelssss.account.TokenValidateFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfiguration {
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
+    public FilterRegistrationBean tokenFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new TokenValidateFilter());
         filterRegistrationBean.addUrlPatterns("/*");
@@ -19,11 +17,20 @@ public class FilterConfiguration {
     }
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean2() {
+    public FilterRegistrationBean authorityFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new AuthorityFilter());
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.setOrder(2);//order的数值越小 则优先级越高
+        return filterRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean logFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new LogFilter());
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.setOrder(3);//order的数值越小 则优先级越高
         return filterRegistrationBean;
     }
 }
