@@ -24,7 +24,7 @@ public class ProjectTest extends SpringBootTestBasic {
                 .downstreamCompany("下游公司").guaranteeMark("").insuranceRatio("").interestRate("10").legalPerson("李四")
                 .partnerCashDepositWay("ces").partnerExpectBillingMethod("").partnerExpectBillingWay("").partnerExpectCredit(BigDecimal.valueOf(3.00))
                 .partnerExpectDeliveryCycle("").partnerExpectDeliveryLocal("深圳").partnerExpectGuaranteeForm("").partnerExpectRate("12")
-                .partnerExpectTransport("").partnerId(2l).partnerMain("测试公司").partnerName("ces").productionName("手机").storageRequired("没有要求").build();
+                .partnerExpectTransport("").partnerId(2l).partnerMain("测试公司").partnerName("ces").productionName("手机").storageRequired("没有要求").state("EDITABLE").build();
         return project;
     }
 
