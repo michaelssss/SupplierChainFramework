@@ -51,8 +51,8 @@ public class CompanyController {
      */
     @ResponseBody
     @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
-    @RequestMapping(value = "query", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response queryALL() {
+    @RequestMapping(value = "list", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    public Response list() {
         return Response.OK(companyHistoryService.getAllCompanyLatestHistory());
     }
 
