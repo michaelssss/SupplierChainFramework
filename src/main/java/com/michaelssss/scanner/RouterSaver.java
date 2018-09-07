@@ -1,8 +1,8 @@
 package com.michaelssss.scanner;
 
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.account.AuthorityCatalog;
 import com.michaelssss.account.FunctionName;
+import com.michaelssss.account.FunctionNameCatalog;
 import com.michaelssss.daemon.Action;
 import com.michaelssss.daemon.BusinessInitialActionCenter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class RouterSaver extends Action {
     @Override
     public void act() {
         RouteScanner routeScanner = new RouteScanner();
-        AuthorityCatalog catalog = SpringContextHolder.getBean(AuthorityCatalog.class);
+        FunctionNameCatalog catalog = SpringContextHolder.getBean(FunctionNameCatalog.class);
         Set<FunctionName> authorities = new HashSet<>();
         Set<FunctionName> strings = routeScanner.getAllFunctionNames("com.michaelssss");
         for (FunctionName functionName : strings) {

@@ -25,7 +25,7 @@ public class RootUser extends Action {
     public void act() {
         UserImpl root = RootUser.RootUser();
         UserCatalog userCatalog = SpringContextHolder.getBean(UserCatalog.class);
-        AuthorityCatalog authorityCatalog = SpringContextHolder.getBean(AuthorityCatalog.class);
+        FunctionNameCatalog authorityCatalog = SpringContextHolder.getBean(FunctionNameCatalog.class);
         UserImpl sample = UserImpl.builder().username(root.getUsername()).build();
         if (0 == userCatalog.count(Example.of(sample))) {
             log.info("create root user" + JSON.toJSONString(root));
