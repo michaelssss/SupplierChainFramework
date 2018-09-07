@@ -19,7 +19,7 @@ public class SwaggerConfiguration {
                 .enable(true)//生产环境改为false
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.michaelssss.rzzl2"))
+                .apis(RequestHandlerSelectors.basePackage("com.michaelssss"))
                 .paths(PathSelectors.any())//生产环境设为PathSelectors.none 二选其一 推荐选上面的
                 .build();
     }
@@ -27,7 +27,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("金证前海业务系统，API描述")
-                .description("测试")
+                .description("")
                 .termsOfServiceUrl("")
                 .version("1.0")
                 .build();

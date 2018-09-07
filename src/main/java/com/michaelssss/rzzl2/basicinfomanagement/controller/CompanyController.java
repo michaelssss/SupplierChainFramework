@@ -25,7 +25,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @Author:
  * @Date 2018/7/9
  */
-@Api(value = "基础信息")
+@Api(value = "基础信息", tags = "基础信息")
 @Controller
 @RequestMapping("Company")
 public class CompanyController {
@@ -37,7 +37,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "添加", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "添加", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "add", method = RequestMethod.POST, produces = {APPLICATION_JSON_VALUE})
     public Response addCompanyInfo(@RequestBody CompanyImpl company) {
         company.save();
@@ -50,14 +50,14 @@ public class CompanyController {
      * @return
      */
     @ResponseBody
-    @ApiOperation(value = "查询", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "query", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response queryALL() {
         return Response.OK(companyHistoryService.getAllCompanyLatestHistory());
     }
 
     @ResponseBody
-    @ApiOperation(value = "详情", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "详情", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "detail", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response queryCompanyInfoById(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -66,7 +66,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "审批", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "审批", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "applyAudit", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response applyAudit(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -77,7 +77,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "新增联系人", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "新增联系人", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Contact/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response addContact(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -108,7 +108,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "新增股东信息", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "新增股东信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "ShareHolder/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response addShareHolder(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -132,7 +132,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "新增账户信息", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "新增账户信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "BankAccount/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response addBankAccount(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -162,7 +162,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "新增地址信息", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "新增地址信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Address/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response addAddress(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -197,7 +197,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "查询所有历史记录", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "查询所有历史记录", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "History/query", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response queryHistory(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -205,7 +205,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "申请成为供货商", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "申请成为供货商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Supplier/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response applySupplier(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -218,7 +218,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "申请成为采购商", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "申请成为采购商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Purchase/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response applyPurchase(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -231,7 +231,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "申请成为仓储商", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "申请成为仓储商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Storage/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response applyStorage(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");
@@ -243,7 +243,7 @@ public class CompanyController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "申请成为资金方", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "申请成为资金方", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Fund/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response applyFund(@RequestBody Map<String, String> map) {
         String companyName = map.get("companyName");

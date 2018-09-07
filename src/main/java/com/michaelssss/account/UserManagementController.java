@@ -6,17 +6,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "UserManagement")
-@Api(value = "用户管理")
+@Api(value = "用户管理", tags = "用户管理")
 public class UserManagementController {
 
     private UserCatalog userCatalog;
@@ -30,8 +27,8 @@ public class UserManagementController {
         this.groupCatalog = groupCatalog;
     }
 
-    @RequestMapping(value = "User/add")
-    @ApiOperation(value = "新增")
+    @RequestMapping(value = "User/add", method = RequestMethod.POST)
+    @ApiOperation(value = "新增", tags = "用户管理")
     @ResponseBody
     public Response addUser(@RequestBody Map<String, String> map) {
         String username = map.get("username");
@@ -57,8 +54,8 @@ public class UserManagementController {
         return Response.OK("新增用户成功");
     }
 
-    @RequestMapping(value = "User/Password/update")
-    @ApiOperation(value = "修改密码")
+    @RequestMapping(value = "User/Password/update", method = RequestMethod.POST)
+    @ApiOperation(value = "修改密码", tags = "用户管理")
     @ResponseBody
     public Response updatePassword(@SessionAttribute("user") User user, @RequestBody Map<String, String> map) {
         String password = map.get("password");
@@ -66,8 +63,8 @@ public class UserManagementController {
         return Response.OK("修改密码成功");
     }
 
-    @RequestMapping(value = "authority")
-    @ApiOperation(value = "授权")
+    @RequestMapping(value = "authority", method = RequestMethod.POST)
+    @ApiOperation(value = "授权", tags = "用户管理")
     @ResponseBody
     public Response authority(@SessionAttribute("user") User user, @RequestBody Map<String, String> map) {
         String functionName = map.get("functionName");
@@ -85,8 +82,8 @@ public class UserManagementController {
         return Response.OK("授权成功");
     }
 
-    @RequestMapping(value = "Group/create")
-    @ApiOperation(value = "创建部门")
+    @RequestMapping(value = "Group/create", method = RequestMethod.POST)
+    @ApiOperation(value = "创建部门", tags = "用户管理")
     @ResponseBody
     public Response createGroup(@RequestBody Map<String, String> map) {
         String groupName = map.get("groupName");
@@ -96,8 +93,8 @@ public class UserManagementController {
         return Response.OK("创建部门成功");
     }
 
-    @RequestMapping(value = "Group/join")
-    @ApiOperation(value = "加入部门")
+    @RequestMapping(value = "Group/join", method = RequestMethod.POST)
+    @ApiOperation(tags = "用户管理", value = "加入部门")
     @ResponseBody
     public Response authorityGroup(@RequestBody Map<String, Object> map) {
         String groupName = map.get("groupName").toString();
@@ -111,8 +108,8 @@ public class UserManagementController {
         return Response.OK("已加入");
     }
 
-    @RequestMapping(value = "Group/Users/list")
-    @ApiOperation(value = "列出部门所有员工")
+    @RequestMapping(value = "Group/Users/list", method = RequestMethod.POST)
+    @ApiOperation(value = "列出部门所有员工", tags = "用户管理")
     @ResponseBody
     public Response listUsersInGroup(@RequestBody Map<String, Object> map) {
         String groupName = map.get("groupName").toString();
@@ -122,8 +119,8 @@ public class UserManagementController {
         return Response.OK(group.getUsers());
     }
 
-    @RequestMapping(value = "Users/list")
-    @ApiOperation(value = "列出所有用户")
+    @RequestMapping(value = "Users/list", method = RequestMethod.POST)
+    @ApiOperation(value = "列出所有用户", tags = "用户管理")
     @ResponseBody
     public Response listUsers() {
         return Response.OK(userCatalog.findAll());

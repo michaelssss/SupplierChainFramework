@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Controller
-@Api(value = "用户相关")
+@Api(value = "用户相关", tags = "用户相关")
 @RequestMapping(value = "User")
 public class UserController {
     private UserCatalog userCatalog;
@@ -23,23 +23,23 @@ public class UserController {
         this.userCatalog = userCatalog;
     }
 
-    @RequestMapping("Functions/get")
+    @RequestMapping(value = "Functions/get", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "获取功能列表")
+    @ApiOperation(value = "获取功能列表", tags = "用户相关")
     public Response getFunctions(@SessionAttribute User user) {
         return Response.OK(user.getHasAuthorityFunctionName());
     }
 
-    @RequestMapping("Profile/get")
+    @RequestMapping(value = "Profile/get", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "获取用户信息")
+    @ApiOperation(value = "获取用户信息", tags = "用户相关")
     public Response getProfile(@SessionAttribute User user) {
         return Response.OK(user.getProfile());
     }
 
-    @RequestMapping(value = "login")
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "登陆")
+    @ApiOperation(value = "登陆", tags = "用户相关")
     public Response login(@RequestBody Map<String, Object> requestMap) throws IOException {
         String username = (String) requestMap.get("username");
         UserImpl example = UserImpl.builder().username(username).build();
@@ -53,9 +53,9 @@ public class UserController {
         return Response.NonOK("username or password not validate");
     }
 
-    @RequestMapping(value = "logout")
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "登出")
+    @ApiOperation(value = "登出", tags = "用户相关")
     public Response logout(@SessionAttribute("user") User user, @CookieValue("token") String token) {
         user.logout(token);
         return Response.OK("登出成功");
