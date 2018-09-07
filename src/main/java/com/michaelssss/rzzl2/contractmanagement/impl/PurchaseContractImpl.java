@@ -1,7 +1,8 @@
 package com.michaelssss.rzzl2.contractmanagement.impl;
 
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.rzzl2.contractmanagement.PurchaseContract;
+import com.michaelssss.rzzl2.BusinessException;
+import com.michaelssss.rzzl2.contractmanagement.Contract;
 import com.michaelssss.rzzl2.contractmanagement.repository.PurchaseContactRepository;
 import com.michaelssss.rzzl2.exception.ExistException;
 import com.michaelssss.utils.BusinessCodeGenerator;
@@ -22,7 +23,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "purchase_contract")
-public class PurchaseContractImpl implements PurchaseContract {
+public class PurchaseContractImpl implements Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,7 +56,7 @@ public class PurchaseContractImpl implements PurchaseContract {
     private String auditState = "1";//审批状态
 
     @Override
-    public void addPurchaseContract() {
+    public void add() {
         PurchaseContractImpl frameContract = PurchaseContractImpl.builder().contractName(this.contractName).build();
         Example ex = Example.of(frameContract);
         frameContract = SpringContextHolder.getBean(PurchaseContactRepository.class).findOne(ex);
@@ -66,23 +67,25 @@ public class PurchaseContractImpl implements PurchaseContract {
     }
 
     @Override
-    public void updatePurchaseContract() {
+    public void update() {
+        if (!this.auditState.equals(EDITABLE)) {
+            throw new BusinessException("合同不可修改状态");
+        }
         SpringContextHolder.getBean(PurchaseContactRepository.class).saveAndFlush(this);
     }
 
     @Override
-    public void deletePurchaseContract() {
-        SpringContextHolder.getBean(PurchaseContactRepository.class).delete(this.id);
+    public void apply() {
+        //TODO:销售合同发起审批
     }
 
     @Override
-    public void confirmPurchaseContract() {
-        this.setAuditState(PurchaseContract.Confirm);
+    public void confirm() {
+        this.setAuditState(Contract.CONFIRM);
         SpringContextHolder.getBean(PurchaseContactRepository.class).saveAndFlush(this);
     }
 
-    @Override
-    public String getPurchaseContractNo() {
+    private String getPurchaseContractNo() {
         return SpringContextHolder.
                 getBean(BusinessCodeGenerator.class).
                 getSequence(this.getClass(), "HT-CG");

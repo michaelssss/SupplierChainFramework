@@ -1,9 +1,9 @@
 package com.michaelssss.rzzl2.contractmanagement.impl;
 
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.rzzl2.contractmanagement.FrameContract;
+import com.michaelssss.rzzl2.BusinessException;
+import com.michaelssss.rzzl2.contractmanagement.Contract;
 import com.michaelssss.rzzl2.contractmanagement.repository.FrameContractRepository;
-import com.michaelssss.rzzl2.exception.ExistException;
 import com.michaelssss.utils.BusinessCodeGenerator;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "frame_contract")
-public class FrameContractImpl implements FrameContract {
+public class FrameContractImpl implements Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,34 +50,41 @@ public class FrameContractImpl implements FrameContract {
     private String auditState;//审批状态
 
     @Override
-    public void addFrameContract() {
+    public void add() {
         FrameContractImpl frameContract = FrameContractImpl.builder().contractName(this.contractName).build();
         Example ex = Example.of(frameContract);
-        frameContract = SpringContextHolder.getBean(FrameContractRepository.class).findOne(ex);
-        if (frameContract != null) {
-            throw new ExistException("框架合同名称已存在");
+        if (SpringContextHolder.getBean(FrameContractRepository.class).exists(ex)) {
+            throw new BusinessException("框架合同名称已存在");
         }
+        this.contractNo = getFrameContractNo();
         SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
     }
 
     @Override
-    public void updateFrameContract() {
-        SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
+    public void update() {
+        if (this.getAuditState().equals(EDITABLE)) {
+            SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
+        } else {
+            throw new BusinessException("合同已经无法修改");
+        }
     }
 
     @Override
     public void apply() {
-        SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
+        //TODO：发起审批
     }
 
     @Override
-    public void confirmFrameContract() {
-        this.setAuditState(FrameContract.CONFIRM);
-        SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
+    public void confirm() {
+        if (this.auditState.equals(Contract.APPROVED)) {
+            this.setAuditState(Contract.CONFIRM);
+            SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
+        } else {
+            throw new BusinessException("合同未经过审批或审批不通过");
+        }
     }
 
-    @Override
-    public String getFrameContractNo() {
+    private String getFrameContractNo() {
         return SpringContextHolder.
                 getBean(BusinessCodeGenerator.class).
                 getSequence(this.getClass(), "HT-KJ");

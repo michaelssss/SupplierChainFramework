@@ -1,4 +1,6 @@
-package com.michaelssss.rzzl2.creditmanagement;
+package com.michaelssss.rzzl2.creditmanagement.domain;
+
+import com.michaelssss.rzzl2.creditmanagement.Acceptance;
 
 /**
  * 商业承兑汇票

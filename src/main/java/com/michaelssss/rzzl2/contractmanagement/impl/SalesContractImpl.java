@@ -1,9 +1,9 @@
 package com.michaelssss.rzzl2.contractmanagement.impl;
 
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.rzzl2.contractmanagement.SalesContract;
+import com.michaelssss.rzzl2.BusinessException;
+import com.michaelssss.rzzl2.contractmanagement.Contract;
 import com.michaelssss.rzzl2.contractmanagement.repository.SalesContractRepository;
-import com.michaelssss.rzzl2.exception.ExistException;
 import com.michaelssss.utils.BusinessCodeGenerator;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "sales_contract")
-public class SalesContractImpl implements SalesContract {
+public class SalesContractImpl implements Contract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,34 +50,35 @@ public class SalesContractImpl implements SalesContract {
     private String auditState;//审批状态
 
     @Override
-    public void addSalesContract() {
+    public void add() {
         SalesContractImpl frameContract = SalesContractImpl.builder().salesContractName(this.salesContractName).build();
-        Example ex = Example.of(frameContract);
-        frameContract = SpringContextHolder.getBean(SalesContractRepository.class).findOne(ex);
-        if (frameContract != null) {
-            throw new ExistException("合同名称已存在");
+        if (SpringContextHolder.getBean(SalesContractRepository.class).exists(Example.of(frameContract))) {
+            throw new BusinessException("合同名称已存在");
+        }
+        this.frameContractNo = getSalesContract();
+        SpringContextHolder.getBean(SalesContractRepository.class).saveAndFlush(this);
+    }
+
+    @Override
+    public void update() {
+        if (!this.auditState.equals(EDITABLE)) {
+            throw new BusinessException("合同不可修改状态");
         }
         SpringContextHolder.getBean(SalesContractRepository.class).saveAndFlush(this);
     }
 
     @Override
-    public void updateSalesContract() {
+    public void apply() {
+        //TODO:发起销售合同审批
+    }
+
+    @Override
+    public void confirm() {
+        this.setAuditState(Contract.CONFIRM);
         SpringContextHolder.getBean(SalesContractRepository.class).saveAndFlush(this);
     }
 
-    @Override
-    public void deleteSalesContract() {
-        SpringContextHolder.getBean(SalesContractRepository.class).delete(this.id);
-    }
-
-    @Override
-    public void confirmSalesContract() {
-        this.setAuditState(SalesContract.Confirm);
-        SpringContextHolder.getBean(SalesContractRepository.class).saveAndFlush(this);
-    }
-
-    @Override
-    public String getSalesContract() {
+    private String getSalesContract() {
         return SpringContextHolder.
                 getBean(BusinessCodeGenerator.class).
                 getSequence(this.getClass(), "HT-XS");

@@ -1,6 +1,8 @@
 package com.michaelssss.rzzl2.creditmanagement;
 
 import com.michaelssss.SpringBootTestBasic;
+import com.michaelssss.rzzl2.creditmanagement.domain.CreditImpl;
+import com.michaelssss.rzzl2.creditmanagement.repository.CreditRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

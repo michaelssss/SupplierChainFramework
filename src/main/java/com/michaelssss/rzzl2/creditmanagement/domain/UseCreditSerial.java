@@ -1,4 +1,4 @@
-package com.michaelssss.rzzl2.creditmanagement;
+package com.michaelssss.rzzl2.creditmanagement.domain;
 
 import lombok.Data;
 

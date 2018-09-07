@@ -43,7 +43,7 @@ public interface Credit {
      * 使用额度
      *
      * @param creditValue 需要使用的额度大小
-     * @throws OverCreditLimitException 若用额超过了剩余额度，则抛出用额超出限制的错误
+     * @throws com.michaelssss.rzzl2.BusinessException 若用额超过了剩余额度，则抛出用额超出限制的错误
      */
-    void useCredit(BigDecimal creditValue, String code) throws OverCreditLimitException;
+    void useCredit(BigDecimal creditValue, String code);
 }

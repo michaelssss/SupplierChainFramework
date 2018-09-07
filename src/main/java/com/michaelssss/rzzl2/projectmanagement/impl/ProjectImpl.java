@@ -23,16 +23,15 @@ public class ProjectImpl implements Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(length = 64, name = "project_name")
+    private Long id;
+    @Column(length = 64, name = "project_name", unique = true)
     private String projectName;//项目名称
     private Long partnerId;//合作伙伴id
     private String partnerName;//企业全称
-    private String partnerMain;//合作伙伴主体
-    private String upstreamCompany;//上游供应商
-    private String downstreamCompany;//下游合作伙伴
-    private Long productionId;//合作产品id
-    private String productionName;//合作产品
+    private String partnerMain;//合作主体
+    private String supplier;//上游供应商
+    private String purchase;//下游合作伙伴
+    private String productionId;//合作产品id
     private BigDecimal partnerExpectCredit;//合作伙伴期望授信额度
     private String partnerExpectRate;//合作伙伴期望费率
     private String partnerExpectBillingWay;//合作伙伴期望计费方式
@@ -41,15 +40,15 @@ public class ProjectImpl implements Project {
     private String partnerExpectTransport;//合作伙伴期望运输费用承担方
     private String partnerExpectDeliveryLocal;//合作伙伴期望提货地点
     private String partnerExpectGuaranteeForm;//合作伙伴期望担保形式
-    private String storageRequired;//其他物流/仓储要求
-    private String insuranceRatio;//保证金比例
-    private String state;//项目状态
-    private String customerExpectAnalysis;//合作伙伴需求合理性分析
-    private String partnerCashDepositWay;//合作伙伴期望保证金抵扣方式
+    private String partnerExpectStorageRequired;//其他物流/仓储要求
+    private String partnerExpectCashDepositRatio;//期望保证金比例
+    private String partnerExpectDepositWay;//期望保证金抵扣方式
+    private String partnerExpectAnalysis;//合作伙伴需求合理性分析
     private String guaranteeMark;//担保备注
     private String interestRate;//利息率
     private String legalPerson;//法定代表
-    private String customerAddress;//注册地址
+    private String registerAddress;//注册地址
+    private String state;//项目状态
 
 
     @Override

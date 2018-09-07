@@ -1,5 +1,7 @@
-package com.michaelssss.rzzl2.creditmanagement;
+package com.michaelssss.rzzl2.creditmanagement.domain;
 
+import com.michaelssss.rzzl2.BusinessException;
+import com.michaelssss.rzzl2.creditmanagement.Credit;
 import lombok.Builder;
 import lombok.Data;
 
@@ -74,9 +76,9 @@ public class CreditImpl implements Credit {
     }
 
     @Override
-    public void useCredit(BigDecimal creditValue, String code) throws OverCreditLimitException {
+    public void useCredit(BigDecimal creditValue, String code) {
         if (creditValue.compareTo(getCreditRemainValue()) < 1) {
-            throw new OverCreditLimitException();
+            throw new BusinessException("已经超出额度限制");
         }
         UseCreditSerial useCreditSerial = new UseCreditSerial();
         useCreditSerial.setType("");

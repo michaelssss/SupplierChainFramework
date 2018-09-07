@@ -1,6 +1,9 @@
-package com.michaelssss.rzzl2.creditmanagement;
+package com.michaelssss.rzzl2.creditmanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
+import com.michaelssss.rzzl2.creditmanagement.Credit;
+import com.michaelssss.rzzl2.creditmanagement.CreditService;
+import com.michaelssss.rzzl2.creditmanagement.repository.CreditRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 

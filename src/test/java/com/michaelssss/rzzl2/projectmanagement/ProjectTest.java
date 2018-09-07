@@ -20,11 +20,11 @@ public class ProjectTest extends SpringBootTestBasic {
     private ProjectCatalog repository;
 
     public Project getProject() {
-        Project project = ProjectImpl.builder().projectName("测试项目").customerAddress("测试地址").customerExpectAnalysis("风险低")
-                .downstreamCompany("下游公司").guaranteeMark("").insuranceRatio("").interestRate("10").legalPerson("李四")
-                .partnerCashDepositWay("ces").partnerExpectBillingMethod("").partnerExpectBillingWay("").partnerExpectCredit(BigDecimal.valueOf(3.00))
+        Project project = ProjectImpl.builder().projectName("测试项目").registerAddress("测试地址").partnerExpectAnalysis("风险低")
+                .purchase("下游公司").guaranteeMark("").partnerExpectRate("").interestRate("10").legalPerson("李四")
+                .partnerExpectCashDepositRatio("ces").partnerExpectBillingMethod("").partnerExpectBillingWay("").partnerExpectCredit(BigDecimal.valueOf(3.00))
                 .partnerExpectDeliveryCycle("").partnerExpectDeliveryLocal("深圳").partnerExpectGuaranteeForm("").partnerExpectRate("12")
-                .partnerExpectTransport("").partnerId(2l).partnerMain("测试公司").partnerName("ces").productionName("手机").storageRequired("没有要求").state("EDITABLE").build();
+                .partnerExpectTransport("").partnerId(2l).partnerMain("测试公司").partnerName("ces").productionId("手机").partnerExpectStorageRequired("没有要求").state("EDITABLE").build();
         return project;
     }
 

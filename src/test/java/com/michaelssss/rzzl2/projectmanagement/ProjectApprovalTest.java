@@ -22,10 +22,10 @@ public class ProjectApprovalTest extends SpringBootTestBasic {
     private ApprovalCatalog approvalCatalog;
 
     public Approval getApproval() {
-        Approval approval = ApprovalImpl.builder().chargeMode("年化计费").clearingForm("全额结款")
-                .creditLine(BigDecimal.valueOf(150)).creditRisk("中").creditType("1").dateChargeMode("dd").deduction(BigDecimal.valueOf(3.00)).deductionPercentage("10")
-                .effectiveTime("2018-7-21").interestRate("10").legalPerson("张三").logistics("空运").marginMethod("尾款抵扣").marketRisk("低")
-                .meetTime(new Date()).minInterestDay("5").partner("测试").partnerId(1L).partnerMain("手机").partnerName("测试").production("手机")
+        Approval approval = ApprovalImpl.builder().billingWay("年化计费").billingMethod("全额结款")
+                .credit(BigDecimal.valueOf(150)).creditRisk("中").creditType("1").deduction(BigDecimal.valueOf(3.00)).deductionPercentage("10")
+                .effectiveTime("2018-7-21").interestRate("10").legalPerson("张三").logistics("空运").cashDepositWay("尾款抵扣").marketRisk("低")
+                .meetTime(new Date()).minInterestDay("5").partnerName("测试").partnerId(1L).partnerMain("手机").partnerName("测试").productionId("手机")
                 .projectName("测试项目").rate("10").build();
         return approval;
     }
