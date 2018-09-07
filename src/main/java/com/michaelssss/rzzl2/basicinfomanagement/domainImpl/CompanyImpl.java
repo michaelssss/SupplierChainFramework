@@ -133,6 +133,7 @@ public class CompanyImpl implements Company {
         if (SpringContextHolder.getBean(CompanyRepository.class).exists(ex)) {
             throw new ExistException("公司名称已存在");
         }
+        this.setHistoryId(Long.toString(System.currentTimeMillis()));
         SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
