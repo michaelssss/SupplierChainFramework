@@ -41,11 +41,11 @@ public class ReceivedOrder {
     }
 
     void confirm() {
-        this.status = "Confirm";
+        this.status = "CONFIRM";
     }
 
     void terminate() {
-        this.status = "Terminate";
+        this.status = "TERMINATE";
     }
 
     void supplierDeliveryConfirm() {

@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2;
 
-public class BusinessException extends Exception {
+public class BusinessException extends RuntimeException {
     private String message;
 
     public BusinessException(String message) {

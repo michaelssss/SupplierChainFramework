@@ -1,8 +1,8 @@
 package com.michaelssss.rzzl2.contractmanagement;
 
 public interface SalesContract {
-    String Confirm = "Confirm";
-    String Terminate = "Terminate";
+    String Confirm = "CONFIRM";
+    String Terminate = "TERMINATE";
 
     /***
      * 添加销售合同

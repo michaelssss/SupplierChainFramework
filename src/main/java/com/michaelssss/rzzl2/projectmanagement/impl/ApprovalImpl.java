@@ -1,8 +1,9 @@
 package com.michaelssss.rzzl2.projectmanagement.impl;
 
 import com.michaelssss.SpringContextHolder;
+import com.michaelssss.rzzl2.BusinessException;
 import com.michaelssss.rzzl2.projectmanagement.Approval;
-import com.michaelssss.rzzl2.projectmanagement.repository.ApproalInfoRepository;
+import com.michaelssss.rzzl2.projectmanagement.repository.ApprovalCatalog;
 import com.michaelssss.utils.BusinessCodeGenerator;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "approval")
-public class ApprovalInfo implements Approval {
+public class ApprovalImpl implements Approval {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -60,28 +61,27 @@ public class ApprovalInfo implements Approval {
     private String state;//状态
 
     @Override
-    public void addProjectApprovalInfo() {
-        SpringContextHolder.getBean(ApproalInfoRepository.class).saveAndFlush(this);
+    public void addApproval() {
+        this.replyCode = getProjectApprovalCode();
+        this.state = EDITABLE;
+        SpringContextHolder.getBean(ApprovalCatalog.class).saveAndFlush(this);
     }
 
     @Override
-    public void updateProjectInfo() {
-        SpringContextHolder.getBean(ApproalInfoRepository.class).saveAndFlush(this);
-    }
-
-    @Override
-    public void deleteProjectInfo() {
-        SpringContextHolder.getBean(ApproalInfoRepository.class).delete(this.id);
+    public void updateApproval() {
+        if (!this.state.equals(EDITABLE)) {
+            throw new BusinessException("本条批复已确认生效，不可修改");
+        }
+        SpringContextHolder.getBean(ApprovalCatalog.class).saveAndFlush(this);
     }
 
     @Override
     public void confirm() {
-        this.state = Approval.Confirm;
-        SpringContextHolder.getBean(ApproalInfoRepository.class).saveAndFlush(this);
+        this.state = Approval.CONFIRM;
+        SpringContextHolder.getBean(ApprovalCatalog.class).saveAndFlush(this);
     }
 
-    @Override
-    public String getProjectApprovalCode() {
+    private String getProjectApprovalCode() {
         return SpringContextHolder.
                 getBean(BusinessCodeGenerator.class).
                 getSequence(this.getClass(), "PF");

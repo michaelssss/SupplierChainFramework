@@ -16,6 +16,7 @@ import java.util.Date;
  * @Date:2018/7/18
  */
 public class FrameContractTest extends SpringBootTestBasic {
+    private FrameContractRepository frameContractRepository;
 
     public FrameContract getFrameContract() {
         FrameContract frameContract = FrameContractImpl.builder().amtDeposit(BigDecimal.valueOf(140.00)).appointedPurchased("手机").auditState("1")
@@ -34,7 +35,7 @@ public class FrameContractTest extends SpringBootTestBasic {
         FrameContract frameContract = getFrameContract();
         ((FrameContractImpl) frameContract).setContractNo(frameContract.getFrameContractNo());
         frameContract.addFrameContract();
-        frameContract.deleteFrameContract();
+        frameContractRepository.delete(((FrameContractImpl) frameContract).getId());
     }
 
     /**
@@ -47,14 +48,14 @@ public class FrameContractTest extends SpringBootTestBasic {
         ((FrameContractImpl) frameContract).setContractName("修改测试框架合同");
         Assert.assertEquals("修改测试框架合同", ((FrameContractImpl) frameContract).getContractName());
         frameContract.updateFrameContract();
-        frameContract.deleteFrameContract();
+        frameContractRepository.delete(((FrameContractImpl) frameContract).getId());
     }
 
     @Test
     public void deleteFrameContract() {
         FrameContract frameContract = getFrameContract();
         frameContract.addFrameContract();
-        frameContract.deleteFrameContract();
+        frameContractRepository.delete(((FrameContractImpl) frameContract).getId());
         frameContract = SpringContextHolder.getBean(FrameContractRepository.class).findOne(((FrameContractImpl) frameContract).getId());
         Assert.assertNull(frameContract);
     }
@@ -66,9 +67,9 @@ public class FrameContractTest extends SpringBootTestBasic {
     public void approveFrameContract() {
         FrameContract frameContract = getFrameContract();
         frameContract.addFrameContract();
-        ((FrameContractImpl) frameContract).setAuditState(FrameContract.Approving);
-        frameContract.approveFrameContract();
-        frameContract.deleteFrameContract();
+        ((FrameContractImpl) frameContract).setAuditState(FrameContract.APPROVING);
+        frameContract.apply();
+        frameContractRepository.delete(((FrameContractImpl) frameContract).getId());
     }
 
     /**
@@ -79,9 +80,8 @@ public class FrameContractTest extends SpringBootTestBasic {
         FrameContract frameContract = getFrameContract();
         frameContract.addFrameContract();
         frameContract.confirmFrameContract();
-        Assert.assertEquals(FrameContract.Confirm, ((FrameContractImpl) frameContract).getAuditState());
-        frameContract.deleteFrameContract();
-
+        Assert.assertEquals(FrameContract.CONFIRM, ((FrameContractImpl) frameContract).getAuditState());
+        frameContractRepository.delete(((FrameContractImpl) frameContract).getId());
     }
 
 }

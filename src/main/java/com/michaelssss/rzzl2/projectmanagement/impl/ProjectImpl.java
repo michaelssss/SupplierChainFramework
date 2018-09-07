@@ -2,33 +2,36 @@ package com.michaelssss.rzzl2.projectmanagement.impl;
 
 
 import com.michaelssss.SpringContextHolder;
+import com.michaelssss.rzzl2.BusinessException;
 import com.michaelssss.rzzl2.exception.ExistException;
 import com.michaelssss.rzzl2.projectmanagement.Project;
-import com.michaelssss.rzzl2.projectmanagement.repository.ProjectInfoRepository;
+import com.michaelssss.rzzl2.projectmanagement.repository.ProjectCatalog;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Example;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Builder
 @Entity
 @Data
-@Table(name = "project_info")
-public class ProjectInfo implements Project {
+@Table(name = "project", indexes = {
+        @Index(name = "idx_projectname", columnList = "project_name", unique = true)
+})
+public class ProjectImpl implements Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 64, name = "project_name")
     private String projectName;//项目名称
     private Long partnerId;//合作伙伴id
     private String partnerName;//企业全称
     private String partnerMain;//合作伙伴主体
     private String upstreamCompany;//上游供应商
     private String downstreamCompany;//下游合作伙伴
-    private long productionId;//合作产品id
+    private Long productionId;//合作产品id
     private String productionName;//合作产品
     private BigDecimal partnerExpectCredit;//合作伙伴期望授信额度
     private String partnerExpectRate;//合作伙伴期望费率
@@ -40,7 +43,7 @@ public class ProjectInfo implements Project {
     private String partnerExpectGuaranteeForm;//合作伙伴期望担保形式
     private String storageRequired;//其他物流/仓储要求
     private String insuranceRatio;//保证金比例
-    private String dictProjectState;//项目状态
+    private String state;//项目状态
     private String customerExpectAnalysis;//合作伙伴需求合理性分析
     private String partnerCashDepositWay;//合作伙伴期望保证金抵扣方式
     private String guaranteeMark;//担保备注
@@ -50,30 +53,29 @@ public class ProjectInfo implements Project {
 
 
     @Override
-    public void addProjectInfo() {
-        ProjectInfo project = ProjectInfo.builder().build();
+    public void addProject() {
+        ProjectImpl project = ProjectImpl.builder().build();
         project.setProjectName(this.projectName);
-        Example<ProjectInfo> ex = Example.of(project);
-        List<ProjectInfo> list = SpringContextHolder.getBean(ProjectInfoRepository.class).findAll(ex);
-        if (list.size() > 0) {
+        Example<ProjectImpl> ex = Example.of(project);
+        if (SpringContextHolder.getBean(ProjectCatalog.class).exists(ex)) {
             throw new ExistException("项目名称已存在");
         }
-        SpringContextHolder.getBean(ProjectInfoRepository.class).saveAndFlush(this);
+        this.state = EDITABLE;
+        SpringContextHolder.getBean(ProjectCatalog.class).saveAndFlush(this);
     }
 
     @Override
-    public void updateProjectInfo() {
-        SpringContextHolder.getBean(ProjectInfoRepository.class).saveAndFlush(this);
+    public void updateProject() {
+        if (state.equals(EDITABLE)) {
+            SpringContextHolder.getBean(ProjectCatalog.class).saveAndFlush(this);
+        } else {
+            throw new BusinessException("项目已经提交审批或者已经审批结束");
+        }
     }
 
     @Override
-    public void deleteProjectInfo() {
-        SpringContextHolder.getBean(ProjectInfoRepository.class).delete(this.id);
-    }
-
-    @Override
-    public void permit() {
-        this.setDictProjectState(Project.Approving);
-        SpringContextHolder.getBean(ProjectInfoRepository.class).saveAndFlush(this);
+    public void apply() {
+        this.setState(Project.APPROVING);
+        SpringContextHolder.getBean(ProjectCatalog.class).saveAndFlush(this);
     }
 }

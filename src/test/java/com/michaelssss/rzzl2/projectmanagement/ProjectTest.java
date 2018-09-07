@@ -1,11 +1,12 @@
 package com.michaelssss.rzzl2.projectmanagement;
 
 import com.michaelssss.SpringBootTestBasic;
-import com.michaelssss.rzzl2.projectmanagement.impl.ProjectInfo;
-import com.michaelssss.rzzl2.projectmanagement.repository.ProjectInfoRepository;
+import com.michaelssss.rzzl2.projectmanagement.impl.ProjectImpl;
+import com.michaelssss.rzzl2.projectmanagement.repository.ProjectCatalog;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 
 import java.math.BigDecimal;
 
@@ -16,10 +17,10 @@ import java.math.BigDecimal;
  */
 public class ProjectTest extends SpringBootTestBasic {
     @Autowired
-    private ProjectInfoRepository repository;
+    private ProjectCatalog repository;
 
     public Project getProject() {
-        Project project = ProjectInfo.builder().dictProjectState("1").projectName("测试项目").customerAddress("测试地址").customerExpectAnalysis("风险低")
+        Project project = ProjectImpl.builder().projectName("测试项目").customerAddress("测试地址").customerExpectAnalysis("风险低")
                 .downstreamCompany("下游公司").guaranteeMark("").insuranceRatio("").interestRate("10").legalPerson("李四")
                 .partnerCashDepositWay("ces").partnerExpectBillingMethod("").partnerExpectBillingWay("").partnerExpectCredit(BigDecimal.valueOf(3.00))
                 .partnerExpectDeliveryCycle("").partnerExpectDeliveryLocal("深圳").partnerExpectGuaranteeForm("").partnerExpectRate("12")
@@ -30,37 +31,37 @@ public class ProjectTest extends SpringBootTestBasic {
     @Test
     public void addProjectInfo() {
         Project project = getProject();
-        project.addProjectInfo();
-        project.deleteProjectInfo();
+        project.addProject();
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
     }
 
     @Test
     public void updateProjectInfo() {
         Project project = getProject();
-        ((ProjectInfo) project).setProjectName("测试修改项目");
-        project.updateProjectInfo();
-        ProjectInfo projectInfo = repository.findOne(((ProjectInfo) project).getId());
-        Assert.assertEquals("测试修改项目", projectInfo.getProjectName());
-        project.deleteProjectInfo();
+        ((ProjectImpl) project).setProjectName("测试修改项目");
+        project.updateProject();
+        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
+        Assert.assertEquals("测试修改项目", projectImpl.getProjectName());
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
     }
 
     @Test
     public void deleteProjectInfo() {
         Project project = getProject();
-        project.addProjectInfo();
-        project.deleteProjectInfo();
-        ProjectInfo projectInfo = repository.findOne(((ProjectInfo) project).getId());
-        Assert.assertNull(projectInfo);
+        project.addProject();
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
+        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
+        Assert.assertNull(projectImpl);
     }
 
     @Test
     public void permitProjectInfo() {
         Project project = getProject();
-        project.addProjectInfo();
-        project.permit();
-        ProjectInfo projectInfo = repository.findOne(((ProjectInfo) project).getId());
-        Assert.assertEquals(Project.Approving, projectInfo.getDictProjectState());
-        project.deleteProjectInfo();
+        project.addProject();
+        project.apply();
+        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
+        Assert.assertEquals(Project.APPROVING, projectImpl.getState());
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
     }
 
 }

@@ -8,8 +8,8 @@ import java.util.Collection;
  */
 public interface Order {
     String New = "New";
-    String Confirm = "Confirm";
-    String Terminate = "Terminate";
+    String Confirm = "CONFIRM";
+    String Terminate = "TERMINATE";
     String DeliveryConfirm = "DeliveryConfirm";
     String ReceivedConfirm = "ReceivedConfirm";
 

@@ -66,18 +66,13 @@ public class FrameContractImpl implements FrameContract {
     }
 
     @Override
-    public void deleteFrameContract() {
-        SpringContextHolder.getBean(FrameContractRepository.class).delete(this.id);
-    }
-
-    @Override
-    public void approveFrameContract() {
+    public void apply() {
         SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void confirmFrameContract() {
-        this.setAuditState(FrameContract.Confirm);
+        this.setAuditState(FrameContract.CONFIRM);
         SpringContextHolder.getBean(FrameContractRepository.class).saveAndFlush(this);
     }
 

@@ -6,36 +6,23 @@ package com.michaelssss.rzzl2.projectmanagement;
  * @Date:2018/7/16
  */
 public interface Approval {
-    String Confirm = "Confirm";
-    String Terminate = "Terminate";
+    String EDITABLE = "EDITABLE";
+    String CONFIRM = "CONFIRM";
+    String TERMINATE = "TERMINATE";
 
     /**
      * 添加 项目批复
      */
-    void addProjectApprovalInfo();
+    void addApproval();
 
     /**
      * 修改项目批复信息
      */
-    void updateProjectInfo();
-
-    /**
-     * 删除项目批复信息
-     */
-    void deleteProjectInfo();
+    void updateApproval();
 
     /**
      * 项目批复生效
      */
     void confirm();
 
-    /**
-     * 生成项目批复编号
-     *
-     * @return 批复编号
-     */
-    String getProjectApprovalCode();
-
 }
-
-

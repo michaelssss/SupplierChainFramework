@@ -1,30 +1,29 @@
 package com.michaelssss.rzzl2.projectmanagement;
 
 /**
+ * @author Micha
+ * 对项目进行重构，减少非业务描述
+ * -------------------------------------
  * @Description:项目信息管理
  * @Author:tsx
  * @Date:2018/7/16
  */
 public interface Project {
-    String Approving = "Approving";
+    String EDITABLE = "EDITABLE";
+    String APPROVING = "APPROVING";
 
     /**
      * 添加项目信息
      */
-    void addProjectInfo();
+    void addProject();
 
     /**
      * 修改项目信息
      */
-    void updateProjectInfo();
-
-    /**
-     * 删除项目信息
-     */
-    void deleteProjectInfo();
+    void updateProject();
 
     /**
      * 发起审批
      */
-    void permit();
+    void apply();
 }

@@ -4,8 +4,8 @@ package com.michaelssss.rzzl2.contractmanagement;
  * 采购合同根据采购订单生成
  */
 public interface PurchaseContract {
-    String Confirm = "Confirm";
-    String Terminate = "Terminate";
+    String Confirm = "CONFIRM";
+    String Terminate = "TERMINATE";
 
     /***
      * 添加采购合同
