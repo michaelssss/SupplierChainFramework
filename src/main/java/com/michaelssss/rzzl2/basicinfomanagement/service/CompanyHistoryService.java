@@ -41,7 +41,7 @@ public class CompanyHistoryService {
         List<Company> companyList = new ArrayList<>();
         Map<String, List<Company>> companyMap = new HashMap<>();
         for (Company company : companies) {
-            if (companyMap.containsKey(company.getPartnerName())) {
+            if (!companyMap.containsKey(company.getPartnerName())) {
                 List<Company> companyList1 = new ArrayList<>();
                 companyList1.add(company);
                 companyMap.put(company.getPartnerName(), companyList1);
