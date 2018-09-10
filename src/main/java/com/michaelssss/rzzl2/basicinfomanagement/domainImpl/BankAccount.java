@@ -1,6 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,13 +18,29 @@ import javax.persistence.*;
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(hidden = true)
     private Long id;
-    private String accountName;//账户名称
-    private String bankAccount;//银行账号
-    private String bankName;//开户行名称
-    private String bankFullName;//开户行全称
-    private String status;//账号状态
-    private String currency;//币种
-    private String isDefault;//是否为默认账户
-    private String remark;//备注
+    @ApiModelProperty(value = "账户名称", example = "收款")
+    private String accountName;
+
+    @ApiModelProperty(value = "银行账号", example = "1234567890")
+    private String bankAccount;
+
+    @ApiModelProperty(value = "开户行名称", example = "中国建设银行")
+    private String bankName;
+
+    @ApiModelProperty(value = "开户行全称", example = "中国健身银行深圳市南山支行")
+    private String bankFullName;
+
+    @ApiModelProperty(value = "账号状态", example = "可用")
+    private String status;
+
+    @ApiModelProperty(value = "币种", example = "人民币")
+    private String currency;
+
+    @ApiModelProperty(value = "是否为默认账户", example = "true")
+    private String isDefault;
+
+    @ApiModelProperty(value = "备注")
+    private String remark;
 }
