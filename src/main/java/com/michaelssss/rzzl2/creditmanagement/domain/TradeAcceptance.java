@@ -49,7 +49,7 @@ public class TradeAcceptance implements Acceptance {
     }
 
     @Override
-    public void transfer(String companyName) {
+    public void transfer(String companyName, BigDecimal amount) {
 
     }
 
