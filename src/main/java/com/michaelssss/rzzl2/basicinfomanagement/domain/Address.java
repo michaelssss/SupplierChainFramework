@@ -1,4 +1,4 @@
-package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
+package com.michaelssss.rzzl2.basicinfomanagement.domain;
 
 
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(hidden = true,readOnly = true)
     private Long id;
     @ApiModelProperty(value = "地址类型", example = "国内")
     private String addressType;

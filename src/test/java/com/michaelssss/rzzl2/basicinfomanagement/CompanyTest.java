@@ -1,7 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement;
 
 import com.michaelssss.SpringBootTestBasic;
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.*;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.*;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

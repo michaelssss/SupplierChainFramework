@@ -1,24 +1,16 @@
-package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
+package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
-@Entity
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "company_contact")
-public class Contact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    private Long id;
+@NoArgsConstructor
+@Data
+public class CompanyContractDataBinder {
+    private String companyName;
+    private String historyId;
     @ApiModelProperty(value = "联系人类型", example = "唯一联系人")
     private String contactType;
     @ApiModelProperty(value = "联系人姓名", example = "Michaelssss")

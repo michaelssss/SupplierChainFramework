@@ -1,25 +1,16 @@
-package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
+package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
-@Entity
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "company_shareholder_info")
-public class ShareholderInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    private Long id;
+@NoArgsConstructor
+@Data
+public class CompanyShareHolderDataBinder {
+    private String companyName;
+    private String historyId;
     @ApiModelProperty(value = "股东姓名", example = "Michaelssss")
     private String shareholderName;
     @ApiModelProperty(value = "持股比例", example = "100%")
@@ -32,4 +23,5 @@ public class ShareholderInfo {
     private String investmentOfType;
     @ApiModelProperty(value = "备注", example = "")
     private String remark;
+
 }

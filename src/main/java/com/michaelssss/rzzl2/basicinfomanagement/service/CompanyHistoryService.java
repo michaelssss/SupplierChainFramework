@@ -1,7 +1,7 @@
 package com.michaelssss.rzzl2.basicinfomanagement.service;
 
 import com.michaelssss.rzzl2.basicinfomanagement.Company;
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.CompanyImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

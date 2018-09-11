@@ -6,6 +6,7 @@ import com.michaelssss.rzzl2.BusinessException;
 import com.michaelssss.rzzl2.exception.ExistException;
 import com.michaelssss.rzzl2.projectmanagement.Project;
 import com.michaelssss.rzzl2.projectmanagement.repository.ProjectCatalog;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Example;
@@ -23,32 +24,59 @@ public class ProjectImpl implements Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "唯一ID")
     private Long id;
     @Column(length = 64, name = "project_name", unique = true)
-    private String projectName;//项目名称
-    private Long partnerId;//合作伙伴id
-    private String partnerName;//企业全称
-    private String partnerMain;//合作主体
-    private String supplier;//上游供应商
-    private String purchase;//下游合作伙伴
-    private String productionId;//合作产品id
-    private BigDecimal partnerExpectCredit;//合作伙伴期望授信额度
-    private String partnerExpectRate;//合作伙伴期望费率
-    private String partnerExpectBillingWay;//合作伙伴期望计费方式
-    private String partnerExpectDeliveryCycle;//合作伙伴期望提货周期
-    private String partnerExpectBillingMethod;//合作伙伴期望结算方式
-    private String partnerExpectTransport;//合作伙伴期望运输费用承担方
-    private String partnerExpectDeliveryLocal;//合作伙伴期望提货地点
-    private String partnerExpectGuaranteeForm;//合作伙伴期望担保形式
-    private String partnerExpectStorageRequired;//其他物流/仓储要求
-    private String partnerExpectCashDepositRatio;//期望保证金比例
-    private String partnerExpectDepositWay;//期望保证金抵扣方式
-    private String partnerExpectAnalysis;//合作伙伴需求合理性分析
-    private String guaranteeMark;//担保备注
-    private String interestRate;//利息率
-    private String legalPerson;//法定代表
-    private String registerAddress;//注册地址
-    private String state;//项目状态
+    @ApiModelProperty(value = "项目名称")
+    private String projectName;
+    @ApiModelProperty(value = "合作伙伴id")
+    private Long partnerId;
+    @ApiModelProperty(value = "选择一个版本信息")
+    private String historyId;
+    @ApiModelProperty(value = "企业全称")
+    private String partnerName;
+    @ApiModelProperty(value = "合作主体")
+    private String partnerMain;
+    @ApiModelProperty(value = "上游供应商")
+    private String supplier;
+    @ApiModelProperty(value = "下游合作伙伴")
+    private String purchase;
+    @ApiModelProperty(value = "合作产品id")
+    private String productionId;
+    @ApiModelProperty(value = "合作伙伴期望授信额度")
+    private BigDecimal partnerExpectCredit;
+    @ApiModelProperty(value = "合作伙伴期望费率")
+    private String partnerExpectRate;
+    @ApiModelProperty(value = "合作伙伴期望计费方式")
+    private String partnerExpectBillingWay;
+    @ApiModelProperty(value = "合作伙伴期望提货周期")
+    private String partnerExpectDeliveryCycle;
+    @ApiModelProperty(value = "合作伙伴期望结算方式")
+    private String partnerExpectBillingMethod;
+    @ApiModelProperty(value = "合作伙伴期望运输费用承担方")
+    private String partnerExpectTransport;
+    @ApiModelProperty(value = "合作伙伴期望提货地点")
+    private String partnerExpectDeliveryLocal;
+    @ApiModelProperty(value = "合作伙伴期望担保形式")
+    private String partnerExpectGuaranteeForm;
+    @ApiModelProperty(value = "其他物流/仓储要求")
+    private String partnerExpectStorageRequired;
+    @ApiModelProperty(value = "期望保证金比例")
+    private String partnerExpectCashDepositRatio;
+    @ApiModelProperty(value = "期望保证金抵扣方式")
+    private String partnerExpectDepositWay;
+    @ApiModelProperty(value = "合作伙伴需求合理性分析")
+    private String partnerExpectAnalysis;
+    @ApiModelProperty(value = "担保备注")
+    private String guaranteeMark;
+    @ApiModelProperty(value = "利息率")
+    private String interestRate;
+    @ApiModelProperty(value = "法定代表")
+    private String legalPerson;
+    @ApiModelProperty(value = "注册地址")
+    private String registerAddress;
+    @ApiModelProperty(value = "项目状态")
+    private String state;
 
 
     @Override

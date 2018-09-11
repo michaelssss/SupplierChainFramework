@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement.respository;
 
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.CompanyImpl;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.CompanyImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

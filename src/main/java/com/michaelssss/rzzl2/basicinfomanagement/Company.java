@@ -1,9 +1,9 @@
 package com.michaelssss.rzzl2.basicinfomanagement;
 
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.Address;
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.BankAccount;
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.Contact;
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.ShareholderInfo;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.Address;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.BankAccount;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.Contact;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.ShareholderInfo;
 
 import java.math.BigDecimal;
 import java.util.Date;

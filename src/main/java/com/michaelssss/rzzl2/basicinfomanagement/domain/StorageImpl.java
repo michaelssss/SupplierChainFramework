@@ -1,4 +1,4 @@
-package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
+package com.michaelssss.rzzl2.basicinfomanagement.domain;
 
 
 import com.michaelssss.SpringContextHolder;

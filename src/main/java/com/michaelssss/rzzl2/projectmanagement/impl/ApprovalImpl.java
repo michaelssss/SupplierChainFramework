@@ -5,6 +5,7 @@ import com.michaelssss.rzzl2.BusinessException;
 import com.michaelssss.rzzl2.projectmanagement.Approval;
 import com.michaelssss.rzzl2.projectmanagement.repository.ApprovalCatalog;
 import com.michaelssss.utils.BusinessCodeGenerator;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,42 +25,77 @@ import java.util.Date;
 public class ApprovalImpl implements Approval {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "唯一ID")
     private Long id;
     @Column(length = 64, name = "reply_code", unique = true)
-    private String replyCode;//批复编号
-    private Long partnerId;//合作伙伴id
-    private String projectName;//项目名称
-    private String partnerName;//企业全称
-    private String partnerMain;//合作主体
-    private String supplier;//上游供应商
-    private String purchase;//下游合作伙伴
-    private String productionId;//合作产品id
-    private BigDecimal credit;//授信额度
-    private String rate;//费率
-    private String billingWay;//计费方式
-    private String deliveryCycle;//提货周期
-    private String billingMethod;//结算方式
-    private String transport;//运输费用承担方
-    private String deliveryLocal;//提货地点
-    private String guaranteeForm;//担保形式
-    private String cashDepositRatio;//保证金比例
-    private String cashDepositWay;//保证金抵扣方式
-    private String deductionPercentage;//每期抵扣比例
-    private BigDecimal deduction;//每期抵扣金额
-    private String effectiveTime;//授信额度有效期
-    private String interestRate;//利息率
-    private String legalPerson;//法定代表
-    private String registerAddress;//注册地址
-    private String minInterestDay;//最小利息计算天数
-    private String marketRisk;//市场风险
-    private String operationRisk;//操作风险
-    private String creditRisk;//信用风险
-    private Date meetTime;//上会时间
-    private String tradeMode;//商流
-    private String moneyStream;//资金流
-    private String logistics;//物流
-    private String creditType;//授信类型
-    private String state;//状态
+    @ApiModelProperty(value = "批复编号")
+    private String replyCode;
+    @ApiModelProperty(value = "合作伙伴id")
+    private Long partnerId;
+    @ApiModelProperty(value = "项目名称")
+    private String projectName;
+    @ApiModelProperty(value = "企业全称")
+    private String partnerName;
+    @ApiModelProperty(value = "合作主体")
+    private String partnerMain;
+    @ApiModelProperty(value = "上游供应商")
+    private String supplier;
+    @ApiModelProperty(value = "下游合作伙伴")
+    private String purchase;
+    @ApiModelProperty(value = "合作产品id")
+    private String productionId;
+    @ApiModelProperty(value = "授信额度")
+    private BigDecimal credit;
+    @ApiModelProperty(value = "费率")
+    private String rate;
+    @ApiModelProperty(value = "计费方式")
+    private String billingWay;
+    @ApiModelProperty(value = "提货周期")
+    private String deliveryCycle;
+    @ApiModelProperty(value = "结算方式")
+    private String billingMethod;
+    @ApiModelProperty(value = "运输费用承担方")
+    private String transport;
+    @ApiModelProperty(value = "提货地点")
+    private String deliveryLocal;
+    @ApiModelProperty(value = "担保形式")
+    private String guaranteeForm;
+    @ApiModelProperty(value = "保证金比例")
+    private String cashDepositRatio;
+    @ApiModelProperty(value = "保证金抵扣方式")
+    private String cashDepositWay;
+    @ApiModelProperty(value = "每期抵扣比例")
+    private String deductionPercentage;
+    @ApiModelProperty(value = "每期抵扣金额")
+    private BigDecimal deduction;
+    @ApiModelProperty(value = "授信额度有效期")
+    private String effectiveTime;
+    @ApiModelProperty(value = "利息率")
+    private String interestRate;
+    @ApiModelProperty(value = "法定代表")
+    private String legalPerson;
+    @ApiModelProperty(value = "注册地址")
+    private String registerAddress;
+    @ApiModelProperty(value = "最小利息计算天数")
+    private String minInterestDay;
+    @ApiModelProperty(value = "市场风险")
+    private String marketRisk;
+    @ApiModelProperty(value = "操作风险")
+    private String operationRisk;
+    @ApiModelProperty(value = "信用风险")
+    private String creditRisk;
+    @ApiModelProperty(value = "上会时间")
+    private Date meetTime;
+    @ApiModelProperty(value = "商流")
+    private String tradeMode;
+    @ApiModelProperty(value = "资金流")
+    private String moneyStream;
+    @ApiModelProperty(value = "物流")
+    private String logistics;
+    @ApiModelProperty(value = "授信类型")
+    private String creditType;
+    @ApiModelProperty(value = "状态", hidden = true)
+    private String state;
 
     @Override
     public void addApproval() {

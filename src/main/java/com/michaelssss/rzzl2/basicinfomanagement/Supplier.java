@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement;
 
-import com.michaelssss.rzzl2.basicinfomanagement.domainImpl.SupplierClientApply;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.SupplierClientApply;
 
 /**
  * @Description:合作伙伴基础信息仓储商信息

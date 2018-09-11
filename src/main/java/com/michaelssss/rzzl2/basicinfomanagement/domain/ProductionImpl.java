@@ -1,9 +1,10 @@
-package com.michaelssss.rzzl2.basicinfomanagement.domainImpl;
+package com.michaelssss.rzzl2.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
-import com.michaelssss.rzzl2.basicinfomanagement.ProductionInfo;
+import com.michaelssss.rzzl2.basicinfomanagement.Production;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.ProductionRepository;
 import com.michaelssss.utils.BusinessCodeGenerator;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,53 +21,56 @@ import java.util.Set;
 @Builder
 @Entity
 @Data
-@Table(name = "goods")
-public class ProductionInfoImpl implements ProductionInfo {
+@Table(name = "production")
+public class ProductionImpl implements Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "业务无关id",readOnly = true,hidden = true)
     private Long id;
-    private String partNumber;//商品料号
+    @ApiModelProperty(value = "sku")
+    private String sku;
+    @ApiModelProperty(value = "商品名称")
     private String name;
-    private String description;//商品简称
+    @ApiModelProperty(value = "商品描述")
+    private String description;
+    @ApiModelProperty(value = "品牌")
     private String brands;
-    private String model;//型号
+    @ApiModelProperty(value = "型号")
+    private String model;
+    @ApiModelProperty(value = "标准")
     private String standard;
-    private String pushOnlineShop;//是否上架
+    @ApiModelProperty(value = "生效时间")
     private Date startTime;
+    @ApiModelProperty(value = "失效时间")
     private Date endTime;
+    @ApiModelProperty(value = "备注")
     private String remark;
+    @ApiModelProperty(value = "状态", readOnly = true)
     private String state;
+    @ApiModelProperty(value = "生产厂商名称")
     private String industry;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private GoodsClassImpl goodsClass;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "goodsId")
-    private Set<PropertyValueImpl> propertyValueSet;
+    private Set<PropertyKeyValue> propertyKeyValues;
 
+    void addProperty(PropertyKeyValue propertyKeyValue) {
+        this.propertyKeyValues.add(propertyKeyValue);
+    }
 
     @Override
     public void saveInfo() {
+        this.sku = getPartNumberNo();
         SpringContextHolder.getBean(ProductionRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void updateInfo() {
         SpringContextHolder.getBean(ProductionRepository.class).saveAndFlush(this);
-
     }
 
-    @Override
-    public void deleteInfo() {
-        SpringContextHolder.getBean(ProductionRepository.class).delete(this.id);
-    }
-
-    @Override
-    public String getPartNumberNo() {
+    private String getPartNumberNo() {
         return SpringContextHolder.
                 getBean(BusinessCodeGenerator.class).
                 getSequence(this.getClass(), "SP");
 
     }
-
-
 }
