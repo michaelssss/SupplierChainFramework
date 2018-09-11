@@ -1,7 +1,8 @@
 package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
 import com.michaelssss.base.Response;
-import com.michaelssss.rzzl2.basicinfomanagement.domain.ProductionClassification;
+import com.michaelssss.rzzl2.basicinfomanagement.ProductionClassification;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.ProductionClassificationImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.service.ClassificationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +49,7 @@ public class ClassificationController {
     @ResponseBody
     public Response<String> addSubClassification(@RequestBody ProductionClassificationDataBinder productionClassification) {
         ProductionClassification parent = classificationService.getById(productionClassification.getParentId());
-        ProductionClassification productionClassification1 = new ProductionClassification();
+        ProductionClassificationImpl productionClassification1 = new ProductionClassificationImpl();
         productionClassification1.setCode(productionClassification.getCode());
         productionClassification1.setName(productionClassification.getName());
         productionClassification1.setTemplateProperties(productionClassification.getTemplateProperties());

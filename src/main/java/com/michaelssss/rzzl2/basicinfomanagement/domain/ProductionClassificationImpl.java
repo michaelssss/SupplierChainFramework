@@ -2,6 +2,7 @@ package com.michaelssss.rzzl2.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.rzzl2.basicinfomanagement.Production;
+import com.michaelssss.rzzl2.basicinfomanagement.ProductionClassification;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.ProductionClassificationCatalog;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,10 +19,10 @@ import java.util.Set;
 @Table(name = "production_classification")
 @Entity
 @Data
-public class ProductionClassification {
+public class ProductionClassificationImpl implements ProductionClassification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "业务无关Id", readOnly = true,hidden = true)
+    @ApiModelProperty(value = "业务无关Id", readOnly = true, hidden = true)
     private Long uid;
     @ApiModelProperty(value = "分类唯一标识")
     private String code;
@@ -46,6 +47,7 @@ public class ProductionClassification {
      * @param production 商品信息
      * @param keyValue   商品分类属性Map
      */
+    @Override
     public void addProduction(Production production, Map<String, String> keyValue) {
         ProductionImpl production1 = (ProductionImpl) production;
         for (TemplateProperty templateProperty : this.templateProperties) {
@@ -62,6 +64,7 @@ public class ProductionClassification {
      *
      * @return
      */
+    @Override
     public List<ProductionImpl> productionInThisClassification() {
         List<ProductionImpl> productions = new ArrayList<>(this.productions);
         for (ProductionClassification productionClassification : this.child) {
@@ -70,11 +73,13 @@ public class ProductionClassification {
         return productions;
     }
 
+    @Override
     public void addSubClassification(ProductionClassification productionClassification) {
-        productionClassification.setLevel(this.level + 1);
+        ((ProductionClassificationImpl) productionClassification).setLevel(this.level + 1);
         this.child.add(productionClassification);
     }
 
+    @Override
     public void save() {
         SpringContextHolder.getBean(ProductionClassificationCatalog.class).save(this);
     }

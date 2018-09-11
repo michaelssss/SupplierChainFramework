@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
-import com.michaelssss.rzzl2.basicinfomanagement.domain.ProductionClassification;
+import com.michaelssss.rzzl2.basicinfomanagement.ProductionClassification;
 import com.michaelssss.rzzl2.basicinfomanagement.domain.TemplateProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

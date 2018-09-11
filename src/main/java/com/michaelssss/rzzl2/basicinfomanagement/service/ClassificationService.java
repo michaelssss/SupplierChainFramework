@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement.service;
 
-import com.michaelssss.rzzl2.basicinfomanagement.domain.ProductionClassification;
+import com.michaelssss.rzzl2.basicinfomanagement.ProductionClassification;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.ProductionClassificationCatalog;
 import org.springframework.stereotype.Service;
 
