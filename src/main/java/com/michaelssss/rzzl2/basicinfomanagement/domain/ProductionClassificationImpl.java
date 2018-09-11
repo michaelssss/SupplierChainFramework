@@ -33,7 +33,7 @@ public class ProductionClassificationImpl implements ProductionClassification {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy
     @ApiModelProperty(value = "子分类")
-    private List<ProductionClassification> child;
+    private List<ProductionClassificationImpl> child;
     @ManyToMany
     @ApiModelProperty(value = "该分类需要填写的属性名称")
     private Set<TemplateProperty> templateProperties;
@@ -76,7 +76,7 @@ public class ProductionClassificationImpl implements ProductionClassification {
     @Override
     public void addSubClassification(ProductionClassification productionClassification) {
         ((ProductionClassificationImpl) productionClassification).setLevel(this.level + 1);
-        this.child.add(productionClassification);
+        this.child.add((ProductionClassificationImpl) productionClassification);
     }
 
     @Override

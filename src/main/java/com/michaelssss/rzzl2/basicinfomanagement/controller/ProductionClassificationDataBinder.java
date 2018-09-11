@@ -1,6 +1,6 @@
 package com.michaelssss.rzzl2.basicinfomanagement.controller;
 
-import com.michaelssss.rzzl2.basicinfomanagement.ProductionClassification;
+import com.michaelssss.rzzl2.basicinfomanagement.domain.ProductionClassificationImpl;
 import com.michaelssss.rzzl2.basicinfomanagement.domain.TemplateProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -23,5 +23,5 @@ public class ProductionClassificationDataBinder {
     @ApiModelProperty(value = "该分类需要填写的属性名称")
     private Set<TemplateProperty> templateProperties;
     @ApiModelProperty(value = "子分类")
-    private List<ProductionClassification> child;
+    private List<ProductionClassificationImpl> child;
 }
