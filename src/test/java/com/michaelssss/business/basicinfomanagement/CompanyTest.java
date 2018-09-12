@@ -70,8 +70,8 @@ public class CompanyTest extends SpringBootTestBasic {
         contactSet.add(getContact());
         Set shareholder = new HashSet<ShareholderInfo>();
         shareholder.add(getShareholder());
-        Company company = CompanyImpl.builder().partnerName("测试公司")
-                .partnerNature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
+        Company company = CompanyImpl.builder().companyName("测试公司")
+                .nature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
                 .contributedCapital(BigDecimal.valueOf(1001)).currency("人民币").runningState("在营")
                 .registeredDate(new Date()).registeredNo("1000").organizationNo("100010")
                 .taxpayerNo("100").uniSocialNo("153321").companyType("1").industry("测试").validateDate(new Date())
@@ -88,7 +88,7 @@ public class CompanyTest extends SpringBootTestBasic {
         Company company = getCompany();
         company.save();
 
-        repository.delete(repository.findOne(Example.of(CompanyImpl.builder().partnerName(company.getPartnerName()).build())));
+        repository.delete(repository.findOne(Example.of(CompanyImpl.builder().companyName(company.getCompanyName()).build())));
     }
 
     @Test
@@ -101,8 +101,8 @@ public class CompanyTest extends SpringBootTestBasic {
                 .connectEmail("125566@sin.com").connectPeople("李四").connectPhone("13975015246").detail("待定").isDefault("是").province(Long.toString(1L)).remark("测试").build();
         Set<Address> addressSet = new HashSet<>();
         addressSet.add(address1);
-        Company company = CompanyImpl.builder().id(2l).partnerName("测试公司更新")
-                .partnerNature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
+        Company company = CompanyImpl.builder().id(2l).companyName("测试公司更新")
+                .nature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
                 .contributedCapital(BigDecimal.valueOf(1001)).currency("人民币").runningState("在营")
                 .registeredDate(new Date()).registeredNo("1000").organizationNo("100010")
                 .taxpayerNo("100").uniSocialNo("153321").companyType("1").industry("测试").validateDate(new Date())

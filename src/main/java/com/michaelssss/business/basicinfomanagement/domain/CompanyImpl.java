@@ -36,12 +36,12 @@ public class CompanyImpl implements Company {
     @ApiModelProperty(hidden = true)
     private Long id;
 
-    @Column(length = 64, name = "partner_name")
+    @Column(length = 64, name = "company_name")
     @ApiModelProperty(value = "公司名称", example = "测试公司")
-    private String partnerName;
+    private String companyName;
 
-    @ApiModelProperty(value = "合作伙伴性质", example = "中国")
-    private String partnerNature;
+    @ApiModelProperty(value = "国别", example = "中国")
+    private String nature;
 
     @ApiModelProperty(value = "合作伙伴类型", example = "商业伙伴")
     private String partnerType;
@@ -195,7 +195,7 @@ public class CompanyImpl implements Company {
     @Override
     public void save() {
         CompanyImpl company = CompanyImpl.builder().build();
-        company.setPartnerName(this.partnerName);
+        company.setCompanyName(this.companyName);
         //创建实例
         Example<CompanyImpl> ex = Example.of(company);
         if (SpringContextHolder.getBean(CompanyRepository.class).exists(ex)) {
@@ -206,13 +206,13 @@ public class CompanyImpl implements Company {
     }
 
     @Override
-    public String getPartnerName() {
-        return partnerName;
+    public String getCompanyName() {
+        return companyName;
     }
 
     @Override
-    public String getPartnerNature() {
-        return partnerNature;
+    public String getNature() {
+        return nature;
     }
 
     @Override

@@ -88,31 +88,28 @@ response:
     "status": "OK",
     "result": [
         {
-            "name": "添加"
+            ccompanyNamenyName: "添加"
         },
         {
-            "name": "获取功能列表"
+        companyNamecompanyName: "获取功能列表"
         },
         {
-            "name": "公司controller"
+   companyName     companyName: "公司controller"
+        },
+        companyName          companyName: "/BankAccount"
+        },
+   companyName {
+            companyName: "用户相关"
+        }companyName      {
+            companyName: "获取用户信息"
+    companyName},
+        {
+            companyName: ""companyName     },
+        {
+            companyName: "xiacompanyName"
         },
         {
-            "name": "/BankAccount"
-        },
-        {
-            "name": "用户相关"
-        },
-        {
-            "name": "获取用户信息"
-        },
-        {
-            "name": ""
-        },
-        {
-            "name": "xiaobai"
-        },
-        {
-            "name": "登陆"
+            companyName: "登陆"
         }
     ]
 }

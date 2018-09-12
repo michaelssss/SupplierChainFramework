@@ -17,20 +17,20 @@ public class CompanyHistoryService {
 
     public Company getSpecialCompanyHistoryByHistoryIdAndCompanyName(String companyName, String historyId) {
         //这是数据库唯一索引保证一定要么有且只有一条，要么一条没有
-        CompanyImpl sample = CompanyImpl.builder().partnerName(companyName).historyId(historyId).build();
+        CompanyImpl sample = CompanyImpl.builder().companyName(companyName).historyId(historyId).build();
         return companyRepository.findOne(Example.of(sample));
     }
 
     public Company getLatestCompany(String companyName) {
         //这是数据库唯一索引保证一定要么有且只有一条，要么一条没有
-        CompanyImpl sample = CompanyImpl.builder().partnerName(companyName).build();
+        CompanyImpl sample = CompanyImpl.builder().companyName(companyName).build();
         List<CompanyImpl> companies = companyRepository.findAll(Example.of(sample));
         companies.sort((c1, c2) -> Long.compare(Long.parseLong(c1.getHistoryId()), Long.parseLong(c2.getHistoryId())));
         return companies.size() == 0 ? null : companies.get(0);
     }
 
     public List<Company> getCompanyAllAuditHistory(String companyName) {
-        CompanyImpl sample = CompanyImpl.builder().partnerName(companyName).build();
+        CompanyImpl sample = CompanyImpl.builder().companyName(companyName).build();
         List<CompanyImpl> companies = companyRepository.findAll(Example.of(sample));
         companies.sort((o1, o2) -> Long.compare(Long.parseLong(o1.getHistoryId()), Long.parseLong(o2.getHistoryId())));
         return new ArrayList<>(companies);
@@ -41,12 +41,12 @@ public class CompanyHistoryService {
         List<Company> companyList = new ArrayList<>();
         Map<String, List<Company>> companyMap = new HashMap<>();
         for (Company company : companies) {
-            if (!companyMap.containsKey(company.getPartnerName())) {
+            if (!companyMap.containsKey(company.getCompanyName())) {
                 List<Company> companyList1 = new ArrayList<>();
                 companyList1.add(company);
-                companyMap.put(company.getPartnerName(), companyList1);
+                companyMap.put(company.getCompanyName(), companyList1);
             } else {
-                companyMap.get(company.getPartnerName()).add(company);
+                companyMap.get(company.getCompanyName()).add(company);
             }
         }
         for (Map.Entry<String, List<Company>> entry : companyMap.entrySet()) {

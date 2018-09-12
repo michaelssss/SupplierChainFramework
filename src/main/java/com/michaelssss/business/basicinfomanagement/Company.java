@@ -79,12 +79,12 @@ public interface Company {
     /**
      * 公司名称
      */
-    String getPartnerName();
+    String getCompanyName();
 
     /**
      * 合作伙伴性质
      */
-    String getPartnerNature();
+    String getNature();
 
     /**
      * 合作伙伴类型

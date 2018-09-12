@@ -115,7 +115,7 @@ public ResponseEntity<User> createUser(@RequestBody @ApiParam(value = "Created u
 
 |属性名称|备注|
 | :--------:| :---|
-|name|属性名称
+|companyName|属性名称
 |value|属性值
 |defaultValue|默认属性值
 |allowableValues|可以不配置
@@ -200,14 +200,14 @@ public ResponseEntity<User> createUser(@RequestBody @ApiParam(value = "Created u
 
 响应头设置，使用方法
 
-@ResponseHeader(name="head1",description="response head conf")  
+@ResponseHeader(companyName="head1",description="response head conf")  
 与Controller中的方法并列使用。
 
 ### 6.属性配置
 
 | 属性名称 | 备注    |
 | :--------:  | :---|
-|name|响应头名称
+|companyName|响应头名称
 |description|头描述
 |response|默认响应类 Void
 |responseContainer|参考ApiOperation中配置
@@ -222,7 +222,7 @@ public ResponseEntity<User> createUser(@RequestBody @ApiParam(value = "Created u
 @ApiImplicitParams：用在方法上包含一组参数说明；  
 @ApiImplicitParam：用在@ApiImplicitParams注解中，指定一个请求参数的各个方面  
 paramType：参数放在哪个地方  
-name：参数代表的含义  
+companyName：参数代表的含义  
 value：参数名称  
 dataType： 参数类型，有String/int，无用  
 required ： 是否必要  
