@@ -26,7 +26,6 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractOrder implements Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
     protected Long uid;
     @Column(length = 64)
     protected String code;
