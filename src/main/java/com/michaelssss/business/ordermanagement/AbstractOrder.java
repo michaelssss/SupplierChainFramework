@@ -23,10 +23,10 @@ import java.util.Date;
 @Setter
 @Getter
 @DiscriminatorColumn
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractOrder implements Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     protected Long uid;
     @Column(length = 64)
     protected String code;
