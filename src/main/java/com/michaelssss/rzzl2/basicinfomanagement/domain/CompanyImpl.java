@@ -1,10 +1,10 @@
 package com.michaelssss.rzzl2.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
+import com.michaelssss.rzzl2.BusinessException;
 import com.michaelssss.rzzl2.basicinfomanagement.Company;
 import com.michaelssss.rzzl2.basicinfomanagement.respository.CompanyRepository;
 import com.michaelssss.rzzl2.basicinfomanagement.service.CompanyHistoryService;
-import com.michaelssss.rzzl2.exception.ExistException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -199,7 +199,7 @@ public class CompanyImpl implements Company {
         //创建实例
         Example<CompanyImpl> ex = Example.of(company);
         if (SpringContextHolder.getBean(CompanyRepository.class).exists(ex)) {
-            throw new ExistException("公司名称已存在");
+            throw new BusinessException("公司名称已存在");
         }
         this.setHistoryId(Long.toString(System.currentTimeMillis()));
         SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
