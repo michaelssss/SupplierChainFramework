@@ -25,7 +25,7 @@ public class ProjectImpl implements Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "唯一ID")
     private Long id;
-    @Column(length = 64, name = "project_name", unique = true)
+    @Column(length = 64, name = "project_name")
     @ApiModelProperty(value = "项目名称")
     private String projectName;
     @ApiModelProperty(value = "合作伙伴id")
