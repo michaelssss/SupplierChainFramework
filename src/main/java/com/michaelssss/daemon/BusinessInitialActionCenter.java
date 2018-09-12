@@ -1,10 +1,15 @@
 package com.michaelssss.daemon;
 
+import com.michaelssss.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 如何使用，首先要实现Action接口，因为Java不支持指针函数
@@ -40,6 +45,10 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                 orderbusinessList.sorted();
                 log.info("======================System daemon started=============================");
                 initFlag = true;
+                PlatformTransactionManager transactionManager = SpringContextHolder.getBean(PlatformTransactionManager.class);
+                TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+                ((DefaultTransactionDefinition) transactionDefinition).setName("BusinessInitialActionCenter");
+                TransactionStatus status = transactionManager.getTransaction(transactionDefinition);
                 for (Action action : orderbusinessList) {
                     synchronized (BusinessInitialActionCenter.class) {
                         try {
@@ -51,6 +60,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                     }
                 }
                 orderbusinessList.clear();
+                transactionManager.commit(status);
             }
         }
     }

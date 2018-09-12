@@ -1,6 +1,7 @@
 package com.michaelssss.account;
 
 import com.michaelssss.SpringContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -28,6 +29,7 @@ public class GroupImpl implements Group, Serializable {
     private Long uid;
 
     @NotEmpty
+    @ApiModelProperty(value = "部门名称")
     private String name;
 
     public GroupImpl() {

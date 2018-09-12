@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -91,6 +92,13 @@ public class UserManagementController {
         group.setGroupName(groupName);
         groupCatalog.saveAndFlush((GroupImpl) group);
         return Response.OK("创建部门成功");
+    }
+
+    @RequestMapping(value = "Group/list", method = RequestMethod.POST)
+    @ApiOperation(tags = "用户管理", value = "查询所有部门")
+    @ResponseBody
+    public Response<List<Group>> listGroup() {
+        return (Response<List<Group>>) Response.OK(this.groupCatalog.findAll());
     }
 
     @RequestMapping(value = "Group/join", method = RequestMethod.POST)

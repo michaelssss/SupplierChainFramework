@@ -1,5 +1,7 @@
 package com.michaelssss.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
 /**
@@ -20,6 +22,7 @@ public interface Group {
      *
      * @return
      */
+    @JsonIgnore
     Set<User> getUsers();
 
     /**
