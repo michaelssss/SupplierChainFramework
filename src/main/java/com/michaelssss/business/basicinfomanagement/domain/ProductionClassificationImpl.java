@@ -65,8 +65,8 @@ public class ProductionClassificationImpl implements ProductionClassification {
      * @return
      */
     @Override
-    public List<ProductionImpl> productionInThisClassification() {
-        List<ProductionImpl> productions = new ArrayList<>(this.productions);
+    public List<Production> productionInThisClassification() {
+        List<Production> productions = new ArrayList<>(this.productions);
         for (ProductionClassification productionClassification : this.child) {
             productions.addAll(productionClassification.productionInThisClassification());
         }

@@ -1,7 +1,5 @@
 package com.michaelssss.business.basicinfomanagement;
 
-import com.michaelssss.business.basicinfomanagement.domain.ProductionImpl;
-
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +17,7 @@ public interface ProductionClassification {
      *
      * @return
      */
-    List<ProductionImpl> productionInThisClassification();
+    List<Production> productionInThisClassification();
 
     void addSubClassification(ProductionClassification productionClassification);
 
