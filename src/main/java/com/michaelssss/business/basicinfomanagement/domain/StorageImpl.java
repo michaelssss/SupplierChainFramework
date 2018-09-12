@@ -1,0 +1,27 @@
+package com.michaelssss.business.basicinfomanagement.domain;
+
+
+import com.michaelssss.SpringContextHolder;
+import com.michaelssss.business.basicinfomanagement.Company;
+import com.michaelssss.business.basicinfomanagement.Storage;
+import com.michaelssss.business.basicinfomanagement.respository.StorageRepository;
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@Table(name = "storage")
+public class StorageImpl implements Storage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private CompanyImpl company;
+
+    @Override
+    public void apply(Company company) {
+        this.company = (CompanyImpl) company;
+        SpringContextHolder.getBean(StorageRepository.class).saveAndFlush(this);
+    }
+}

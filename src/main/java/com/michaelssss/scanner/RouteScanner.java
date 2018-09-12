@@ -121,7 +121,7 @@ class RouteScanner {
     /**
      * 查找当前路径下所有的@Api注解文件
      *
-     * @param path 格式为 com.michaelssss.rzzl2
+     * @param path 格式为 com.michaelssss.business
      * @return
      */
     private Set<BeanDefinition> findAllBeanDefineByFunction(String path) {
