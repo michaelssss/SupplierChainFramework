@@ -11,7 +11,7 @@ import java.util.Objects;
  * 注意到一个货品应该由货品名称，型号，品牌，单位唯一确定，若有一个不同则认为是不同货品
  */
 @Entity
-@Table(name = "cargo", indexes = {@Index(name = "idx_namemodelbrand", columnList = "companyName,model,brand")})
+@Table(name = "cargo", indexes = {@Index(name = "idx_namemodelbrand", columnList = "name,model,brand")})
 @Data
 public class Cargo {
     @Id

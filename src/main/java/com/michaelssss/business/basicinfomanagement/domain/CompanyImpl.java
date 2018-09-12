@@ -28,8 +28,8 @@ import java.util.Set;
 @Builder
 @Data
 @Table(name = "company", indexes = {
-        @Index(name = "idx_partnerNameHistoryId",
-                columnList = "partner_name,history_id", unique = true)})
+        @Index(name = "idx_companyNameHistoryId",
+                columnList = "company_name,history_id", unique = true)})
 public class CompanyImpl implements Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
