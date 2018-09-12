@@ -9,7 +9,8 @@ public class MyMySQLDialect extends MySQL57InnoDBDialect {
         registerColumnType(Types.VARCHAR, "longtext");
 //		registerColumnType( Types.VARCHAR, 16777215, "mediumtext" );
 //		registerColumnType( Types.VARCHAR, 65535, "text" );
-        registerColumnType(Types.VARCHAR, 128, "varchar($l)");
+        registerColumnType(Types.VARCHAR, 255, "varchar($l)");
         registerColumnType(Types.LONGVARCHAR, "longtext");
     }
+
 }
