@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.data.domain.Example;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -59,6 +60,7 @@ public class OrderTest extends SpringBootTestBasic {
      * 添加委托单测试
      */
     @Test
+    @Transactional
     public void testAddEntrustedOrder() {
         EntrustedOrderImpl fake = null;
         EntrustedOrderRepository repository = SpringContextHolder.getBean(EntrustedOrderRepository.class);
@@ -70,6 +72,7 @@ public class OrderTest extends SpringBootTestBasic {
     }
 
     @Test
+    @Transactional
     public void testAddSalesOrder() {
         EntrustedOrderRepository repository1 = SpringContextHolder.getBean(EntrustedOrderRepository.class);
         EntrustedOrderImpl fake1 = repository1.saveAndFlush(fakeEntrustedOrder());
@@ -84,6 +87,7 @@ public class OrderTest extends SpringBootTestBasic {
     }
 
     @Test
+    @Transactional
     public void testAddPurchaseOrder() {
         EntrustedOrderRepository repository1 = SpringContextHolder.getBean(EntrustedOrderRepository.class);
         EntrustedOrderImpl fake1 = repository1.saveAndFlush(fakeEntrustedOrder());
