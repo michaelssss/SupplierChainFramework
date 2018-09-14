@@ -20,7 +20,7 @@ public final class PageUtils {
     }
 
     public static void writeResponsePageHeader(Page page, HttpServletResponse response) {
-        int pageNum = page.getNumber();
+        int pageNum = page.getNumber() + 1;
         int pageSize = page.getSize();
         long total = page.getTotalElements();
         int totalPage = page.getTotalPages();
