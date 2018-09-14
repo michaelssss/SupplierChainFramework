@@ -5,15 +5,21 @@ import com.michaelssss.base.Response;
 import com.michaelssss.business.basicinfomanagement.*;
 import com.michaelssss.business.basicinfomanagement.domain.*;
 import com.michaelssss.business.basicinfomanagement.service.CompanyHistoryService;
+import com.michaelssss.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +59,12 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "list", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<List<Company>> list() {
-        return (Response<List<Company>>) Response.OK(companyHistoryService.getAllCompanyLatestHistory());
+    public Response<List<Company>> list(HttpServletRequest request, HttpServletResponse response) {
+        List<Company> companies = companyHistoryService.getAllCompanyLatestHistory();
+        Pageable pageable = PageUtils.getPageableFromRequest(request);
+        Page<Company> companyPage = new PageImpl<>(companies, pageable, companies.size());
+        PageUtils.writeResponsePageHeader(companyPage, response);
+        return (Response<List<Company>>) Response.OK(companyPage.getContent());
     }
 
     @ResponseBody

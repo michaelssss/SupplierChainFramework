@@ -121,25 +121,21 @@ public class CompanyImpl implements Company {
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "companyId")
     @ApiModelProperty(value = "公司地址")
     private Set<Address> addressSet;
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "companyId")
     @ApiModelProperty(value = "银行账户列表")
     private Set<BankAccount> bankAccounts;
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "companyId")
     @ApiModelProperty(value = "股东信息列表")
     private Set<ShareholderInfo> shareholderInfoSet;
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "companyId")
     @ApiModelProperty(value = "联系人列表")
     private Set<Contact> contactSet;
 

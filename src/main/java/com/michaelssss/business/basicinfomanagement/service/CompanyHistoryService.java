@@ -1,7 +1,7 @@
 package com.michaelssss.business.basicinfomanagement.service;
 
 import com.michaelssss.business.basicinfomanagement.Company;
-import com.michaelssss.business.basicinfomanagement.domain.CompanyImpl;
+import com.michaelssss.business.basicinfomanagement.domain.*;
 import com.michaelssss.business.basicinfomanagement.respository.CompanyRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +64,18 @@ public class CompanyHistoryService {
         BeanUtils.copyProperties(company1, company2);
         company2.setId(null);
         company2.setHistoryId(Long.toString(new Date().getTime()));
+        for (Address address : company2.getAddressSet()) {
+            address.setId(null);
+        }
+        for (ShareholderInfo shareholderInfo : company2.getShareholderInfoSet()) {
+            shareholderInfo.setId(null);
+        }
+        for (BankAccount bankAccount : company2.getBankAccounts()) {
+            bankAccount.setId(null);
+        }
+        for (Contact contact : company2.getContactSet()) {
+            contact.setId(null);
+        }
         return companyRepository.saveAndFlush(company2);
     }
 }
