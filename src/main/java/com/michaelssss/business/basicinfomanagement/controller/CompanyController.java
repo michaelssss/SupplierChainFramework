@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,7 +62,7 @@ public class CompanyController {
         Company sample = CompanyImpl.builder().companyName(queryParam.get("companyName")).companyType(queryParam.get("companyType")).build();
         List<Company> companies = companyHistoryService.getAllCompanyLatestHistory(sample);
         Pageable pageable = PageUtils.getPageableFromRequest(request);
-        Page<Company> companyPage = new PageImpl<>(companies, pageable, companies.size());
+        Page<Company> companyPage = (Page<Company>) PageUtils.getPageFromPageable(companies, pageable);
         PageUtils.writeResponsePageHeader(companyPage, response);
         return (Response<List<Company>>) Response.OK(companyPage.getContent());
     }
