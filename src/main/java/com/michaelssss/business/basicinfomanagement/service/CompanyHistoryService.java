@@ -36,8 +36,8 @@ public class CompanyHistoryService {
         return new ArrayList<>(companies);
     }
 
-    public List<Company> getAllCompanyLatestHistory() {
-        List<CompanyImpl> companies = companyRepository.findAll();
+    public List<Company> getAllCompanyLatestHistory(Company sample) {
+        List<CompanyImpl> companies = companyRepository.findAll(Example.of((CompanyImpl) sample));
         List<Company> companyList = new ArrayList<>();
         Map<String, List<Company>> companyMap = new HashMap<>();
         for (Company company : companies) {

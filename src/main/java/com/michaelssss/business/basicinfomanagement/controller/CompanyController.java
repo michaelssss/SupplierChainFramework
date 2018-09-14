@@ -59,8 +59,9 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "list", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<List<Company>> list(HttpServletRequest request, HttpServletResponse response) {
-        List<Company> companies = companyHistoryService.getAllCompanyLatestHistory();
+    public Response<List<Company>> list(@RequestBody Map<String, String> queryParam, HttpServletRequest request, HttpServletResponse response) {
+        Company sample = CompanyImpl.builder().companyName(queryParam.get("companyName")).companyType(queryParam.get("companyType")).build();
+        List<Company> companies = companyHistoryService.getAllCompanyLatestHistory(sample);
         Pageable pageable = PageUtils.getPageableFromRequest(request);
         Page<Company> companyPage = new PageImpl<>(companies, pageable, companies.size());
         PageUtils.writeResponsePageHeader(companyPage, response);
