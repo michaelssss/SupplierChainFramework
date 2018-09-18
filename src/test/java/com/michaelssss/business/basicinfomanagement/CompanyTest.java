@@ -24,7 +24,7 @@ public class CompanyTest extends SpringBootTestBasic {
     @Autowired
     private CompanyRepository repository;
 
-    public BankAccount getBankAccount() {
+    private BankAccount getBankAccount() {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setAccountName("中国测试账户名称");
         bankAccount.setBankAccount("423252566655442");
@@ -36,7 +36,7 @@ public class CompanyTest extends SpringBootTestBasic {
         return bankAccount;
     }
 
-    public Contact getContact() {
+    private Contact getContact() {
         Contact contact = new Contact();
         contact.setContactType("一般联系人");
         contact.setDepartment("财务部");
@@ -47,7 +47,7 @@ public class CompanyTest extends SpringBootTestBasic {
         return contact;
     }
 
-    public ShareholderInfo getShareholder() {
+    private ShareholderInfo getShareholder() {
         ShareholderInfo shareholderInfo = new ShareholderInfo();
         shareholderInfo.setShareholderName("TONY");
         shareholderInfo.setFundedOfRatio("10");
@@ -55,13 +55,13 @@ public class CompanyTest extends SpringBootTestBasic {
         return shareholderInfo;
     }
 
-    public Address getAddress() {
+    private Address getAddress() {
         Address address = Address.builder().addressType(Long.toString(1)).area(Long.toString(1)).city(Long.toString(2l))
                 .detail("待定").province(Long.toString(1L)).remark("测试").build();
         return address;
     }
 
-    public Company getCompany() {
+    private Company getCompany() {
         Set addressSet = new HashSet<Address>();
         addressSet.add(getAddress());
         Set bankAccount = new HashSet<BankAccount>();
@@ -87,21 +87,16 @@ public class CompanyTest extends SpringBootTestBasic {
     public void addCompany() {
         Company company = getCompany();
         company.save();
-
         repository.delete(repository.findOne(Example.of(CompanyImpl.builder().companyName(company.getCompanyName()).build())));
     }
 
     @Test
     public void addAddress() {
-        Address address = Address.builder().addressType(Long.toString(2l)).area(Long.toString(3l)).city(Long.toString(2l))
-                .detail("待定").province(Long.toString(1L)).remark("测试").build();
-
-
         Address address1 = Address.builder().addressType(Long.toString(1)).area(Long.toString(1)).city(Long.toString(2l))
                 .detail("待定").province(Long.toString(1L)).remark("测试").build();
         Set<Address> addressSet = new HashSet<>();
         addressSet.add(address1);
-        Company company = CompanyImpl.builder().id(2l).companyName("测试公司更新")
+        Company company = CompanyImpl.builder().id(2l).companyName("测试公司更新11")
                 .nature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
                 .contributedCapital(BigDecimal.valueOf(1001)).currency("人民币").runningState("在营")
                 .registeredDate(new Date()).registeredNo("1000").organizationNo("100010")
