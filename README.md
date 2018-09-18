@@ -1,117 +1,85 @@
-# 接口列表
+# 纯Java框架实践文档
 
-## 约定
+## 版本管理
 
-* 除了登录接口外，所有的请求需要在header中放置token
+采用git作为版本管理，理由是能够方便的创建分支并合并
 
-* token的正确性由服务端保证
+## 开发
 
-* 所有请求都采用post
+* 采用前后端完全分离
 
-* 未提及的功能请求均可在http://host/swagger-ui.html中查询
+* 前端自行维护完整路由表
 
-## 登陆
+* 后端只告知哪些功能项对于登陆用户是可用的
 
-* 说明
+* 权限校验完全由后台掌控
 
-> 若登陆成功则返回token，否则token为空字符串  
-token过期时间，若前端传空字符串则为当前时间延后七天
+* 数据校验也有后台解决，前端只保证用户体验的校验
 
-* 例子
+* 前后端通过功能名称及Api文档来关联
 
-path: /User/login
+* 后台采用Swagger注解，并且依据Swagger注解自动将开发代码变为开发文档
 
-```json
-request:
+* 因为采用了Hibernate作为对象持久化管理组件，开发人员无需关心底层的建表，只需要关注对象之间的关系
+
+* 部署Nginx反响代理解决前后端跨域问题
+
+```conf
+server
 {
-    "username":"", //String
-    "password":"", //String
-    "outdate":1234 //时间戳,Timestamp
-}
-```
+    charset utf-8;
+    access_log /home/logs/access.log;
+    error_log /home/logs/error.log;
+    listen 80;
+    root /home/rzzl-admin/dist;
+    location / {
+        try_files $uri $uri/ @router;
+        index index.html;
+    }
 
-```json
-response:
-{
-    "status": "OK",
-    "result": {
-        "token": "42047fa6-600c-433b-8ec1-331250c81f47",
-        "outdate": 2173017600000
+    location ^~ /api {
+        rewrite  ^/api/(.*)$ /$1 break;
+        proxy_pass http://127.0.0.1:8080;
+     }
+
+    location @router {
+        rewrite ^.*$ /index.html last;
     }
 }
 ```
 
-## 登出
+## 最佳实践
 
-* 说明
+* 对于查询列表的操作，有如下几种状况
+    
+```java
+   //完全只需要用SQL解决查询，无需要在业务代码做处理，则只需要将pageable代码传入Jpa的repository，示例代码如下
 
-> 若操作成功，则该token失效
-
-* 例子
-
-path: /User/logout
-
-```json
-request:
-{
-    "token":""
-}
-```
-
-```json
-response:
-{
-    "status": "OK",
-    "result": {
+    public Response<?> listxxxx(@RequestBody Map<String,String> requestMap, HttpServletRequest request, HttpServletResponse response){
+        Page<XXX> page = this.XXXrepository.findall(Example.of(requestBody),PageUtils.getPageableFromRequest(request));
+        PageUtils.writeResponsePageHeader(page, response);
+        return (Response<List<XXX>>)Response.OK(page.getContent());
     }
-}
+
 ```
 
-## 获取当前用户可用功能列表
+```java
+   //需要自己在Java处理列表的，示例如下
+   //需要将拼装过程放在Service,或者专有业务对象完成列表拼装
+   //以下代码是从公司信息list中摘取的
 
-* 当前用户可用功能列表数据结构说明
-
-
-
-* 例子
-
-path:/User/Functions/get
-
-```json
-request:
-{}
-```
-
-```json
-response:
-{
-    "status": "OK",
-    "result": [
-        {
-            ccompanyNamenyName: "添加"
-        },
-        {
-        companyNamecompanyName: "获取功能列表"
-        },
-        {
-   companyName     companyName: "公司controller"
-        },
-        companyName          companyName: "/BankAccount"
-        },
-   companyName {
-            companyName: "用户相关"
-        }companyName      {
-            companyName: "获取用户信息"
-    companyName},
-        {
-            companyName: ""companyName     },
-        {
-            companyName: "xiacompanyName"
-        },
-        {
-            companyName: "登陆"
+    public Response<List<Company>> list(@RequestBody Map<String, String> queryParam, HttpServletRequest request, HttpServletResponse response) {
+            Company sample = CompanyImpl.builder().companyName(queryParam.get("companyName")).companyType(queryParam.get("companyType")).build();
+            List<Company> companies = companyHistoryService.getAllCompanyLatestHistory(sample);
+            Pageable pageable = PageUtils.getPageableFromRequest(request);
+            Page<Company> companyPage = (Page<Company>) PageUtils.getPageFromPageable(companies, pageable);
+            PageUtils.writeResponsePageHeader(companyPage, response);
+            return (Response<List<Company>>) Response.OK(companyPage.getContent());
         }
-    ]
-}
-
 ```
+
+* 对于前端页面应该从http.headers中获取数据
+
+* 前端查询提交分页请求时，应在Header中增添pageNum和pageSize两个参数,默认请求是第一页，每页20个元素
+
+* 约定，每个页面对应的应该是个聚合根对象结构体
