@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 @Data
-@Table(name = "project", indexes = {
+@Table(name = "`project`", indexes = {
         @Index(name = "idx_projectname", columnList = "project_name", unique = true)
 })
 public class ProjectImpl implements Project {
