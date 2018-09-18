@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -64,6 +65,7 @@ public class CompanyHistoryService {
      * @param company 需要做深拷贝的公司对象
      * @return 拷贝后的对象
      */
+    @Transactional(rollbackOn = Exception.class)
     public Company addNewRecord(Company company) {
         CompanyImpl company1 = (CompanyImpl) company;
         CompanyImpl company2 = CompanyImpl.builder().build();
