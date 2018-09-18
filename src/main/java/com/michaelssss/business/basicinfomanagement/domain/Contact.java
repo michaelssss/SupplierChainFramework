@@ -37,6 +37,6 @@ public class Contact {
     private String position;
     @ApiModelProperty(value = "备注", example = "")
     private String remark;
-    @ApiModelProperty(value = "是否默认联系人", allowableValues = "true,false")
+    @ApiModelProperty(value = "是否默认", allowableValues = "true,false")
     private String isDefault;
 }
