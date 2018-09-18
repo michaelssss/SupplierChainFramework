@@ -82,7 +82,7 @@ server
 
 * 前端查询提交分页请求时，应在Header中增添pageNum和pageSize两个参数,默认请求是第一页，每页20个元素示例代码如下
 
-```javascript 1.8
+```javascript
 async getTableData(currentPage) {
       await (
         axios.post('/api/Company/list', {}, {
