@@ -90,7 +90,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "新增联系人", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Contact/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<String> addContact(@RequestBody CompanyContractDataBinder map) {
+    public Response<String> addContact(@RequestBody CompanyContactDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
         String contactType = map.getContactType();//联系人类型
@@ -184,10 +184,6 @@ public class CompanyController {
         String area = map.getArea();
         String detail = map.getDetail();
         String zipCode = map.getZipCode();
-        String connectPeople = map.getConnectPeople();
-        String connectPhone = map.getConnectPhone();
-        String connectEmail = map.getConnectEmail();
-        String isDefault = map.getIsDefault();
         String remark = map.getRemark();
         Address address = Address.builder()
                 .addressType(addressType)
@@ -196,10 +192,6 @@ public class CompanyController {
                 .area(area)
                 .detail(detail)
                 .zipCode(zipCode)
-                .connectPeople(connectPeople)
-                .connectPhone(connectPhone)
-                .connectEmail(connectEmail)
-                .isDefault(isDefault)
                 .remark(remark)
                 .build();
         Company company = companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);

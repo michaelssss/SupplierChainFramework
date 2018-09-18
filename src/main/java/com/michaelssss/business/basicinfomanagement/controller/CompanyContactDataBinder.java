@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CompanyContractDataBinder {
+public class CompanyContactDataBinder {
     private String companyName;
     private String historyId;
     @ApiModelProperty(value = "联系人类型", example = "唯一联系人")
@@ -27,6 +27,8 @@ public class CompanyContractDataBinder {
     private String department;
     @ApiModelProperty(value = "职位", example = "CEO")
     private String position;
+    @ApiModelProperty(value = "是否默认联系人", allowableValues = "true,false")
+    private String isDefault;
     @ApiModelProperty(value = "备注", example = "")
     private String remark;
 }

@@ -37,12 +37,6 @@ public class Contact {
     private String position;
     @ApiModelProperty(value = "备注", example = "")
     private String remark;
-    @ApiModelProperty(value = "联系人", example = "Michaelssss")
-    private String connectPeople;
-    @ApiModelProperty(value = "联系人手机", example = "13800000000")
-    private String connectPhone;
-    @ApiModelProperty(value = "联系人Email", example = "test@Test.com")
-    private String connectEmail;
     @ApiModelProperty(value = "是否默认联系人", allowableValues = "true,false")
     private String isDefault;
 }
