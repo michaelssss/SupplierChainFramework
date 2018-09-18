@@ -23,7 +23,7 @@ public final class PageUtils {
 
     public static Page<?> getPageFromPageable(List<?> list, Pageable pageable) {
         int from = pageable.getOffset();
-        int end = from + pageable.getPageSize() > list.size() ? from + pageable.getPageSize() : list.size();
+        int end = from + pageable.getPageSize() > list.size() ? list.size() : from + pageable.getPageSize();
         return new PageImpl<>(list.subList(from, end), pageable, list.size());
     }
 
