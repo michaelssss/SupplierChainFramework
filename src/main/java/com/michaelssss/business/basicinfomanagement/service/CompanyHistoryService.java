@@ -58,24 +58,46 @@ public class CompanyHistoryService {
         return companyList;
     }
 
+    /**
+     * 需要对company对象做深拷贝，否则与预期不符
+     *
+     * @param company 需要做深拷贝的公司对象
+     * @return 拷贝后的对象
+     */
     public Company addNewRecord(Company company) {
         CompanyImpl company1 = (CompanyImpl) company;
         CompanyImpl company2 = CompanyImpl.builder().build();
         BeanUtils.copyProperties(company1, company2);
         company2.setId(null);
         company2.setHistoryId(Long.toString(new Date().getTime()));
+        Set<Address> addresses = new HashSet<>();
+        Set<ShareholderInfo> shareholderInfos = new HashSet<>();
+        Set<BankAccount> bankAccounts = new HashSet<>();
+        Set<Contact> contacts = new HashSet<>();
         for (Address address : company2.getAddressSet()) {
-            address.setId(null);
+            Address address1 = new Address();
+            BeanUtils.copyProperties(address, address1, "id");
+            addresses.add(address1);
         }
         for (ShareholderInfo shareholderInfo : company2.getShareholderInfoSet()) {
-            shareholderInfo.setId(null);
+            ShareholderInfo shareholderInfo1 = new ShareholderInfo();
+            BeanUtils.copyProperties(shareholderInfo, shareholderInfo1, "id");
+            shareholderInfos.add(shareholderInfo1);
         }
         for (BankAccount bankAccount : company2.getBankAccounts()) {
-            bankAccount.setId(null);
+            BankAccount bankAccount1 = new BankAccount();
+            BeanUtils.copyProperties(bankAccount, bankAccount1, "id");
+            bankAccounts.add(bankAccount1);
         }
         for (Contact contact : company2.getContactSet()) {
-            contact.setId(null);
+            Contact contact1 = new Contact();
+            BeanUtils.copyProperties(contact, contact1, "id");
+            contacts.add(contact1);
         }
+        company2.setAddressSet(addresses);
+        company2.setShareholderInfoSet(shareholderInfos);
+        company2.setContactSet(contacts);
+        company2.setBankAccounts(bankAccounts);
         return companyRepository.saveAndFlush(company2);
     }
 }

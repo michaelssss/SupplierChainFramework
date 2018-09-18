@@ -9,12 +9,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +32,7 @@ import java.util.Set;
 @Table(name = "company", indexes = {
         @Index(name = "idx_companyNameHistoryId",
                 columnList = "company_name,history_id", unique = true)})
-public class CompanyImpl implements Company {
+public class CompanyImpl implements Company, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(hidden = true)
@@ -354,5 +356,40 @@ public class CompanyImpl implements Company {
     @Override
     public void applyAudit() {
         SpringContextHolder.getBean(CompanyHistoryService.class).addNewRecord(this);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        CompanyImpl company2 = CompanyImpl.builder().build();
+        BeanUtils.copyProperties(this, company2, "id");
+        Set<Address> addresses = new HashSet<>();
+        Set<ShareholderInfo> shareholderInfos = new HashSet<>();
+        Set<BankAccount> bankAccounts = new HashSet<>();
+        Set<Contact> contacts = new HashSet<>();
+        for (Address address : this.getAddressSet()) {
+            Address address1 = new Address();
+            BeanUtils.copyProperties(address, address1, "id");
+            addresses.add(address1);
+        }
+        for (ShareholderInfo shareholderInfo : this.getShareholderInfoSet()) {
+            ShareholderInfo shareholderInfo1 = new ShareholderInfo();
+            BeanUtils.copyProperties(shareholderInfo, shareholderInfo1, "id");
+            shareholderInfos.add(shareholderInfo1);
+        }
+        for (BankAccount bankAccount : this.getBankAccounts()) {
+            BankAccount bankAccount1 = new BankAccount();
+            BeanUtils.copyProperties(bankAccount, bankAccount1, "id");
+            bankAccounts.add(bankAccount1);
+        }
+        for (Contact contact : this.getContactSet()) {
+            Contact contact1 = new Contact();
+            BeanUtils.copyProperties(contact, contact1, "id");
+            contacts.add(contact1);
+        }
+        company2.setAddressSet(addresses);
+        company2.setShareholderInfoSet(shareholderInfos);
+        company2.setContactSet(contacts);
+        company2.setBankAccounts(bankAccounts);
+        return company2;
     }
 }
