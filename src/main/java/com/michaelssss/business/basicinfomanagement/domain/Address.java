@@ -32,14 +32,6 @@ public class Address {
     private String detail;
     @ApiModelProperty(value = "邮政编码", example = "543002")
     private String zipCode;//邮政编码
-    @ApiModelProperty(value = "联系人", example = "Michaelssss")
-    private String connectPeople;
-    @ApiModelProperty(value = "联系人手机", example = "13800000000")
-    private String connectPhone;
-    @ApiModelProperty(value = "联系人Email", example = "test@Test.com")
-    private String connectEmail;
-    @ApiModelProperty(value = "是否默认联系人", allowableValues = "true,false")
-    private String isDefault;
     @ApiModelProperty(value = "备注")
     private String remark;
 }
