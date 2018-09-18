@@ -80,6 +80,33 @@ server
 
 * 对于前端页面应该从http.headers中获取数据
 
-* 前端查询提交分页请求时，应在Header中增添pageNum和pageSize两个参数,默认请求是第一页，每页20个元素
+* 前端查询提交分页请求时，应在Header中增添pageNum和pageSize两个参数,默认请求是第一页，每页20个元素示例代码如下
+
+```javascript 1.8
+async getTableData(currentPage) {
+      await (
+        axios.post('/api/Company/list', {}, {
+          headers: {
+            pagenum: currentPage,
+            pagesize: this.pageSize
+          }
+        }).then(res => {
+          this.tableData = res.data.result
+          // 分页组件用的参数
+          if (res.headers.totalelement > 0) {
+            this.total_Number = parseInt(res.headers.totalelement)
+            this.currentPage = parseInt(res.headers.pagenum)
+            this.total_page = parseInt(res.headers.totalpage)
+          } else {
+            this.total_Number = 1
+            this.currentPage = 1
+            this.total_page = 1
+          }
+        }).catch(res => {
+          console.log(res)
+        })
+      )
+    }
+```
 
 * 约定，每个页面对应的应该是个聚合根对象结构体
