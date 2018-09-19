@@ -113,6 +113,8 @@ async getTableData(currentPage) {
 
 ## 后台单元测试最佳实践
 
+* 如何创建单机双实例可以参照项目下的说明文件:双数据库配置.md
+
 * 单元测试库使用独立的DB实例（Hibernate限制,无法使用schema做分离），且使用create-drop建表规则
 
 * 正常库使用update建表规则
