@@ -102,12 +102,14 @@ public class CompanyController {
         String department = map.getDepartment();//联系人所属部门
         String position = map.getPosition();//职位
         String remark = map.getRemark();//备注
+        String isDefault = map.getIsDefault();
         Contact contact = Contact.builder()
                 .contactType(contactType)
                 .name(name)
                 .mobilePhone(mobilePhone)
                 .phone(phone)
                 .fax(fax)
+                .isDefault(isDefault)
                 .email(email)
                 .department(department)
                 .position(position)
@@ -185,9 +187,11 @@ public class CompanyController {
         String detail = map.getDetail();
         String zipCode = map.getZipCode();
         String remark = map.getRemark();
+        String isDefault = map.getIsDefault();
         Address address = Address.builder()
                 .addressType(addressType)
                 .province(province)
+                .isDefault(isDefault)
                 .city(city)
                 .area(area)
                 .detail(detail)

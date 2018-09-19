@@ -27,7 +27,7 @@ public class CompanyContactDataBinder {
     private String department;
     @ApiModelProperty(value = "职位", example = "CEO")
     private String position;
-    @ApiModelProperty(value = "是否默认联系人", allowableValues = "true,false")
+    @ApiModelProperty(value = "是否默认", allowableValues = "true,false")
     private String isDefault;
     @ApiModelProperty(value = "备注", example = "")
     private String remark;

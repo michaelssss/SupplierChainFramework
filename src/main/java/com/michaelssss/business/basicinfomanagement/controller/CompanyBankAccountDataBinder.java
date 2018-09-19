@@ -29,7 +29,7 @@ public class CompanyBankAccountDataBinder {
     @ApiModelProperty(value = "币种", example = "人民币")
     private String currency;
 
-    @ApiModelProperty(value = "是否为默认账户", example = "true")
+    @ApiModelProperty(value = "是否默认", allowableValues = "true,false")
     private String isDefault;
 
     @ApiModelProperty(value = "备注")

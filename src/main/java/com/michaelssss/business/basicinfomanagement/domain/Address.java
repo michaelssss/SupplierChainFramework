@@ -34,6 +34,6 @@ public class Address {
     private String zipCode;//邮政编码
     @ApiModelProperty(value = "备注")
     private String remark;
-    @ApiModelProperty(value = "是否默认")
+    @ApiModelProperty(value = "是否默认", allowableValues = "true,false")
     private String isDefault;
 }
