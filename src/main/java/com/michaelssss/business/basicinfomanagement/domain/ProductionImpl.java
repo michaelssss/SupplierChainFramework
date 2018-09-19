@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -52,8 +54,13 @@ public class ProductionImpl implements Production {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PropertyKeyValue> propertyKeyValues;
 
-    void addProperty(PropertyKeyValue propertyKeyValue) {
+    public void addProperty(PropertyKeyValue propertyKeyValue) {
         this.propertyKeyValues.add(propertyKeyValue);
+    }
+
+    @Override
+    public Collection<PropertyKeyValue> getProperties() {
+        return Collections.unmodifiableSet(this.propertyKeyValues);
     }
 
     @Override

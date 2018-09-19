@@ -3,6 +3,7 @@ package com.michaelssss.business.basicinfomanagement;
 import com.michaelssss.SpringBootTestBasic;
 import com.michaelssss.business.basicinfomanagement.domain.*;
 import com.michaelssss.business.basicinfomanagement.respository.CompanyRepository;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -62,15 +63,15 @@ public class CompanyTest extends SpringBootTestBasic {
     }
 
     private Company getCompany() {
-        Set addressSet = new HashSet<Address>();
+        Set<Address> addressSet = new HashSet<>();
         addressSet.add(getAddress());
-        Set bankAccount = new HashSet<BankAccount>();
+        Set<BankAccount> bankAccount = new HashSet<>();
         bankAccount.add(getBankAccount());
-        Set contactSet = new HashSet<Contact>();
+        Set<Contact> contactSet = new HashSet<>();
         contactSet.add(getContact());
-        Set shareholder = new HashSet<ShareholderInfo>();
+        Set<ShareholderInfo> shareholder = new HashSet<>();
         shareholder.add(getShareholder());
-        Company company = CompanyImpl.builder().companyName("测试公司")
+        return CompanyImpl.builder().companyName("测试公司")
                 .nature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
                 .contributedCapital(BigDecimal.valueOf(1001)).currency("人民币").runningState("在营")
                 .registeredDate(new Date()).registeredNo("1000").organizationNo("100010")
@@ -79,8 +80,6 @@ public class CompanyTest extends SpringBootTestBasic {
                 .usedName("超神").runningWay("不知道").staffSize("上市")
                 .period("222").registeredAddress("深圳南山").scope("农业")
                 .source("介绍所").addressSet(addressSet).shareholderInfoSet(shareholder).contactSet(contactSet).bankAccounts(bankAccount).build();
-        return company;
-
     }
 
     @Test
@@ -93,20 +92,9 @@ public class CompanyTest extends SpringBootTestBasic {
     @Test
     public void addAddress() {
         Address address1 = Address.builder().addressType(Long.toString(1)).area(Long.toString(1)).city(Long.toString(2l))
-                .detail("待定").province(Long.toString(1L)).remark("测试").build();
-        Set<Address> addressSet = new HashSet<>();
-        addressSet.add(address1);
-        Company company = CompanyImpl.builder().id(2l).companyName("测试公司更新11")
-                .nature("上市公司").legalRepresentative("张三").registeredCapital(BigDecimal.valueOf(1001))
-                .contributedCapital(BigDecimal.valueOf(1001)).currency("人民币").runningState("在营")
-                .registeredDate(new Date()).registeredNo("1000").organizationNo("100010")
-                .taxpayerNo("100").uniSocialNo("153321").companyType("1").industry("测试").validateDate(new Date())
-                .registeredAuthority("水电费").district("深圳").engName("dine")
-                .usedName("超神").runningWay("不知道").staffSize("上市")
-                .period("222").registeredAddress("深圳南山").scope("农业")
-                .source("介绍所").addressSet(addressSet).build();
-        company.save();
+                .detail("待定").province(Long.toString(1L)).remark("测试1").build();
+        Company company = getCompany();
+        company.addAddress(address1);
+        Assert.assertTrue(company.getAddressSet().contains(address1));
     }
-
-
 }

@@ -144,49 +144,41 @@ public class CompanyImpl implements Company, Cloneable {
     @Override
     public void addAddress(Address address) {
         this.addressSet.add(address);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void deleteAddress(Address address) {
         addressSet.remove(address);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void addContacts(Contact contact) {
         contactSet.add(contact);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void deleteContact(Contact contact) {
         contactSet.remove(contact);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
 
     public void addBankAccount(BankAccount bankAccount) {
         this.bankAccounts.add(bankAccount);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void deleteBankAccount(BankAccount bankAccount) {
         bankAccounts.remove(bankAccount);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void addShareHolder(ShareholderInfo shareholderInfo) {
         shareholderInfoSet.add(shareholderInfo);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
     @Override
     public void deleteShareHolder(ShareholderInfo shareholderInfo) {
         shareholderInfoSet.remove(shareholderInfo);
-        SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
     }
 
 

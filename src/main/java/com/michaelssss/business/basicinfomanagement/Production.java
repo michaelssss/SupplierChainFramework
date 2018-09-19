@@ -1,5 +1,9 @@
 package com.michaelssss.business.basicinfomanagement;
 
+import com.michaelssss.business.basicinfomanagement.domain.PropertyKeyValue;
+
+import java.util.Collection;
+
 /**
  * @Description:商品信息维护
  * @Author:tanshaoxing
@@ -13,9 +17,18 @@ public interface Production {
     void saveInfo();
 
     /**
+     * 添加属性及名称
+     *
+     * @param propertyKeyValue
+     */
+    void addProperty(PropertyKeyValue propertyKeyValue);
+
+    Collection<PropertyKeyValue> getProperties();
+
+    /**
      * 修改商品信息
      */
     void updateInfo();
-    
+
 }
 
