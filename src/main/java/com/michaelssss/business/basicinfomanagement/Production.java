@@ -30,5 +30,55 @@ public interface Production {
      */
     void updateInfo();
 
+    /**
+     * 获取商品Sku
+     *
+     * @return
+     */
+    String getSku();
+
+    /**
+     * 获取商品名称
+     *
+     * @return
+     */
+    String getName();
+
+    /**
+     * 获取商品描述
+     *
+     * @return
+     */
+    String getDescription();
+
+    /**
+     * 获取商品品牌
+     *
+     * @return
+     */
+    String getBrands();
+
+    /**
+     * 获取商品型号
+     *
+     * @return
+     */
+    String getModel();
+
+    String getStandard();
+
+    /**
+     * 商品备注
+     *
+     * @return
+     */
+    String getRemark();
+
+    /**
+     * 获取商品生产企业
+     *
+     * @return
+     */
+    String getIndustry();
 }
 
