@@ -63,7 +63,7 @@ public class CompanyImpl implements Company, Cloneable {
     @ApiModelProperty(value = "经营状态", example = "正常")
     private String runningState;
 
-    @ApiModelProperty(value = "成立日期", example = "2011-08-11 00:00:00")
+    @ApiModelProperty(value = "成立日期", example = "2018-09-14T03:21:03.000Z")
     private Date registeredDate;
 
     @ApiModelProperty(value = "注册号", example = "1234567890")
@@ -84,7 +84,7 @@ public class CompanyImpl implements Company, Cloneable {
     @ApiModelProperty(value = "所属行业", example = "金融证券")
     private String industry;
 
-    @ApiModelProperty(value = "核准日期", example = "2011-08-11 00:00:00")
+    @ApiModelProperty(value = "核准日期", example = "2018-09-14T03:21:03.000Z")
     private Date validateDate;
 
     @ApiModelProperty(value = "登记机关", example = "税务局")

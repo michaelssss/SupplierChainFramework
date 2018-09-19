@@ -25,29 +25,29 @@ import java.util.Set;
 public class ProductionImpl implements Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "业务无关id",readOnly = true,hidden = true)
+    @ApiModelProperty(value = "业务无关id", readOnly = true, hidden = true)
     private Long id;
-    @ApiModelProperty(value = "sku")
+    @ApiModelProperty(value = "sku", example = "testSku")
     private String sku;
-    @ApiModelProperty(value = "商品名称")
+    @ApiModelProperty(value = "商品名称", example = "测试商品")
     private String name;
-    @ApiModelProperty(value = "商品描述")
+    @ApiModelProperty(value = "商品描述", example = "测试用")
     private String description;
-    @ApiModelProperty(value = "品牌")
+    @ApiModelProperty(value = "品牌", example = "M")
     private String brands;
-    @ApiModelProperty(value = "型号")
+    @ApiModelProperty(value = "型号", example = "T")
     private String model;
-    @ApiModelProperty(value = "标准")
+    @ApiModelProperty(value = "标准", example = "tt")
     private String standard;
-    @ApiModelProperty(value = "生效时间")
+    @ApiModelProperty(value = "生效时间", example = "2018-09-14T03:21:03.000Z")
     private Date startTime;
-    @ApiModelProperty(value = "失效时间")
+    @ApiModelProperty(value = "失效时间", example = "2018-09-14T03:21:03.000Z")
     private Date endTime;
     @ApiModelProperty(value = "备注")
     private String remark;
     @ApiModelProperty(value = "状态", readOnly = true)
     private String state;
-    @ApiModelProperty(value = "生产厂商名称")
+    @ApiModelProperty(value = "生产厂商名称", example = "testProducer")
     private String industry;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PropertyKeyValue> propertyKeyValues;

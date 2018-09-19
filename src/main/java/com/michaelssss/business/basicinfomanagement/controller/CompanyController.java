@@ -1,6 +1,7 @@
 package com.michaelssss.business.basicinfomanagement.controller;
 
 
+import com.michaelssss.account.User;
 import com.michaelssss.base.Response;
 import com.michaelssss.business.basicinfomanagement.*;
 import com.michaelssss.business.basicinfomanagement.domain.*;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -214,50 +212,48 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "申请成为供货商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Supplier/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<String> applySupplier(@RequestBody CompanyHistoryDataBinder map) {
+    public Response<String> applySupplier(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
         Company company = this.companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
-        SupplierClientApply supplierClientApply = SupplierClientApply.builder().build();
         Supplier supplier = new SupplierImpl();
-        supplier.apply(supplierClientApply, company);
+        supplier.apply(user, company);
         return (Response<String>) Response.OK("申请成功");
     }
 
     @ResponseBody
     @ApiOperation(value = "申请成为采购商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Purchase/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<String> applyPurchase(@RequestBody CompanyHistoryDataBinder map) {
+    public Response<String> applyPurchase(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
         Company company = this.companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
-        PurchaseClientApply purchaseClientApply = PurchaseClientApply.builder().build();
         Purchaser purchaser = PurchaserImpl.builder().build();
-        purchaser.apply(purchaseClientApply, company);
+        purchaser.apply(user, company);
         return (Response<String>) Response.OK("申请成功");
     }
 
     @ResponseBody
     @ApiOperation(value = "申请成为仓储商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Storage/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<String> applyStorage(@RequestBody CompanyHistoryDataBinder map) {
+    public Response<String> applyStorage(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
         Company company = this.companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         Storage storage = new StorageImpl();
-        storage.apply(company);
+        storage.apply(user, company);
         return (Response<String>) Response.OK("申请成功");
     }
 
     @ResponseBody
     @ApiOperation(value = "申请成为资金方", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Fund/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-    public Response<String> applyFund(@RequestBody CompanyHistoryDataBinder map) {
+    public Response<String> applyFund(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
         Company company = this.companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(companyName, historyId);
         Funding funding = new FundingImpl();
-        funding.apply(company);
+        funding.apply(user, company);
         return (Response<String>) Response.OK("申请成功");
     }
 }

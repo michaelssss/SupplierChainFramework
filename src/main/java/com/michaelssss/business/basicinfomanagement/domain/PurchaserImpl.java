@@ -1,6 +1,7 @@
 package com.michaelssss.business.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
+import com.michaelssss.account.User;
 import com.michaelssss.business.basicinfomanagement.Company;
 import com.michaelssss.business.basicinfomanagement.Purchaser;
 import com.michaelssss.business.basicinfomanagement.respository.PurchaserRepository;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -19,13 +21,16 @@ public class PurchaserImpl implements Purchaser {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CompanyImpl company;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private PurchaseClientApply purchaseClientApply;
+    private String applier;
+    private Date applyDate;
+    private Date auditDate;
+    private String auditor;
 
     @Override
-    public void apply(PurchaseClientApply purchaseClientApply, Company company) {
-        this.purchaseClientApply = purchaseClientApply;
+    public void apply(User user, Company company) {
         this.company = (CompanyImpl) company;
+        this.applyDate = new Date();
+        this.applier = user.getUsername();
         SpringContextHolder.getBean(PurchaserRepository.class).saveAndFlush(this);
     }
 }

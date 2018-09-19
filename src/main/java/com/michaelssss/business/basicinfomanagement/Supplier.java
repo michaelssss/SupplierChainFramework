@@ -1,6 +1,6 @@
 package com.michaelssss.business.basicinfomanagement;
 
-import com.michaelssss.business.basicinfomanagement.domain.SupplierClientApply;
+import com.michaelssss.account.User;
 
 /**
  * @Description:合作伙伴基础信息仓储商信息
@@ -12,7 +12,7 @@ public interface Supplier {
     /**
      * 添加供应方信息
      */
-    void apply(SupplierClientApply supplierClientApply, Company company);
+    void apply(User user, Company company);
 
     /**
      * 获取公司信息
