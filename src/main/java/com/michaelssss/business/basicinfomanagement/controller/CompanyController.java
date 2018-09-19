@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
@@ -121,6 +122,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "新增股东信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "ShareHolder/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> addShareHolder(@RequestBody CompanyShareHolderDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -145,6 +147,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "新增账户信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "BankAccount/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> addBankAccount(@RequestBody CompanyBankAccountDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -175,6 +178,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "新增地址信息", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Address/add", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> addAddress(@RequestBody CompanyAddrDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -212,6 +216,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "申请成为供货商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Supplier/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> applySupplier(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -224,6 +229,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "申请成为采购商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Purchase/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> applyPurchase(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -236,6 +242,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "申请成为仓储商", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Storage/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> applyStorage(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
@@ -248,6 +255,7 @@ public class CompanyController {
     @ResponseBody
     @ApiOperation(value = "申请成为资金方", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "Fund/apply", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @Transactional
     public Response<String> applyFund(@SessionAttribute("user") User user, @RequestBody CompanyHistoryDataBinder map) {
         String companyName = map.getCompanyName();
         String historyId = map.getHistoryId();
