@@ -9,6 +9,7 @@ import com.michaelssss.business.basicinfomanagement.service.CompanyHistoryServic
 import com.michaelssss.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +59,10 @@ public class CompanyController {
     @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
     @RequestMapping(value = "list", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Response<List<Company>> list(@RequestBody Map<String, String> queryParam, HttpServletRequest request, HttpServletResponse response) {
-        Company sample = CompanyImpl.builder().companyName(queryParam.get("companyName")).companyType(queryParam.get("companyType")).build();
+        Company sample = CompanyImpl.builder()
+                .companyName(StringUtils.isEmpty(queryParam.get("companyName")) ? null : queryParam.get("companyName"))
+                .nature(StringUtils.isEmpty(queryParam.get("nature")) ? null : queryParam.get("nature"))
+                .build();
         List<Company> companies = companyHistoryService.getAllCompanyLatestHistory(sample);
         Pageable pageable = PageUtils.getPageableFromRequest(request);
         Page<Company> companyPage = (Page<Company>) PageUtils.getPageFromPageable(companies, pageable);

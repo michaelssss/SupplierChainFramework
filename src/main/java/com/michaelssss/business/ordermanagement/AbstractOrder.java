@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 
 @Entity
-@Table(name = "`order`", indexes =
+@Table(name = "all_order", indexes =
         {
                 @Index(name = "idx_code", columnList = "code", unique = true),
                 @Index(name = "idx_date", columnList = "orderDate")
