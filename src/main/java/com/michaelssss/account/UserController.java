@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @Api(value = "用户相关", tags = "用户相关")
@@ -26,15 +27,15 @@ public class UserController {
     @RequestMapping(value = "Functions/get", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "获取功能列表", tags = "用户相关")
-    public Response getFunctions(@SessionAttribute User user) {
-        return Response.OK(user.getHasAuthorityFunctionName());
+    public Response<Set<FunctionName>> getFunctions(@SessionAttribute User user) {
+        return (Response<Set<FunctionName>>) Response.OK(user.getHasAuthorityFunctionName());
     }
 
     @RequestMapping(value = "Profile/get", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "获取用户信息", tags = "用户相关")
-    public Response getProfile(@SessionAttribute User user) {
-        return Response.OK(user.getProfile());
+    public Response<UserProfile> getProfile(@SessionAttribute User user) {
+        return (Response<UserProfile>) Response.OK(user.getProfile());
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
