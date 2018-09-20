@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
@@ -32,7 +33,9 @@ import java.util.Set;
 @Table(name = "company", indexes = {
         @Index(name = "idx_companyNameHistoryId",
                 columnList = "company_name,history_id", unique = true)})
-public class CompanyImpl implements Company, Cloneable {
+public class CompanyImpl implements Company, Serializable {
+
+    private static final long serialVersionUID = -7485430596329993850L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(hidden = true)

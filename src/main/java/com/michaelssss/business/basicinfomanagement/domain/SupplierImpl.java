@@ -9,13 +9,16 @@ import com.michaelssss.business.basicinfomanagement.respository.SupplierReposito
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity
 @Data
 @Table(name = "supplier")
-public class SupplierImpl implements Supplier {
+public class SupplierImpl implements Supplier, Serializable {
+
+    private static final long serialVersionUID = -4741104850882056110L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

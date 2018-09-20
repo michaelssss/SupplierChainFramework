@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
@@ -15,10 +16,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company_address")
-public class Address {
+public class Address implements Serializable {
+
+    private static final long serialVersionUID = 6154968561656142496L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true,readOnly = true)
+    @ApiModelProperty(hidden = true, readOnly = true)
     private Long id;
     @ApiModelProperty(value = "地址类型", example = "国内")
     private String addressType;

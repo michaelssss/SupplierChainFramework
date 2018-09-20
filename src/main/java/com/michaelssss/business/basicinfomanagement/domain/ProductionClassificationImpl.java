@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ import java.util.Set;
 @Table(name = "production_classification")
 @Entity
 @Data
-public class ProductionClassificationImpl implements ProductionClassification {
+public class ProductionClassificationImpl implements ProductionClassification, Serializable {
+
+    private static final long serialVersionUID = 2471958509170278711L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "业务无关Id", readOnly = true, hidden = true)

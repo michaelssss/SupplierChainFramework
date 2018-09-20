@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 商品所在分类需要填写的属性及值
@@ -15,7 +16,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "production_property_key_value")
-public class PropertyKeyValue {
+public class PropertyKeyValue implements Serializable {
+
+    private static final long serialVersionUID = -77569692436381348L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "uid", readOnly = true, hidden = true)

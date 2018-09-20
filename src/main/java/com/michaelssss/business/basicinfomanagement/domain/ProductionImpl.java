@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -24,7 +25,9 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "production")
-public class ProductionImpl implements Production {
+public class ProductionImpl implements Production, Serializable {
+
+    private static final long serialVersionUID = -962271783963574133L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "业务无关id", readOnly = true, hidden = true)

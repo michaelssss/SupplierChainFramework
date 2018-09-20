@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 表示分类需要填写的属性名称
@@ -11,7 +12,9 @@ import javax.persistence.*;
 @Table(name = "template_property")
 @Entity
 @Data
-public class TemplateProperty {
+public class TemplateProperty implements Serializable {
+
+    private static final long serialVersionUID = -6542104895558079287L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "无关ID", readOnly = true, hidden = true)

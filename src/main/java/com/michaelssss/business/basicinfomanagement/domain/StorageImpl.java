@@ -9,12 +9,15 @@ import com.michaelssss.business.basicinfomanagement.respository.StorageRepositor
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "storage")
-public class StorageImpl implements Storage {
+public class StorageImpl implements Storage, Serializable {
+
+    private static final long serialVersionUID = -6099953598885627436L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

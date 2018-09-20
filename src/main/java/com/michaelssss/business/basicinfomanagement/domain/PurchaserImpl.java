@@ -9,13 +9,16 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Builder
 @Table(name = "purchaser")
-public class PurchaserImpl implements Purchaser {
+public class PurchaserImpl implements Purchaser, Serializable {
+
+    private static final long serialVersionUID = 8123054650165521888L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

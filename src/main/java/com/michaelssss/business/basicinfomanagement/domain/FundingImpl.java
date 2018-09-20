@@ -8,12 +8,15 @@ import com.michaelssss.business.basicinfomanagement.respository.FundingRepositor
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "funding")
-public class FundingImpl implements Funding {
+public class FundingImpl implements Funding, Serializable {
+
+    private static final long serialVersionUID = -5349493500926643120L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
