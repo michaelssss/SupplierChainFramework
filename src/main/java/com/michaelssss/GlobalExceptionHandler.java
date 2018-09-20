@@ -13,4 +13,11 @@ public class GlobalExceptionHandler {
     public Response catchException(BusinessException e) {
         return Response.NonOK(e.getMessage());
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseBody
+    public Response catchGlobalException(Exception e) {
+        return Response.NonOK(e.getMessage());
+    }
+
 }
