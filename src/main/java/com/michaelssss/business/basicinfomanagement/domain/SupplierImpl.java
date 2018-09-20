@@ -3,6 +3,7 @@ package com.michaelssss.business.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.account.User;
+import com.michaelssss.business.BusinessException;
 import com.michaelssss.business.basicinfomanagement.Company;
 import com.michaelssss.business.basicinfomanagement.Supplier;
 import com.michaelssss.business.basicinfomanagement.respository.SupplierRepository;
@@ -31,6 +32,9 @@ public class SupplierImpl implements Supplier, Serializable {
 
     @Override
     public void apply(User user, Company company) {
+        if (null == company) {
+            throw new BusinessException("未查询到有效公司信息");
+        }
         this.company = (CompanyImpl) company;
         this.applyDate = new Date();
         this.applier = user.getUsername();

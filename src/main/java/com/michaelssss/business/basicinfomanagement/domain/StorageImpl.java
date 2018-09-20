@@ -3,6 +3,7 @@ package com.michaelssss.business.basicinfomanagement.domain;
 
 import com.michaelssss.SpringContextHolder;
 import com.michaelssss.account.User;
+import com.michaelssss.business.BusinessException;
 import com.michaelssss.business.basicinfomanagement.Company;
 import com.michaelssss.business.basicinfomanagement.Storage;
 import com.michaelssss.business.basicinfomanagement.respository.StorageRepository;
@@ -29,6 +30,9 @@ public class StorageImpl implements Storage, Serializable {
     private String auditor;
     @Override
     public void apply(User user, Company company) {
+        if (null == company) {
+            throw new BusinessException("未查询到有效公司信息");
+        }
         this.company = (CompanyImpl) company;
         this.applyDate = new Date();
         this.applier = user.getUsername();
