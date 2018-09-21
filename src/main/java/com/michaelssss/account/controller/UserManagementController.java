@@ -2,12 +2,17 @@ package com.michaelssss.account.controller;
 
 import com.michaelssss.account.*;
 import com.michaelssss.base.Response;
+import com.michaelssss.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.List;
 
@@ -130,7 +135,11 @@ public class UserManagementController {
     @RequestMapping(value = "Users/list", method = RequestMethod.POST)
     @ApiOperation(value = "列出所有用户", tags = "用户管理")
     @ResponseBody
-    public Response<List<User>> listUsers() {
-        return (Response<List<User>>) Response.OK(userCatalog.findAll());
+    public Response<List<User>> listUsers(@RequestBody UserListDataBinder userListDataBinder, HttpServletRequest request, HttpServletResponse response) {
+        Pageable pageable = PageUtils.getPageableFromRequest(request);
+        UserImpl sample = UserImpl.builder().username(userListDataBinder.getUsername()).build();
+        Page<UserImpl> page = userCatalog.findAll(Example.of(sample), pageable);
+        PageUtils.writeResponsePageHeader(page, response);
+        return (Response<List<User>>) Response.OK(page.getContent());
     }
 }
