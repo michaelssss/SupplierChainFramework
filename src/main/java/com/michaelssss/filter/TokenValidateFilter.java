@@ -43,7 +43,7 @@ public class TokenValidateFilter implements Filter {
             if (!request1.getRequestURI().equals("/User/login")) {
                 if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
                     response1.setContentType("application/json");
-                    response1.getWriter().write(JSON.toJSONString(Response.NonOK("token validate failed")));
+                    response1.getWriter().write(JSON.toJSONString(Response.TokenValidateFailed()));
                     response1.setStatus(HttpServletResponse.SC_OK);
                     return;
                 } else {

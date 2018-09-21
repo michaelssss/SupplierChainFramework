@@ -15,7 +15,7 @@ public interface Group {
      *
      * @param name
      */
-    void setGroupName(String name);
+    void setName(String name);
 
     /**
      * 获取部门所有员工

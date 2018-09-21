@@ -28,7 +28,13 @@ public class Response<T> {
         response.result = o;
         return response;
     }
-    
+
+    public static Response<String> TokenValidateFailed() {
+        Response<String> response = new Response<>();
+        response.status = Status.TOKENNOTVALIDATE;
+        response.result = "Token已经过期或者找不到，请重新登陆";
+        return response;
+    }
 
     public static Response<?> NonOK(Object o) {
         Response response = new Response<>();

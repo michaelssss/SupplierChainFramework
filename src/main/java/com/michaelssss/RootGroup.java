@@ -38,7 +38,7 @@ public class RootGroup extends Action {
         UserImpl root = UserImpl.builder().username("8888").build();
         root = userCatalog.findOne(Example.of(root));
         GroupImpl rootGroup = new GroupImpl();
-        rootGroup.setGroupName("root");
+        rootGroup.setName("root");
         if (!groupCatalog.exists(Example.of(rootGroup))) {
             rootGroup.addUser(root);
             groupCatalog.save(rootGroup);

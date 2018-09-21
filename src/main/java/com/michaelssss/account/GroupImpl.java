@@ -38,7 +38,7 @@ public class GroupImpl implements Group, Serializable {
     }
 
     @Override
-    public void setGroupName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

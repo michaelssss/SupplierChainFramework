@@ -25,7 +25,7 @@ public class GroupImplTest extends SpringBootTestBasic {
     public void testAddUser() {
         Group group = new GroupImpl();
         User user = new UserImpl();
-        group.setGroupName("testGroup");
+        group.setName("testGroup");
         group.addUser(user);
         Assert.assertTrue(group.getUsers().contains(user));
     }
