@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @Api(value = "用户相关", tags = "用户相关")
@@ -29,7 +27,9 @@ public class UserController {
     @ResponseBody
     @ApiOperation(value = "获取功能列表", tags = "用户相关")
     public Response<Set<FunctionName>> getFunctions(@SessionAttribute User user) {
-        return (Response<Set<FunctionName>>) Response.OK(user.getHasAuthorityFunctionName());
+        List<FunctionName> functionNames = new ArrayList<>(user.getHasAuthorityFunctionName());
+        functionNames.sort((o1, o2) -> o1.getFunctionName().compareTo(o2.getFunctionName()));
+        return (Response<Set<FunctionName>>) Response.OK(functionNames);
     }
 
     @RequestMapping(value = "Profile/get", method = RequestMethod.POST)
