@@ -58,7 +58,7 @@ public class UserImpl implements User, Serializable {
 
     @Override
     public void authority(User other, FunctionName functionName) {
-        if (hasAuthority(functionName.getFunctionName())) {
+        if (null != functionName && hasAuthority(functionName.getFunctionName())) {
             other.authority(functionName);
         } else {
             throw new AuthorityException("you have no Authority");
