@@ -32,15 +32,15 @@ public class TokenValidateFilter implements Filter {
         String token = "";
         if (null != request1.getCookies()) {
             for (Cookie cookie : request1.getCookies()) {
-                if (cookie.getName().equals("token")) {
+                if ("token".equals(cookie.getName())) {
                     token = cookie.getValue();
                 }
             }
         }
-        boolean isSwaggerUri = uri.equals("/swagger-ui.html") || uri.matches("^/webjars/springfox-swagger-ui/.*$") || uri.equals("/v2/api-docs")
-                || uri.equals("/swagger-resources") || uri.equals("/configuration/ui");
+        boolean isSwaggerUri = "/swagger-ui.html".equals(uri) || "^/webjars/springfox-swagger-ui/.*$".matches(uri) || "/v2/api-docs".equals(uri)
+                || "/swagger-resources".equals(uri) || "/configuration/ui".equals(uri);
         if (!isSwaggerUri) {
-            if (!request1.getRequestURI().equals("/User/login")) {
+            if (!"/User/login".equals(request1.getRequestURI())) {
                 if (headerHasNoToken(token) || !tokenExist(token) || !tokenNotOutdate(token)) {
                     response1.setContentType("application/json");
                     response1.getWriter().write(JSON.toJSONString(Response.TokenValidateFailed()));

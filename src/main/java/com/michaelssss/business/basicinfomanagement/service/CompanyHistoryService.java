@@ -71,7 +71,7 @@ public class CompanyHistoryService {
         CompanyImpl company2 = CompanyImpl.builder().build();
         BeanUtils.copyProperties(company1, company2);
         company2.setId(null);
-        company2.setHistoryId(Long.toString(new Date().getTime()));
+        company2.setHistoryId(Long.toString(System.currentTimeMillis()));
         Set<Address> addresses = new HashSet<>();
         Set<ShareholderInfo> shareholderInfos = new HashSet<>();
         Set<BankAccount> bankAccounts = new HashSet<>();

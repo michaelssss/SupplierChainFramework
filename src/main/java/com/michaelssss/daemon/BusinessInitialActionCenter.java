@@ -20,7 +20,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @Slf4j
 @Service
 public class BusinessInitialActionCenter implements ApplicationListener<ApplicationEvent> {
-    private final static OrderBusinessArrayList orderbusinessList = new OrderBusinessArrayList();
+    private final static OrderBusinessArrayList ACTIONS = new OrderBusinessArrayList();
     private static boolean initFlag = false;
 
     /**
@@ -30,26 +30,26 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
      */
     public static void registeredAction(Action action) {
         synchronized (BusinessInitialActionCenter.class) {
-            orderbusinessList.add(action);
+            ACTIONS.add(action);
         }
     }
 
     public static String getStatus() {
-        return orderbusinessList.size() == 0 && initFlag ? "Idle" : "Busy";
+        return ACTIONS.size() == 0 && initFlag ? "Idle" : "Busy";
     }
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof ContextRefreshedEvent) {
             if (!initFlag) {
-                orderbusinessList.sorted();
+                ACTIONS.sorted();
                 log.info("======================System daemon started=============================");
                 initFlag = true;
                 PlatformTransactionManager transactionManager = SpringContextHolder.getBean(PlatformTransactionManager.class);
                 TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
                 ((DefaultTransactionDefinition) transactionDefinition).setName("BusinessInitialActionCenter");
                 TransactionStatus status = transactionManager.getTransaction(transactionDefinition);
-                for (Action action : orderbusinessList) {
+                for (Action action : ACTIONS) {
                     synchronized (BusinessInitialActionCenter.class) {
                         try {
                             action.act();
@@ -59,7 +59,7 @@ public class BusinessInitialActionCenter implements ApplicationListener<Applicat
                         }
                     }
                 }
-                orderbusinessList.clear();
+                ACTIONS.clear();
                 transactionManager.commit(status);
             }
         }

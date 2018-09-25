@@ -14,7 +14,7 @@ public class BankFlow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
     private String type;
-    private String OrderCode;
+    private String orderCode;
     private BigDecimal occupation;
     private Date operationDate;
 }

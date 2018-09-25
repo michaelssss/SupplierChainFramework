@@ -15,6 +15,7 @@ import java.util.*;
 @Controller
 @Api(value = "用户相关", tags = "用户相关")
 @RequestMapping(value = "User")
+@SuppressWarnings("unchecked")
 public class UserController {
     private UserCatalog userCatalog;
 

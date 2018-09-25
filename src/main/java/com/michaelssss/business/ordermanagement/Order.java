@@ -7,11 +7,11 @@ import java.util.Collection;
  * 订单通用接口
  */
 public interface Order {
-    String New = "New";
-    String Confirm = "CONFIRM";
-    String Terminate = "TERMINATE";
-    String DeliveryConfirm = "DeliveryConfirm";
-    String ReceivedConfirm = "ReceivedConfirm";
+    String NEW = "NEW";
+    String CONFIRM = "CONFIRM";
+    String TERMINATE = "TERMINATE";
+    String DELIVERY_CONFIRM = "DELIVERY_CONFIRM";
+    String RECEIVED_CONFIRM = "RECEIVED_CONFIRM";
 
     /**
      * 获取订单编号

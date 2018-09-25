@@ -38,7 +38,7 @@ public class StockTest extends SpringBootTestBasic {
         receivedOrder.setStatus("Test");
         StockImpl stock = new StockImpl();
         stock.setCode("testCode");
-        stock.ReceivedCargoOrderAdd(receivedOrder);
+        stock.receivedCargoOrderAdd(receivedOrder);
         stock = this.repository.saveAndFlush(stock);
         this.repository.delete(stock);
     }
@@ -63,7 +63,7 @@ public class StockTest extends SpringBootTestBasic {
         receivedOrder.setStatus("Test");
         StockImpl stock = new StockImpl();
         stock.setCode("testCode");
-        stock.ReceivedCargoOrderAdd(receivedOrder);
+        stock.receivedCargoOrderAdd(receivedOrder);
         stock = this.repository.saveAndFlush(stock);
         Assert.assertEquals(1, stock.getStockCargo().size());
         this.repository.delete(stock);

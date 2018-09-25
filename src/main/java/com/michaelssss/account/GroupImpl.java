@@ -60,8 +60,12 @@ public class GroupImpl implements Group, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof GroupImpl)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GroupImpl)) {
+            return false;
+        }
         GroupImpl that = (GroupImpl) o;
         return Objects.equals(getName(), that.getName());
     }

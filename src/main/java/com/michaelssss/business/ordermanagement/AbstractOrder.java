@@ -33,7 +33,7 @@ public abstract class AbstractOrder implements Order {
 
     protected Date orderDate;
 
-    protected String status = New;
+    protected String status = NEW;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -48,6 +48,7 @@ public abstract class AbstractOrder implements Order {
         return result;
     }
 
+    @Override
     public Collection<OrderGood> getGoods() {
         return Collections.unmodifiableCollection(goods);
     }
@@ -62,17 +63,17 @@ public abstract class AbstractOrder implements Order {
     @Override
     public void confirm() {
         checkEditable();
-        this.status = Confirm;
+        this.status = CONFIRM;
     }
 
     @Override
     public void terminate() {
         checkEditable();
-        this.status = Terminate;
+        this.status = TERMINATE;
     }
 
     protected void checkEditable() {
-        if (!this.status.equals(New)) {
+        if (!this.status.equals(NEW)) {
             throw new RuntimeException("订单已确认或已生效，不可修改");
         }
     }

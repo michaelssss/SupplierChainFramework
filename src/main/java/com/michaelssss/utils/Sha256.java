@@ -40,11 +40,11 @@ public class Sha256 {
      * 判断所输入密码与用户密码是否匹配
      *
      * @param pwd    用户密码
-     * @param pwd_in 输入密码
+     * @param pwdin 输入密码
      * @return
      */
-    public boolean isPwd(String pwd, String pwd_in) {
-        if (getPwd(pwd_in).equals(pwd)) {
+    public boolean isPwd(String pwd, String pwdin) {
+        if (getPwd(pwdin).equals(pwd)) {
             return true;
         }
         return false;

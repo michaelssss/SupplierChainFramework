@@ -57,6 +57,7 @@ public class ProductionImpl implements Production, Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PropertyKeyValue> propertyKeyValues;
 
+    @Override
     public void addProperty(PropertyKeyValue propertyKeyValue) {
         this.propertyKeyValues.add(propertyKeyValue);
     }

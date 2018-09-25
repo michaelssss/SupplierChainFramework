@@ -164,7 +164,7 @@ public class CompanyImpl implements Company, Serializable {
         contactSet.remove(contact);
     }
 
-
+    @Override
     public void addBankAccount(BankAccount bankAccount) {
         this.bankAccounts.add(bankAccount);
     }

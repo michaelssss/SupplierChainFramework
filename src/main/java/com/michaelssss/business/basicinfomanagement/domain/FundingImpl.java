@@ -20,7 +20,7 @@ public class FundingImpl implements Funding, Serializable {
     private static final long serialVersionUID = -5349493500926643120L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CompanyImpl company;
     private String applier;

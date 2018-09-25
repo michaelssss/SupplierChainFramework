@@ -145,4 +145,21 @@ public class UserImpl implements User, Serializable {
         org.activiti.engine.identity.User user = identityService.createUserQuery().userId(this.username).singleResult();
         return taskService.createTaskQuery().taskCandidateOrAssigned(user.getId()).list();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof UserImpl)) {
+            return false;
+        }
+        UserImpl user = (UserImpl) o;
+        return Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
+    }
 }

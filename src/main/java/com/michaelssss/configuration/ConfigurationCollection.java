@@ -44,7 +44,8 @@ class ConfigurationCollection {
                 object1 = object;
             }
         }
-        if (null != object1)
+        if (null != object1) {
             this.keyValueObjects.remove(object1);
+        }
     }
 }

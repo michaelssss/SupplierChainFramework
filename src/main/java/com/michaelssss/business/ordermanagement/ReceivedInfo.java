@@ -24,8 +24,12 @@ public class ReceivedInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ReceivedInfo)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ReceivedInfo)) {
+            return false;
+        }
         ReceivedInfo that = (ReceivedInfo) o;
         return Objects.equals(getCompanyFullName(), that.getCompanyFullName()) &&
                 Objects.equals(getCompanyAddress(), that.getCompanyAddress()) &&

@@ -33,8 +33,12 @@ public class TransferReceipt {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TransferReceipt)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof TransferReceipt)) {
+            return false;
+        }
         TransferReceipt that = (TransferReceipt) o;
         return Objects.equals(getCode(), that.getCode());
     }

@@ -100,32 +100,32 @@ public class OrderTest extends SpringBootTestBasic {
     @Test
     public void testConfirm() {
         Order order = fakeEntrustedOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.confirm();
-        Assert.assertEquals(Order.Confirm, order.getStatus());
+        Assert.assertEquals(Order.CONFIRM, order.getStatus());
         order = fakePurchaseOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.confirm();
-        Assert.assertEquals(Order.Confirm, order.getStatus());
+        Assert.assertEquals(Order.CONFIRM, order.getStatus());
         order = fakeSalesOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.confirm();
-        Assert.assertEquals(Order.Confirm, order.getStatus());
+        Assert.assertEquals(Order.CONFIRM, order.getStatus());
     }
 
     @Test
     public void testTerminate() {
         Order order = fakeEntrustedOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.terminate();
-        Assert.assertEquals(Order.Terminate, order.getStatus());
+        Assert.assertEquals(Order.TERMINATE, order.getStatus());
         order = fakePurchaseOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.terminate();
-        Assert.assertEquals(Order.Terminate, order.getStatus());
+        Assert.assertEquals(Order.TERMINATE, order.getStatus());
         order = fakeSalesOrder();
-        Assert.assertEquals(Order.New, order.getStatus());
+        Assert.assertEquals(Order.NEW, order.getStatus());
         order.terminate();
-        Assert.assertEquals(Order.Terminate, order.getStatus());
+        Assert.assertEquals(Order.TERMINATE, order.getStatus());
     }
 }

@@ -35,12 +35,12 @@ public class StockImpl implements Stock {
     private List<ReceivedOrder> receivedOrders = new ArrayList<>();//收货单列表
 
     @Override
-    public void ReceivedCargoOrderAdd(ReceivedOrder receivedOrder) {
+    public void receivedCargoOrderAdd(ReceivedOrder receivedOrder) {
         this.receivedOrders.add(receivedOrder);
     }
 
     @Override
-    public void DeliveryCargoOrderAdd(DeliveryOrder deliveryOrder) {
+    public void deliveryCargoOrderAdd(DeliveryOrder deliveryOrder) {
         this.deliveryOrders.add(deliveryOrder);
     }
 

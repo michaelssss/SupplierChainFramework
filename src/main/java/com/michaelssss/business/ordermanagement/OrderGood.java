@@ -26,8 +26,12 @@ public class OrderGood {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrderGood)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof OrderGood)) {
+            return false;
+        }
         OrderGood orderGood = (OrderGood) o;
         return Objects.equals(getName(), orderGood.getName()) &&
                 Objects.equals(getModel(), orderGood.getModel()) &&

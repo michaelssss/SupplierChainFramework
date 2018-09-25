@@ -8,10 +8,10 @@ public interface Stock {
     /**
      * 根据采购订单，添加收货单
      */
-    void ReceivedCargoOrderAdd(ReceivedOrder receivedOrder);
+    void receivedCargoOrderAdd(ReceivedOrder receivedOrder);
 
     /**
      * 根据销售订单，添加出货单
      */
-    void DeliveryCargoOrderAdd(DeliveryOrder deliveryOrder);
+    void deliveryCargoOrderAdd(DeliveryOrder deliveryOrder);
 }

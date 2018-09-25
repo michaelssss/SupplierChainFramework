@@ -26,8 +26,12 @@ public class FunctionName {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof FunctionName)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FunctionName)) {
+            return false;
+        }
         FunctionName that = (FunctionName) o;
         return Objects.equals(functionName, that.functionName);
     }

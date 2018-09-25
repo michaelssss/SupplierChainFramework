@@ -35,7 +35,7 @@ public class DeliveryOrder {
     @PhoneNumber
     private String contactPhone;//联系电话
     @NotEmpty
-    private String status = "New";//状态：New,CONFIRM,ReceivedConfirm,TERMINATE
+    private String status = "NEW";//状态：NEW,CONFIRM,RECEIVED_CONFIRM,TERMINATE
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cargo> cargos;//货物列表
 
@@ -52,7 +52,7 @@ public class DeliveryOrder {
     }
 
     void clientReceivedConfirm() {
-        this.status = "ReceivedConfirm";
+        this.status = "RECEIVED_CONFIRM";
     }
 
     void deliverTerminate() {
