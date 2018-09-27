@@ -86,7 +86,7 @@ public class CompanyTest extends SpringBootTestBasic {
     public void addCompany() {
         Company company = getCompany();
         company.save();
-        repository.delete(repository.findOne(Example.of(CompanyImpl.builder().companyName(company.getCompanyName()).build())));
+        repository.delete(repository.findOne(Example.of(CompanyImpl.builder().companyName(company.getCompanyName()).build())).get());
     }
 
     @Test

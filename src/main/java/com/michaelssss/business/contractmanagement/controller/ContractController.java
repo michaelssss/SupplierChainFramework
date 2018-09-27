@@ -39,7 +39,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "更新框架合同", tags = "合同管理")
     public Response updateFrameworkContract(@RequestBody FrameContractImpl contract) {
-        FrameContractImpl contract1 = frameContractRepository.findOne(contract.getId());
+        FrameContractImpl contract1 = frameContractRepository.findById(contract.getId()).get();
         BeanUtils.copyProperties(contract, contract1, "id", "audit_state");
         contract1.update();
         return Response.OK("更新框架合同成功");
@@ -49,7 +49,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "确认框架合同", tags = "合同管理")
     public Response confirmFrameworkContract(@RequestBody Map<String, Long> map) {
-        Contract contract = frameContractRepository.findOne(map.get("id"));
+        Contract contract = frameContractRepository.findById(map.get("id")).get();
         contract.confirm();
         return Response.OK("确认框架合同成功");
     }
@@ -66,7 +66,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "更新销售合同", tags = "合同管理")
     public Response updateSalesContract(@RequestBody SalesContractImpl contract) {
-        SalesContractImpl contract1 = salesContractRepository.findOne(contract.getId());
+        SalesContractImpl contract1 = salesContractRepository.findById(contract.getId()).get();
         BeanUtils.copyProperties(contract, contract1, "id", "audit_state");
         contract1.update();
         return Response.OK("更新销售合同成功");
@@ -76,7 +76,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "确认销售合同", tags = "合同管理")
     public Response confirmSalesContract(@RequestBody Map<String, Long> map) {
-        Contract contract = salesContractRepository.findOne(map.get("id"));
+        Contract contract = salesContractRepository.findById(map.get("id")).get();
         contract.confirm();
         return Response.OK("确认销售合同成功");
     }
@@ -93,7 +93,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "更新采购合同", tags = "合同管理")
     public Response updatePurchaseContract(@RequestBody PurchaseContractImpl contract) {
-        PurchaseContractImpl contract1 = purchaseContactRepository.findOne(contract.getId());
+        PurchaseContractImpl contract1 = purchaseContactRepository.findById(contract.getId()).get();
         BeanUtils.copyProperties(contract, contract1, "id", "audit_state");
         contract1.update();
         return Response.OK("更新采购合同成功");
@@ -103,7 +103,7 @@ public class ContractController {
     @ResponseBody
     @ApiOperation(value = "确认采购合同", tags = "合同管理")
     public Response confirmPurchaseContract(@RequestBody Map<String, Long> map) {
-        Contract contract = purchaseContactRepository.findOne(map.get("id"));
+        Contract contract = purchaseContactRepository.findById(map.get("id")).get();
         contract.confirm();
         return Response.OK("确认采购合同成功");
     }

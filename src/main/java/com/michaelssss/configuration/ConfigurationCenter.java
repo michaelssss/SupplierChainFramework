@@ -66,7 +66,7 @@ public class ConfigurationCenter {
             configurationCollection.addKeyValue(key, value);
 
         } else {
-            configurationCollection = repository.findOne(Example.of(sample));
+            configurationCollection = repository.findOne(Example.of(sample)).get();
             configurationCollection.addKeyValue(key, value);
         }
         this.repository.saveAndFlush(configurationCollection);
@@ -84,7 +84,7 @@ public class ConfigurationCenter {
     public void deleteKey(String subSystem, String key) {
         ConfigurationCollection sample = new ConfigurationCollection();
         sample.setSubSystem(subSystem);
-        ConfigurationCollection configurationCollection = repository.findOne(Example.of(sample));
+        ConfigurationCollection configurationCollection = repository.findOne(Example.of(sample)).get();
         if (null != configurationCollection) {
             configurationCollection.deleteKey(key);
             init();

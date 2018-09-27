@@ -21,32 +21,32 @@ class OrderQueryImpl implements OrderQuery {
     public EntrustedOrder queryEntrustedOrderByEntrustedCode(String entrustedCode) {
         EntrustedOrderImpl entrustedOrder = new EntrustedOrderImpl();
         entrustedOrder.setCode(entrustedCode);
-        return entrustedOrderRepository.findOne(Example.of(entrustedOrder));
+        return entrustedOrderRepository.findOne(Example.of(entrustedOrder)).get();
     }
 
     @Override
     public EntrustedOrder queryEntrustedOrderBySalesCode(String salesCode) {
         SalesOrderImpl salesOrder = new SalesOrderImpl();
         salesOrder.setCode(salesCode);
-        salesOrder = salesOrderRepository.findOne(Example.of(salesOrder));
+        salesOrder = salesOrderRepository.findOne(Example.of(salesOrder)).get();
         if (null == salesOrder) {
             return null;
         }
         EntrustedOrderImpl entrustedOrder = new EntrustedOrderImpl();
         entrustedOrder.setCode(salesOrder.getEntrustedCode());
-        return entrustedOrderRepository.findOne(Example.of(entrustedOrder));
+        return entrustedOrderRepository.findOne(Example.of(entrustedOrder)).get();
     }
 
     @Override
     public EntrustedOrder queryEntrustedOrderByPurchaseCode(String purchaseCode) {
         PurchaseOrderImpl purchaseOrder = new PurchaseOrderImpl();
         purchaseOrder.setCode(purchaseCode);
-        purchaseOrder = purchaseOrderRepository.findOne(Example.of(purchaseOrder));
+        purchaseOrder = purchaseOrderRepository.findOne(Example.of(purchaseOrder)).get();
         if (null == purchaseOrder) {
             return null;
         }
         EntrustedOrderImpl entrustedOrder = new EntrustedOrderImpl();
         entrustedOrder.setCode(purchaseOrder.getEntrustedCode());
-        return entrustedOrderRepository.findOne(Example.of(entrustedOrder));
+        return entrustedOrderRepository.findOne(Example.of(entrustedOrder)).get();
     }
 }

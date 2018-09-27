@@ -19,7 +19,7 @@ public class CompanyHistoryService {
     public Company getSpecialCompanyHistoryByHistoryIdAndCompanyName(String companyName, String historyId) {
         //这是数据库唯一索引保证一定要么有且只有一条，要么一条没有
         CompanyImpl sample = CompanyImpl.builder().companyName(companyName).historyId(historyId).build();
-        return companyRepository.findOne(Example.of(sample));
+        return companyRepository.findOne(Example.of(sample)).get();
     }
 
     public Company getLatestCompany(String companyName) {

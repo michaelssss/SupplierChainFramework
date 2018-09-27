@@ -46,9 +46,9 @@ public class UserController {
     public Response login(@RequestBody Map<String, Object> requestMap) throws IOException {
         String username = (String) requestMap.get("username");
         UserImpl example = UserImpl.builder().username(username).build();
-        UserImpl user = userCatalog.findOne(Example.of(example));
-        if (null != user) {
-            Token token = user.login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString())));
+        Optional<UserImpl> user = userCatalog.findOne(Example.of(example));
+        if (user.isPresent()) {
+            Token token = user.get().login((String) requestMap.get("password"), new Date(Long.valueOf(requestMap.get("outdate").toString())));
             if (null != token) {
                 return Response.OK(token);
             }

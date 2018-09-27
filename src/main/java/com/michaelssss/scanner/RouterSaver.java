@@ -33,7 +33,7 @@ public class RouterSaver extends Action {
                 authorities.add(functionName);
             }
         }
-        catalog.save(authorities);
+        catalog.saveAll(authorities);
         catalog.flush();
     }
 }

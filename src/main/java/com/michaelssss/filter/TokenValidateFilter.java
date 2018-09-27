@@ -67,7 +67,7 @@ public class TokenValidateFilter implements Filter {
         TokenCatalog catalog = SpringContextHolder.getBean(TokenCatalog.class);
         Token example = new Token();
         example.setToken(token);
-        return catalog.findOne(Example.of(example));
+        return catalog.findOne(Example.of(example)).get();
     }
 
     private boolean tokenExist(String token) {

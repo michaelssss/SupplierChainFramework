@@ -32,7 +32,7 @@ public class ProjectTest extends SpringBootTestBasic {
     public void addProjectInfo() {
         Project project = getProject();
         project.addProject();
-        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)).get());
     }
 
     @Test
@@ -40,18 +40,17 @@ public class ProjectTest extends SpringBootTestBasic {
         Project project = getProject();
         ((ProjectImpl) project).setProjectName("测试修改项目");
         project.updateProject();
-        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
+        ProjectImpl projectImpl = repository.findById(((ProjectImpl) project).getId()).get();
         Assert.assertEquals("测试修改项目", projectImpl.getProjectName());
-        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)).get());
     }
 
     @Test
     public void deleteProjectInfo() {
         Project project = getProject();
         project.addProject();
-        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
-        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
-        Assert.assertNull(projectImpl);
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)).get());
+        Assert.assertTrue(!repository.findById(((ProjectImpl) project).getId()).isPresent());
     }
 
     @Test
@@ -59,9 +58,9 @@ public class ProjectTest extends SpringBootTestBasic {
         Project project = getProject();
         project.addProject();
         project.apply();
-        ProjectImpl projectImpl = repository.findOne(((ProjectImpl) project).getId());
+        ProjectImpl projectImpl = repository.findById(((ProjectImpl) project).getId()).get();
         Assert.assertEquals(Project.APPROVING, projectImpl.getState());
-        repository.delete(repository.findOne(Example.of((ProjectImpl) project)));
+        repository.delete(repository.findOne(Example.of((ProjectImpl) project)).get());
     }
 
 }

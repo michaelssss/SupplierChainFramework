@@ -77,10 +77,10 @@ public class UserManagementController {
         String functionName = map.getFunctionName();
         FunctionName functionName1 = new FunctionName();
         functionName1.setFunctionName(functionName);
-        functionName1 = functionNameCatalog.findOne(Example.of(functionName1));
+        functionName1 = functionNameCatalog.findOne(Example.of(functionName1)).get();
         String authUserName = map.getAuthUserName();
         User user1 = UserImpl.builder().username(authUserName).build();
-        user1 = userCatalog.findOne(Example.of((UserImpl) user1));
+        user1 = userCatalog.findOne(Example.of((UserImpl) user1)).get();
         try {
             user.authority(user1, functionName1);
         } catch (AuthorityException e) {
@@ -113,10 +113,10 @@ public class UserManagementController {
         String groupName = map.getGroupName();
         String username = map.getUsername();
         User user = UserImpl.builder().username(username).build();
-        user = this.userCatalog.findOne(Example.of((UserImpl) user));
+        user = this.userCatalog.findOne(Example.of((UserImpl) user)).get();
         GroupImpl group = new GroupImpl();
         group.setName(groupName);
-        group = groupCatalog.findOne(Example.of(group));
+        group = groupCatalog.findOne(Example.of(group)).get();
         group.addUser(user);
         return Response.OK("已加入");
     }
@@ -128,7 +128,7 @@ public class UserManagementController {
         String groupName = map.getGroupName();
         GroupImpl group = new GroupImpl();
         group.setName(groupName);
-        group = groupCatalog.findOne(Example.of(group));
+        group = groupCatalog.findOne(Example.of(group)).get();
         return (Response<List<User>>) Response.OK(group.getUsers());
     }
 

@@ -21,7 +21,7 @@ public class CreditServiceImpl implements CreditService {
 
         Example<CreditImpl> creditExample = Example.of(creditImpl);
 
-        CreditImpl credit = SpringContextHolder.getBean(CreditRepository.class).findOne(creditExample);
+        CreditImpl credit = SpringContextHolder.getBean(CreditRepository.class).findOne(creditExample).get();
 
         return credit;
 

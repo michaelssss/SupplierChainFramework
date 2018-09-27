@@ -26,6 +26,6 @@ public class ClassificationService {
     }
 
     public ProductionClassification getById(Long id) {
-        return classificationCatalog.findOne(id);
+        return classificationCatalog.findById(id).get();
     }
 }

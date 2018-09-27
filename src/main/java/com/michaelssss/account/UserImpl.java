@@ -94,7 +94,7 @@ public class UserImpl implements User, Serializable {
             Sha256 encoder = new Sha256(SpringContextHolder.getBean(ConfigurationCenter.class));
             FunctionName functionName = new FunctionName();
             functionName.setFunctionName("用户相关.获取功能列表");
-            functionName = SpringContextHolder.getBean(FunctionNameCatalog.class).findOne(Example.of(functionName));
+            functionName = SpringContextHolder.getBean(FunctionNameCatalog.class).findOne(Example.of(functionName)).get();
             this.functionNames.add(functionName);
             this.password = encoder.getPwd(this.password);
             SpringContextHolder.getBean(UserCatalog.class).saveAndFlush(this);
@@ -120,7 +120,7 @@ public class UserImpl implements User, Serializable {
         TokenCatalog tokenCatalog = SpringContextHolder.getBean(TokenCatalog.class);
         Token sample = new Token();
         sample.setToken(token);
-        Token token1 = tokenCatalog.findOne(Example.of(sample));
+        Token token1 = tokenCatalog.findOne(Example.of(sample)).get();
         if (token1.getUser().uid.equals(this.uid)) {
             tokenCatalog.delete(token1);
         }

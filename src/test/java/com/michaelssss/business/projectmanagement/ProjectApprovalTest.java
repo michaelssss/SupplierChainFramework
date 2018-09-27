@@ -34,7 +34,7 @@ public class ProjectApprovalTest extends SpringBootTestBasic {
     public void addApprovalInfo() {
         Approval approval = getApproval();
         approval.addApproval();
-        approvalCatalog.delete(((ApprovalImpl) approval).getId());
+        approvalCatalog.deleteById(((ApprovalImpl) approval).getId());
     }
 
     @Test
@@ -43,9 +43,9 @@ public class ProjectApprovalTest extends SpringBootTestBasic {
         approval.addApproval();
         ((ApprovalImpl) approval).setProjectName("修改测试");
         approval.updateApproval();
-        ApprovalImpl approvalImpl = approvalCatalog.findOne(((ApprovalImpl) approval).getId());
+        ApprovalImpl approvalImpl = approvalCatalog.findById(((ApprovalImpl) approval).getId()).get();
         Assert.assertEquals("修改测试", approvalImpl.getProjectName());
-        approvalCatalog.delete(((ApprovalImpl) approval).getId());
+        approvalCatalog.deleteById(((ApprovalImpl) approval).getId());
     }
 
     @Test
@@ -53,8 +53,8 @@ public class ProjectApprovalTest extends SpringBootTestBasic {
         Approval approval = getApproval();
         approval.addApproval();
         approval.confirm();
-        ApprovalImpl approvalImpl = approvalCatalog.findOne(((ApprovalImpl) approval).getId());
+        ApprovalImpl approvalImpl = approvalCatalog.findById(((ApprovalImpl) approval).getId()).get();
         Assert.assertEquals(Approval.CONFIRM, approvalImpl.getState());
-        approvalCatalog.delete(((ApprovalImpl) approval).getId());
+        approvalCatalog.deleteById(((ApprovalImpl) approval).getId());
     }
 }

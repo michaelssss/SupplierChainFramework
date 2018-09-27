@@ -40,7 +40,7 @@ public class ProjectController {
     @ApiOperation(value = "项目详情", tags = "项目管理")
     @ResponseBody
     public Response detailProject(@RequestBody ProjectImpl project) {
-        return Response.OK(projectCatalog.findOne(project.getId()));
+        return Response.OK(projectCatalog.findById(project.getId()).get());
     }
 
     @RequestMapping(value = "Project/Approval/list", method = RequestMethod.POST)
@@ -54,7 +54,7 @@ public class ProjectController {
     @ApiOperation(value = "批复详情", tags = "项目管理")
     @ResponseBody
     public Response detailProjectApproval(@RequestBody ApprovalImpl approval) {
-        return Response.OK(approvalCatalog.findOne(approval.getId()));
+        return Response.OK(approvalCatalog.findById(approval.getId()).get());
     }
 
     @RequestMapping(value = "Project/add", method = RequestMethod.POST)
@@ -69,7 +69,7 @@ public class ProjectController {
     @ApiOperation(value = "更新项目", tags = "项目管理")
     @ResponseBody
     public Response updateProject(@RequestBody ProjectImpl project) {
-        ProjectImpl instance = projectCatalog.findOne(project.getId());
+        ProjectImpl instance = projectCatalog.findById(project.getId()).get();
         BeanUtils.copyProperties(project, instance, "id", "state");
         instance.updateProject();
         return Response.OK("更新项目成功");
@@ -79,7 +79,7 @@ public class ProjectController {
     @ApiOperation(value = "申请项目", tags = "项目管理")
     @ResponseBody
     public Response applyProject(@RequestBody ProjectImpl project) {
-        ProjectImpl instance = projectCatalog.findOne(project.getId());
+        ProjectImpl instance = projectCatalog.findById(project.getId()).get();
         instance.apply();
         return Response.OK("项目申请成功");
     }
@@ -96,7 +96,7 @@ public class ProjectController {
     @ApiOperation(value = "更新项目批复", tags = "项目管理")
     @ResponseBody
     public Response updateProjectApproval(@RequestBody ApprovalImpl approval) {
-        Approval instance = approvalCatalog.findOne(approval.getId());
+        Approval instance = approvalCatalog.findById(approval.getId()).get();
         BeanUtils.copyProperties(approval, instance, "id", "state");
         instance.updateApproval();
         return Response.OK("添加项目批复成功");
@@ -106,7 +106,7 @@ public class ProjectController {
     @ApiOperation(value = "确认项目批复", tags = "项目管理")
     @ResponseBody
     public Response confirmProjectApproval(@RequestBody ApprovalImpl approval) {
-        Approval instance = approvalCatalog.findOne(approval.getId());
+        Approval instance = approvalCatalog.findById(approval.getId()).get();
         instance.confirm();
         return Response.OK("确认项目批复成功");
     }

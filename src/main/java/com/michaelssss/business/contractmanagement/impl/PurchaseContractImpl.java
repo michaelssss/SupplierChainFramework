@@ -58,8 +58,7 @@ public class PurchaseContractImpl implements Contract {
     public void add() {
         PurchaseContractImpl frameContract = PurchaseContractImpl.builder().contractName(this.contractName).build();
         Example ex = Example.of(frameContract);
-        frameContract = SpringContextHolder.getBean(PurchaseContactRepository.class).findOne(ex);
-        if (frameContract != null) {
+        if (SpringContextHolder.getBean(PurchaseContactRepository.class).exists(ex)) {
             throw new BusinessException("合同名称已存在");
         }
         SpringContextHolder.getBean(PurchaseContactRepository.class).saveAndFlush(this);

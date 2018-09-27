@@ -26,7 +26,7 @@ public class BusinessCodeGenerator {
         sample.setPrefix(prefix);
         sample.setClazzName(clazz.getSimpleName());
         if (recordExist(sample)) {
-            actual = recordEntityRepository.findOne(Example.of(sample));
+            actual = recordEntityRepository.findOne(Example.of(sample)).get();
             actual.setSequence(actual.getSequence() + 1L);
         } else {
             actual = new RecordEntity();
