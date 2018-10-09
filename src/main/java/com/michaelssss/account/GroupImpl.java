@@ -1,6 +1,5 @@
 package com.michaelssss.account;
 
-import com.michaelssss.SpringContextHolder;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Collections;
@@ -59,7 +58,6 @@ public class GroupImpl implements Group, Serializable {
   @Override
   public void removeUser(User user) {
     this.users.removeIf((user1 -> user.getUsername().equals(user1.getUsername())));
-    SpringContextHolder.getBean(GroupCatalog.class).saveAndFlush(this);
   }
 
   @Override

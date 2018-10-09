@@ -8,24 +8,18 @@ import java.util.Set;
  */
 public interface Group {
 
-  /**
-   * 设立部门名字
-   */
+  String getName();
+
+  /** 设立部门名字 */
   void setName(String name);
 
-  /**
-   * 获取部门所有员工
-   */
+  /** 获取部门所有员工 */
   @JsonIgnore
   Set<User> getUsers();
 
-  /**
-   * 给部门添加员工
-   */
+  /** 给部门添加员工 */
   void addUser(User user);
 
-  /**
-   * 将员工从部门移除
-   */
+  /** 将员工从部门移除 */
   void removeUser(User user);
 }
