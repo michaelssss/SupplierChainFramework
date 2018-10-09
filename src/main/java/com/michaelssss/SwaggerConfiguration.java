@@ -13,23 +13,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
-    @Bean
-    public Docket create() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .enable(true)//生产环境改为false
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.michaelssss"))
-                .paths(PathSelectors.any())//生产环境设为PathSelectors.none 二选其一 推荐选上面的
-                .build();
-    }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("金证前海业务系统，API描述")
-                .description("")
-                .termsOfServiceUrl("")
-                .version("1.0")
-                .build();
-    }
+  @Bean
+  public Docket create() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .enable(true) // 生产环境改为false
+        .apiInfo(apiInfo())
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.michaelssss"))
+        .paths(PathSelectors.any()) // 生产环境设为PathSelectors.none 二选其一 推荐选上面的
+        .build();
+  }
+
+  private ApiInfo apiInfo() {
+    return new ApiInfoBuilder()
+        .title("金证前海业务系统，API描述")
+        .description("")
+        .termsOfServiceUrl("")
+        .version("1.0")
+        .build();
+  }
 }

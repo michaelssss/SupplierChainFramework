@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CompanyHistoryDataBinder {
-    private String companyName;
-    private String historyId;
+
+  private String companyName;
+  private String historyId;
 }

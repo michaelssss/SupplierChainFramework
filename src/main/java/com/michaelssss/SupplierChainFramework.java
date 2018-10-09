@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.michaelssss")
 public class SupplierChainFramework {
-    public static void main(String[] args) {
-        SpringApplication.run(SupplierChainFramework.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(SupplierChainFramework.class, args);
+  }
 }

@@ -4,241 +4,214 @@ import com.michaelssss.business.basicinfomanagement.domain.Address;
 import com.michaelssss.business.basicinfomanagement.domain.BankAccount;
 import com.michaelssss.business.basicinfomanagement.domain.Contact;
 import com.michaelssss.business.basicinfomanagement.domain.ShareholderInfo;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
 /**
- * @Description:合作伙伴基础信息模型接口，维护公司信息
- * @Author:tanshaoxing
- * @Date:2018/7/11
+ * @Description:合作伙伴基础信息模型接口，维护公司信息 @Author:tanshaoxing @Date:2018/7/11
  */
 public interface Company {
-    /**
-     * 添加公司地址信息
-     *
-     * @param address
-     */
-    void addAddress(Address address);
 
-    /**
-     * 移除公司地址信息
-     *
-     * @param address
-     */
-    void deleteAddress(Address address);
+  /**
+   * 添加公司地址信息
+   */
+  void addAddress(Address address);
 
-    /**
-     * 添加联系人
-     *
-     * @param contact
-     */
-    void addContacts(Contact contact);
+  /**
+   * 移除公司地址信息
+   */
+  void deleteAddress(Address address);
 
-    /**
-     * 删除联系人
-     *
-     * @param contact
-     */
-    void deleteContact(Contact contact);
+  /**
+   * 添加联系人
+   */
+  void addContacts(Contact contact);
 
-    /**
-     * 添加银行账户
-     *
-     * @param bankAccount
-     */
-    void addBankAccount(BankAccount bankAccount);
+  /**
+   * 删除联系人
+   */
+  void deleteContact(Contact contact);
 
-    /**
-     * 删除银行账户信息
-     *
-     * @param bankAccount
-     */
-    void deleteBankAccount(BankAccount bankAccount);
+  /**
+   * 添加银行账户
+   */
+  void addBankAccount(BankAccount bankAccount);
 
-    /**
-     * 添加股东信息
-     *
-     * @param shareholderInfo
-     */
-    void addShareHolder(ShareholderInfo shareholderInfo);
+  /**
+   * 删除银行账户信息
+   */
+  void deleteBankAccount(BankAccount bankAccount);
 
-    /**
-     * 移除股东信息
-     *
-     * @param shareholderInfo
-     */
-    void deleteShareHolder(ShareholderInfo shareholderInfo);
+  /**
+   * 添加股东信息
+   */
+  void addShareHolder(ShareholderInfo shareholderInfo);
 
-    /**
-     * 添加公司的基础信息
-     */
-    void save();
+  /**
+   * 移除股东信息
+   */
+  void deleteShareHolder(ShareholderInfo shareholderInfo);
 
-    /**
-     * 公司名称
-     */
-    String getCompanyName();
+  /**
+   * 添加公司的基础信息
+   */
+  void save();
 
-    /**
-     * 合作伙伴性质
-     */
-    String getNature();
+  /**
+   * 公司名称
+   */
+  String getCompanyName();
 
-    /**
-     * 合作伙伴类型
-     */
-    String getPartnerType();
+  /**
+   * 合作伙伴性质
+   */
+  String getNature();
 
-    /**
-     * 法定代表人
-     */
-    String getLegalRepresentative();
+  /**
+   * 合作伙伴类型
+   */
+  String getPartnerType();
 
-    /**
-     * 注册资本
-     */
-    BigDecimal getRegisteredCapital();
+  /**
+   * 法定代表人
+   */
+  String getLegalRepresentative();
 
-    /**
-     * 注册资本
-     */
-    BigDecimal getContributedCapital();
+  /**
+   * 注册资本
+   */
+  BigDecimal getRegisteredCapital();
 
-    /**
-     * 币种
-     */
-    String getCurrency();
+  /**
+   * 注册资本
+   */
+  BigDecimal getContributedCapital();
 
-    /**
-     * 经营状态
-     */
-    String getRunningState();
+  /**
+   * 币种
+   */
+  String getCurrency();
 
-    /**
-     * 成立日期
-     */
-    Date getRegisteredDate();
+  /**
+   * 经营状态
+   */
+  String getRunningState();
 
-    /**
-     * 注册号
-     */
-    String getRegisteredNo();
+  /**
+   * 成立日期
+   */
+  Date getRegisteredDate();
 
-    /**
-     * 组织机构代码
-     */
-    String getOrganizationNo();
+  /**
+   * 注册号
+   */
+  String getRegisteredNo();
 
-    /**
-     * 纳税人识别号
-     */
-    String getTaxpayerNo();
+  /**
+   * 组织机构代码
+   */
+  String getOrganizationNo();
 
-    /**
-     * 统一社会信用代码
-     */
-    String getUniSocialNo();
+  /**
+   * 纳税人识别号
+   */
+  String getTaxpayerNo();
 
-    /**
-     * 公司类型
-     */
-    String getCompanyType();
+  /**
+   * 统一社会信用代码
+   */
+  String getUniSocialNo();
 
-    /**
-     * 所属行业
-     */
-    String getIndustry();
+  /**
+   * 公司类型
+   */
+  String getCompanyType();
 
-    /**
-     * 核准日期
-     */
-    Date getValidateDate();
+  /**
+   * 所属行业
+   */
+  String getIndustry();
 
-    /**
-     * 登记机关
-     */
-    String getRegisteredAuthority();
+  /**
+   * 核准日期
+   */
+  Date getValidateDate();
 
-    /**
-     * 所属地区
-     */
-    String getDistrict();
+  /**
+   * 登记机关
+   */
+  String getRegisteredAuthority();
 
-    /**
-     * 英文名
-     */
-    String getEngName();
+  /**
+   * 所属地区
+   */
+  String getDistrict();
 
-    /**
-     * 曾用名
-     */
-    String getUsedName();
+  /**
+   * 英文名
+   */
+  String getEngName();
 
-    /**
-     * 经营方式
-     */
-    String getRunningWay();
+  /**
+   * 曾用名
+   */
+  String getUsedName();
 
-    /**
-     * 员工规模
-     */
-    String getStaffSize();
+  /**
+   * 经营方式
+   */
+  String getRunningWay();
 
-    /**
-     * 营业期限
-     */
-    String getPeriod();
+  /**
+   * 员工规模
+   */
+  String getStaffSize();
 
-    /**
-     * 注册地址
-     */
-    String getRegisteredAddress();
+  /**
+   * 营业期限
+   */
+  String getPeriod();
 
-    /**
-     * 经营范围
-     */
-    String getScope();
+  /**
+   * 注册地址
+   */
+  String getRegisteredAddress();
 
-    /**
-     * 合作伙伴来源
-     */
-    String getSource();
+  /**
+   * 经营范围
+   */
+  String getScope();
 
-    String getHistoryId();
+  /**
+   * 合作伙伴来源
+   */
+  String getSource();
 
-    /**
-     * 公司地址列表
-     *
-     * @return
-     */
-    Set<Address> getAddressSet();
+  String getHistoryId();
 
-    /**
-     * 银行账户列表
-     *
-     * @return
-     */
-    Set<BankAccount> getBankAccounts();
+  /**
+   * 公司地址列表
+   */
+  Set<Address> getAddressSet();
 
-    /**
-     * 股东信息
-     *
-     * @return
-     */
-    Set<ShareholderInfo> getShareholderInfoSet();
+  /**
+   * 银行账户列表
+   */
+  Set<BankAccount> getBankAccounts();
 
-    /**
-     * 联系人列表
-     *
-     * @return
-     */
-    Set<Contact> getContactSet();
+  /**
+   * 股东信息
+   */
+  Set<ShareholderInfo> getShareholderInfoSet();
 
-    /**
-     * 产生一条审核记录，生成一条新记录信息
-     */
-    void applyAudit();
+  /**
+   * 联系人列表
+   */
+  Set<Contact> getContactSet();
 
+  /**
+   * 产生一条审核记录，生成一条新记录信息
+   */
+  void applyAudit();
 }

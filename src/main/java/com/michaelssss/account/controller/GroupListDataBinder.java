@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class GroupListDataBinder {
-    private String groupName;
+
+  private String groupName;
 }

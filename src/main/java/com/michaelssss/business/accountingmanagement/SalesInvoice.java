@@ -3,13 +3,14 @@ package com.michaelssss.business.accountingmanagement;
 import java.math.BigDecimal;
 
 public interface SalesInvoice extends Invoice {
-    void addTransferReceipt(TransferReceipt transferReceipt);
 
-    void confirmAuditTotal(BigDecimal auditTotal);
+  void addTransferReceipt(TransferReceipt transferReceipt);
 
-    BigDecimal getAuditTotal();
+  void confirmAuditTotal(BigDecimal auditTotal);
 
-    BigDecimal getNotAuditTotal();
+  BigDecimal getAuditTotal();
 
-    void deleteTransferReceipt(String receiptCode);
+  BigDecimal getNotAuditTotal();
+
+  void deleteTransferReceipt(String receiptCode);
 }

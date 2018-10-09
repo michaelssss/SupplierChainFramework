@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Request<T> {
-    //当前页数
-    private int currentPage;
-    //请求单页数据量大小
-    private int size;
-    //请求参数
-    private T payLoad;
+
+  // 当前页数
+  private int currentPage;
+  // 请求单页数据量大小
+  private int size;
+  // 请求参数
+  private T payLoad;
 }

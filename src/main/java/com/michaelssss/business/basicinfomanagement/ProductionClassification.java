@@ -4,22 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductionClassification {
-    /**
-     * 往该分类放置商品
-     *
-     * @param production 商品信息
-     * @param keyValue   商品分类属性Map
-     */
-    void addProduction(Production production, Map<String, String> keyValue);
 
-    /**
-     * 获取该分类及其子分类的所有商品
-     *
-     * @return
-     */
-    List<Production> productionInThisClassification();
+  /**
+   * 往该分类放置商品
+   *
+   * @param production 商品信息
+   * @param keyValue 商品分类属性Map
+   */
+  void addProduction(Production production, Map<String, String> keyValue);
 
-    void addSubClassification(ProductionClassification productionClassification);
+  /**
+   * 获取该分类及其子分类的所有商品
+   */
+  List<Production> productionInThisClassification();
 
-    void save();
+  void addSubClassification(ProductionClassification productionClassification);
+
+  void save();
 }

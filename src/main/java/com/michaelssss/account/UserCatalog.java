@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Michaelssss
  */
 public interface UserCatalog extends JpaRepository<UserImpl, Long> {
+
 }
