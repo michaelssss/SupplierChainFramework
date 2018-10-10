@@ -42,7 +42,7 @@ public class TokenValidateFilter implements Filter {
     }
     boolean isSwaggerUri =
         "/swagger-ui.html".equals(uri)
-            || "^/webjars/springfox-swagger-ui/.*$".matches(uri)
+            || uri.matches("^/webjars/springfox-swagger-ui/.*$")
             || "/v2/api-docs".equals(uri)
             || "/swagger-resources".equals(uri)
             || "/configuration/ui".equals(uri);
