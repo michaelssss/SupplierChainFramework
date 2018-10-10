@@ -103,13 +103,7 @@ public class UserController {
   @ResponseBody
   public Response<String> finishTask(
       @SessionAttribute("user") User user, @RequestBody TaskDataBinder taskDataBinder) {
-    List<Task> tasks = user.getTasks();
-    for (Task task : tasks) {
-      if (taskDataBinder.getTaskId().equals(task.getId())) {
-        taskService.complete(task.getId());
-        break;
-      }
-    }
+    user.completeTask(taskDataBinder.getTaskId());
     return (Response<String>) Response.OK("流程ID： " + taskDataBinder.getTaskId() + " 已经结束");
   }
 

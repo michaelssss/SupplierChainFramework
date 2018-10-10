@@ -173,6 +173,17 @@ public class UserImpl implements User, Serializable {
   }
 
   @Override
+  public void completeTask(String taskId) {
+    // ?或许可以增加一层很薄的Service以完成事务处理
+    for (Task task : getTasks()) {
+      if (task.getId().equals(taskId)) {
+        SpringContextHolder.getBean(TaskService.class).complete(task.getId());
+        break;
+      }
+    }
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

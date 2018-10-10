@@ -27,9 +27,7 @@ public interface User {
    */
   boolean validatePassword(String password);
 
-  /**
-   * 获取当前用户的菜单列表
-   */
+  /** 获取当前用户的菜单列表 */
   @JsonIgnore
   Set<FunctionName> getHasAuthorityFunctionName();
 
@@ -41,9 +39,7 @@ public interface User {
    */
   boolean hasAuthority(String functionName);
 
-  /**
-   * 注册一个用户
-   */
+  /** 注册一个用户 */
   void registered();
 
   /**
@@ -64,4 +60,6 @@ public interface User {
 
   @JsonIgnore
   List<Task> getTasks();
+
+  void completeTask(String taskId);
 }
