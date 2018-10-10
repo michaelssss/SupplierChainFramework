@@ -4,10 +4,7 @@ import com.michaelssss.account.User;
 import com.michaelssss.base.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -44,28 +41,5 @@ public class BPMService {
     return Response.OK("start Tasked");
   }
 
-  @RequestMapping(value = "Task/query")
-  @ApiOperation(value = "testQueryTask")
-  @ResponseBody
-  public Response queryTask(@SessionAttribute("user") User user) {
-    List<Map<String, String>> list = new ArrayList<>();
-    for (Task task : user.getTasks()) {
-      Map<String, String> map = new HashMap<>();
-      map.put("taskId", task.getId());
-      map.put("taskName", task.getName());
-      list.add(map);
-    }
-    return Response.OK(list);
-  }
 
-  @RequestMapping(value = "Task/finish")
-  @ApiOperation(value = "finishTask")
-  @ResponseBody
-  public Response finishTask(@SessionAttribute("user") User user) {
-    List<Task> tasks = user.getTasks();
-    for (Task task : tasks) {
-      processEngine.getTaskService().complete(task.getId());
-    }
-    return Response.OK("clean all");
-  }
 }

@@ -12,10 +12,14 @@ import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
@@ -33,10 +37,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class UserController {
 
   private UserCatalog userCatalog;
+  private TaskService taskService;
+  private RuntimeService runtimeService;
 
   @Autowired
-  public UserController(UserCatalog userCatalog) {
+  public UserController(
+      UserCatalog userCatalog, TaskService taskService, RuntimeService runtimeService) {
     this.userCatalog = userCatalog;
+    this.taskService = taskService;
+    this.runtimeService = runtimeService;
   }
 
   @RequestMapping(value = "Functions/get", method = RequestMethod.POST)
@@ -73,6 +82,35 @@ public class UserController {
       }
     }
     return Response.NonOK("username or password not validate");
+  }
+
+  @RequestMapping(value = "Tasks/query")
+  @ApiOperation(value = "获取当前用户任务列表")
+  @ResponseBody
+  public Response queryTask(@SessionAttribute("user") User user) {
+    List<Map<String, String>> list = new ArrayList<>();
+    for (Task task : user.getTasks()) {
+      Map<String, String> map = new HashMap<>();
+      map.put("taskId", task.getId());
+      map.put("taskName", task.getName());
+      list.add(map);
+    }
+    return Response.OK(list);
+  }
+
+  @RequestMapping(value = "Task/finish")
+  @ApiOperation(value = "用户完成指定流程")
+  @ResponseBody
+  public Response<String> finishTask(
+      @SessionAttribute("user") User user, @RequestBody TaskDataBinder taskDataBinder) {
+    List<Task> tasks = user.getTasks();
+    for (Task task : tasks) {
+      if (taskDataBinder.getTaskId().equals(task.getId())) {
+        taskService.complete(task.getId());
+        break;
+      }
+    }
+    return (Response<String>) Response.OK("流程ID： " + taskDataBinder.getTaskId() + " 已经结束");
   }
 
   @RequestMapping(value = "logout", method = RequestMethod.POST)

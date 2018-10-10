@@ -19,6 +19,7 @@ import com.michaelssss.business.basicinfomanagement.domain.ShareholderInfo;
 import com.michaelssss.business.basicinfomanagement.domain.StorageImpl;
 import com.michaelssss.business.basicinfomanagement.domain.SupplierImpl;
 import com.michaelssss.business.basicinfomanagement.service.CompanyHistoryService;
+import com.michaelssss.business.basicinfomanagement.service.CompanyService;
 import com.michaelssss.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,10 +48,13 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class CompanyController {
 
   private CompanyHistoryService companyHistoryService;
+  private CompanyService companyService;
 
   @Autowired
-  public CompanyController(CompanyHistoryService companyHistoryService) {
+  public CompanyController(
+      CompanyHistoryService companyHistoryService, CompanyService companyService) {
     this.companyHistoryService = companyHistoryService;
+    this.companyService = companyService;
   }
 
   @ResponseBody
@@ -64,9 +68,7 @@ public class CompanyController {
     return (Response<CompanyImpl>) Response.OK(company);
   }
 
-  /**
-   * 总是查询最新一条
-   */
+  /** 总是查询最新一条 */
   @ResponseBody
   @ApiOperation(value = "查询", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
   @RequestMapping(value = "list", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
@@ -95,11 +97,11 @@ public class CompanyController {
   @ResponseBody
   @ApiOperation(value = "详情", tags = "基础信息", produces = APPLICATION_JSON_VALUE)
   @RequestMapping(value = "detail", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
-  public Response<List<CompanyImpl>> queryCompanyInfoById(
+  public Response<CompanyImpl> queryCompanyInfoById(
       @RequestBody CompanyHistoryDataBinder companyHistoryDataBinder) {
     String companyName = companyHistoryDataBinder.getCompanyName();
     String historyId = companyHistoryDataBinder.getHistoryId();
-    return (Response<List<CompanyImpl>>)
+    return (Response<CompanyImpl>)
         Response.OK(
             companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(
                 companyName, historyId));
@@ -115,10 +117,7 @@ public class CompanyController {
       @RequestBody CompanyHistoryDataBinder companyHistoryDataBinder) {
     String companyName = companyHistoryDataBinder.getCompanyName();
     String historyId = companyHistoryDataBinder.getHistoryId();
-    Company company =
-        this.companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(
-            companyName, historyId);
-    company.applyAudit();
+    companyService.startApplyAudit(companyName, historyId);
     return (Response<String>) Response.OK("申请审批成功");
   }
 

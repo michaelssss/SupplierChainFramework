@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +27,8 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 
@@ -201,6 +205,7 @@ public class CompanyImpl implements Company, Serializable {
       throw new BusinessException("公司名称已存在");
     }
     this.setHistoryId(Long.toString(System.currentTimeMillis()));
+    this.validateDate = null;
     SpringContextHolder.getBean(CompanyRepository.class).saveAndFlush(this);
   }
 
@@ -356,7 +361,20 @@ public class CompanyImpl implements Company, Serializable {
 
   @Override
   public void applyAudit() {
-    SpringContextHolder.getBean(CompanyHistoryService.class).addNewRecord(this);
+    Company company = SpringContextHolder.getBean(CompanyHistoryService.class).addNewRecord(this);
+    RuntimeService runtimeService = SpringContextHolder.getBean(RuntimeService.class);
+    // 根据ProcessKey得到新的ProcessInstance，然后将当前需要审批的公司ID传入，审批页面只是单纯的做查询
+    ProcessInstance companyValidateProcess =
+        runtimeService.startProcessInstanceByKey("CompanyValidateProcess");
+    Map<String, Object> map = new HashMap<>();
+    map.put("companyName", company.getCompanyName());
+    map.put("historyId", company.getHistoryId());
+    runtimeService.setVariablesLocal(companyValidateProcess.getId(), map);
+  }
+
+  @Override
+  public void validated() {
+    this.validateDate = new Date();
   }
 
   @Override

@@ -1,6 +1,8 @@
 package com.michaelssss;
 
+import java.io.IOException;
 import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.DynamicBpmnService;
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
@@ -18,10 +20,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@Slf4j
 public class BpmConfig {
+
+  private static Resource[] getBpmnFiles(ResourceLoader resourceLoader) {
+    ResourcePatternResolver resourcePatternResolver =
+        ResourcePatternUtils.getResourcePatternResolver(resourceLoader);
+    Resource[] resources = new Resource[]{};
+    try {
+      resources = resourcePatternResolver.getResources("classpath*:processes/*.bpmn");
+      for (Resource resource : resources) {
+        log.info("bpmn " + resource.getFilename() + " has been load");
+      }
+    } catch (IOException e) {
+      log.error("bpmn initial failed", e);
+    }
+    return resources;
+  }
 
   // 流程配置，与spring整合采用SpringProcessEngineConfiguration这个实现
   @Bean
@@ -37,8 +57,7 @@ public class BpmConfig {
     processEngineConfiguration.setDatabaseType(
         SpringProcessEngineConfiguration.DATABASE_TYPE_MYSQL);
     processEngineConfiguration.setTransactionManager(transactionManager);
-    processEngineConfiguration.setDeploymentResources(
-        new Resource[]{resourceLoader.getResource("classpath:/processes/HelloWorld.bpmn")});
+    processEngineConfiguration.setDeploymentResources(getBpmnFiles(resourceLoader));
     return processEngineConfiguration;
   } // 流程引擎，与spring整合使用factoryBean
 
