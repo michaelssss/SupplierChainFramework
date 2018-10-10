@@ -84,7 +84,7 @@ public class UserController {
     return Response.NonOK("username or password not validate");
   }
 
-  @RequestMapping(value = "Tasks/query")
+  @RequestMapping(value = "Tasks/query", method = RequestMethod.POST)
   @ApiOperation(value = "获取当前用户任务列表")
   @ResponseBody
   public Response queryTask(@SessionAttribute("user") User user) {
@@ -98,7 +98,7 @@ public class UserController {
     return Response.OK(list);
   }
 
-  @RequestMapping(value = "Task/finish")
+  @RequestMapping(value = "Task/finish", method = RequestMethod.POST)
   @ApiOperation(value = "用户完成指定流程")
   @ResponseBody
   public Response<String> finishTask(
