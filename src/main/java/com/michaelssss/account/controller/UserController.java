@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,15 +86,15 @@ public class UserController {
   @RequestMapping(value = "Tasks/query", method = RequestMethod.POST)
   @ApiOperation(value = "获取当前用户任务列表")
   @ResponseBody
-  public Response queryTask(@SessionAttribute("user") User user) {
-    List<Map<String, String>> list = new ArrayList<>();
+  public Response<List<TaskQueryOutputDataBinder>> queryTask(@SessionAttribute("user") User user) {
+    List<TaskQueryOutputDataBinder> list = new ArrayList<>();
     for (Task task : user.getTasks()) {
-      Map<String, String> map = new HashMap<>();
-      map.put("taskId", task.getId());
-      map.put("taskName", task.getName());
-      list.add(map);
+      TaskQueryOutputDataBinder taskQueryOutputDataBinder = new TaskQueryOutputDataBinder();
+      taskQueryOutputDataBinder.setTaskId(task.getId());
+      taskQueryOutputDataBinder.setTaskName(task.getName());
+      list.add(taskQueryOutputDataBinder);
     }
-    return Response.OK(list);
+    return (Response<List<TaskQueryOutputDataBinder>>) Response.OK(list);
   }
 
   @RequestMapping(value = "Task/finish", method = RequestMethod.POST)
