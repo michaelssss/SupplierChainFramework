@@ -27,7 +27,7 @@ public class SwaggerConfiguration {
 
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("金证前海业务系统，API描述")
+        .title("Spring预研系统，API描述")
         .description("")
         .termsOfServiceUrl("")
         .version("1.0")
