@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -36,15 +34,10 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class UserController {
 
   private UserCatalog userCatalog;
-  private TaskService taskService;
-  private RuntimeService runtimeService;
 
   @Autowired
-  public UserController(
-      UserCatalog userCatalog, TaskService taskService, RuntimeService runtimeService) {
+  public UserController(UserCatalog userCatalog) {
     this.userCatalog = userCatalog;
-    this.taskService = taskService;
-    this.runtimeService = runtimeService;
   }
 
   @RequestMapping(value = "Functions/get", method = RequestMethod.POST)
