@@ -40,7 +40,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 /**
- * Description:公司信息控制层 @Author: @Date 2018/7/9
+ * Description:公司信息控制层
+ *
+ * @author Michaelssss
+ * @date 2018/7/9
  */
 @Api(value = "基础信息", tags = "基础信息")
 @Controller
@@ -273,8 +276,7 @@ public class CompanyController {
       produces = APPLICATION_JSON_VALUE)
   public Response<List<Company>> queryHistory(@RequestBody Map<String, String> map) {
     String companyName = map.get("companyName");
-    return Response.OK(
-        this.companyHistoryService.getCompanyAllAuditHistory(companyName));
+    return Response.OK(this.companyHistoryService.getCompanyAllAuditHistory(companyName));
   }
 
   @ResponseBody

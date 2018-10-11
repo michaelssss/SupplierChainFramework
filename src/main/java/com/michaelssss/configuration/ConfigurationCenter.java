@@ -2,6 +2,7 @@ package com.michaelssss.configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -46,10 +47,14 @@ public class ConfigurationCenter {
    */
   public String getValue(String subSystem, String key) {
     String result = null;
-    for (ConfigurationCollection configurationCollection : this.collections) {
-      if (configurationCollection.getSubSystem().equals(subSystem)) {
-        result = configurationCollection.getValue(key);
-      }
+    Optional<ConfigurationCollection> configurationCollection1 =
+        this.collections
+            .parallelStream()
+            .filter(
+                configurationCollection -> configurationCollection.getSubSystem().equals(subSystem))
+            .findFirst();
+    if (configurationCollection1.isPresent()) {
+      result = configurationCollection1.get().getValue(key);
     }
     return result;
   }
@@ -58,7 +63,7 @@ public class ConfigurationCenter {
     ConfigurationCollection sample = new ConfigurationCollection();
     sample.setSubSystem(subSystem);
     ConfigurationCollection configurationCollection = null;
-    if (repository.count(Example.of(sample)) == 0) {
+    if (repository.exists(Example.of(sample))) {
       configurationCollection = new ConfigurationCollection();
       configurationCollection.setSubSystem(subSystem);
       configurationCollection.setKeyValueObjects(new ArrayList<>());
@@ -83,9 +88,10 @@ public class ConfigurationCenter {
   public void deleteKey(String subSystem, String key) {
     ConfigurationCollection sample = new ConfigurationCollection();
     sample.setSubSystem(subSystem);
-    ConfigurationCollection configurationCollection = repository.findOne(Example.of(sample)).get();
-    if (null != configurationCollection) {
-      configurationCollection.deleteKey(key);
+    Optional<ConfigurationCollection> configurationCollection =
+        repository.findOne(Example.of(sample));
+    if (configurationCollection.isPresent()) {
+      configurationCollection.get().deleteKey(key);
       init();
     }
   }
