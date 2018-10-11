@@ -62,15 +62,14 @@ public class ConfigurationCenter {
   public void addKeyValue(String subSystem, String key, String value) {
     ConfigurationCollection sample = new ConfigurationCollection();
     sample.setSubSystem(subSystem);
-    ConfigurationCollection configurationCollection = null;
+    ConfigurationCollection configurationCollection;
     if (repository.exists(Example.of(sample))) {
+      configurationCollection = repository.findOne(Example.of(sample)).get();
+      configurationCollection.addKeyValue(key, value);
+    } else {
       configurationCollection = new ConfigurationCollection();
       configurationCollection.setSubSystem(subSystem);
       configurationCollection.setKeyValueObjects(new ArrayList<>());
-      configurationCollection.addKeyValue(key, value);
-
-    } else {
-      configurationCollection = repository.findOne(Example.of(sample)).get();
       configurationCollection.addKeyValue(key, value);
     }
     this.repository.saveAndFlush(configurationCollection);
