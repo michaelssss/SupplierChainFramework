@@ -6,11 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 本类是用于生成带盐的sha256加密的</br> 因本系统中用户密码是不可逆的，故而采用带盐加密，盐存放在ConfigurationCenter
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @Slf4j
 @Component
 public class Sha256 {
 
-  private String salt = ""; // 盐
+  private String salt; // 盐
 
   @Autowired
   public Sha256(ConfigurationCenter configurationCenter) {
@@ -46,9 +52,7 @@ public class Sha256 {
     return false;
   }
 
-  /**
-   * 字符串合并
-   */
+  /** 字符串合并 */
   private String mergePasswordAndSalt(String pwd) {
     if (pwd == null) {
       pwd = "";
@@ -61,9 +65,7 @@ public class Sha256 {
     }
   }
 
-  /**
-   * 将byte转为16进制
-   */
+  /** 将byte转为16进制 */
   private String byte2Hex(byte[] bytes) {
     StringBuffer stringBuffer = new StringBuffer();
     String temp = null;

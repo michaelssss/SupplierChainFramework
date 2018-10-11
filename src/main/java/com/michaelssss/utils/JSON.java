@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 本类用于解析和生成Json字符串
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @Slf4j
 public class JSON {
 

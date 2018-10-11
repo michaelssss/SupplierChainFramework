@@ -8,6 +8,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * 本类用于Controller分页功能 本类不可继承，不可实例化
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 public final class PageUtils {
 
   private PageUtils() {

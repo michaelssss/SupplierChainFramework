@@ -13,6 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
+/**
+ * 本类用于初始化时候创建一个组织 本类由Spring管理其实例
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @Component
 @Slf4j
 public class RootGroup extends Action {

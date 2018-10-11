@@ -15,7 +15,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 /**
- * 本类用于返回一个用户对象 可以用于业务新增用户参考
+ * 本类用于系统初始化时候，自动注册一个根用户 账号为8888，密码为1
  *
  * @author Michaelssss
  * @see UserImpl
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RootUser extends Action {
 
-  public static UserImpl RootUser() {
+  private static UserImpl root() {
     UserProfile testUserProfile = new UserProfile();
     testUserProfile.setAge("23");
     testUserProfile.setName("testName");
@@ -43,7 +43,7 @@ public class RootUser extends Action {
 
   @Override
   public void act() {
-    UserImpl root = RootUser.RootUser();
+    UserImpl root = RootUser.root();
     UserCatalog userCatalog = SpringContextHolder.getBean(UserCatalog.class);
     FunctionNameCatalog authorityCatalog = SpringContextHolder.getBean(FunctionNameCatalog.class);
     UserImpl sample = UserImpl.builder().username(root.getUsername()).build();
