@@ -14,6 +14,7 @@ import com.michaelssss.base.Response;
 import com.michaelssss.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +119,7 @@ public class UserManagementController {
   @ApiOperation(tags = "用户管理", value = "查询所有部门")
   @ResponseBody
   public Response<List<Group>> listGroup() {
-    return (Response<List<Group>>) Response.OK(this.groupCatalog.findAll());
+    return Response.OK(new ArrayList<>(this.groupCatalog.findAll()));
   }
 
   @RequestMapping(value = "Group/join", method = RequestMethod.POST)
@@ -144,7 +145,7 @@ public class UserManagementController {
     GroupImpl group = new GroupImpl();
     group.setName(groupName);
     group = groupCatalog.findOne(Example.of(group)).get();
-    return (Response<List<User>>) Response.OK(group.getUsers());
+    return Response.OK(new ArrayList<>(group.getUsers()));
   }
 
   @RequestMapping(value = "Users/list", method = RequestMethod.POST)
@@ -158,6 +159,6 @@ public class UserManagementController {
     UserImpl sample = UserImpl.builder().username(userListDataBinder.getUsername()).build();
     Page<UserImpl> page = userCatalog.findAll(Example.of(sample), pageable);
     PageUtils.writeResponsePageHeader(page, response);
-    return (Response<List<User>>) Response.OK(page.getContent());
+    return Response.OK(new ArrayList<>(page.getContent()));
   }
 }

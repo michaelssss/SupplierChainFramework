@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class UserController {
   public Response<Set<FunctionName>> getFunctions(@SessionAttribute User user) {
     List<FunctionName> functionNames = new ArrayList<>(user.getHasAuthorityFunctionName());
     functionNames.sort((o1, o2) -> o1.getFunctionName().compareTo(o2.getFunctionName()));
-    return (Response<Set<FunctionName>>) Response.OK(functionNames);
+    return Response.OK(new HashSet<>(functionNames));
   }
 
   @RequestMapping(value = "Profile/get", method = RequestMethod.POST)

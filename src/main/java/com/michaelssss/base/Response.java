@@ -23,7 +23,7 @@ public class Response<T> {
   private Response() {
   }
 
-  public static Response<?> OK(Object o) {
+  public static <T> Response<T> OK(T o) {
     Response response = new Response<>();
     response.status = Status.OK;
     response.result = o;
@@ -37,7 +37,7 @@ public class Response<T> {
     return response;
   }
 
-  public static Response<?> NonOK(Object o) {
+  public static <T> Response<T> NonOK(T o) {
     Response response = new Response<>();
     response.status = Status.ERROR;
     response.result = o;

@@ -101,8 +101,8 @@ public class CompanyController {
       @RequestBody CompanyHistoryDataBinder companyHistoryDataBinder) {
     String companyName = companyHistoryDataBinder.getCompanyName();
     String historyId = companyHistoryDataBinder.getHistoryId();
-    return (Response<CompanyImpl>)
-        Response.OK(
+    return Response.OK(
+        (CompanyImpl)
             companyHistoryService.getSpecialCompanyHistoryByHistoryIdAndCompanyName(
                 companyName, historyId));
   }
@@ -271,10 +271,10 @@ public class CompanyController {
       value = "History/query",
       method = RequestMethod.POST,
       produces = APPLICATION_JSON_VALUE)
-  public Response<List<CompanyImpl>> queryHistory(@RequestBody Map<String, String> map) {
+  public Response<List<Company>> queryHistory(@RequestBody Map<String, String> map) {
     String companyName = map.get("companyName");
-    return (Response<List<CompanyImpl>>)
-        Response.OK(this.companyHistoryService.getCompanyAllAuditHistory(companyName));
+    return Response.OK(
+        this.companyHistoryService.getCompanyAllAuditHistory(companyName));
   }
 
   @ResponseBody
