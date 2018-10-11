@@ -4,6 +4,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 本类用于注册Filter至SpringMVC的Dispatcher
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @Configuration
 public class FilterConfiguration {
 

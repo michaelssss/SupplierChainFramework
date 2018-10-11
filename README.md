@@ -50,6 +50,12 @@ server
 
 ## 最佳实践
 
+* 不推荐在业务在系统启动时候获取配置，应该在Spring完全启动后再去获取配置参数
+
+* 对于业务参数应放入数据库中，应使用ConfigurationCenter对参数进行存储及修改其实例由Spring管理通过SpringContextHolder可以获取
+
+* 如果需要在启动启动时候做一些初始化操作，请实现一个com.michaelssss.daemon.Action的虚类，并将其交由Spring管理然后注册至BusinessInitialActionCenter
+
 * 对于查询列表的操作，有如下几种状况
     
 ```java

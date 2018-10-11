@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 该类用于校验请求Token是否拥有请求相应Url的权限
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @WebFilter(filterName = "authorityFilter", urlPatterns = "/*")
 @Slf4j
 public class AuthorityFilter implements Filter {

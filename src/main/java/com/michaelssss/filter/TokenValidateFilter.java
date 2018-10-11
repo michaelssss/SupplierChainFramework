@@ -19,6 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 
+/**
+ * 本类用于验证Header中的Token是否有效
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
+ */
 @WebFilter(filterName = "tokenValidateFilter", urlPatterns = "/*")
 public class TokenValidateFilter implements Filter {
 

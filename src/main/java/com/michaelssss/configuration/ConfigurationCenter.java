@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * 配置中心，将所有的配置项放入数据库中管理，配置文件中只包含了非业务相关的配置，如数据库连接等
+ *
+ * @author Michaelssss
+ * @date 2018年10月11日
  */
 @Service
 public class ConfigurationCenter {

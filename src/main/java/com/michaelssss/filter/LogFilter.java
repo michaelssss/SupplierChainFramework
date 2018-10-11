@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 该Filter用于记录所有外部请求的日志
+ *
+ * @author Michaelssss
+ * @date 2018/10/11
+ */
 @Slf4j
 @WebFilter(filterName = "logFilter", urlPatterns = "/*")
 public class LogFilter implements Filter {
